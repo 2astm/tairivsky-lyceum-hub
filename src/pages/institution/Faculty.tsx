@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users, GraduationCap, BookOpen, Globe, Flask, Calculator, Palette, Dumbbell } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // Define department types
 type Department = 
@@ -17,174 +18,72 @@ type Department =
   | 'arts-technologies'
   | 'physical-defense';
 
-// Define teacher type
-interface Teacher {
-  id: string;
-  name: string;
-  position: string;
-  department: Department;
-  photo: string;
-  subjects?: string[];
-  experience?: string;
-}
-
-// Mock data for teachers by department
-const teachers: Teacher[] = [
-  // Elementary School
+// Department data structure
+const departments = [
   {
-    id: 'elem1',
-    name: 'Степаненко Наталія Василівна',
-    position: 'Вчитель початкових класів, вища категорія',
-    department: 'elementary',
-    photo: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81',
-    experience: '25 років',
+    id: 'elementary',
+    name: 'Початкова школа',
+    icon: GraduationCap,
+    description: 'Вчителі початкової школи (1-4 класи)',
+    color: 'bg-blue-100 text-blue-700'
   },
   {
-    id: 'elem2',
-    name: 'Ковальчук Ірина Петрівна',
-    position: 'Вчитель початкових класів, перша категорія',
-    department: 'elementary',
-    photo: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
-    experience: '12 років',
-  },
-  
-  // Philology
-  {
-    id: 'phil1',
-    name: 'Литвиненко Олена Ігорівна',
-    position: 'Вчитель української мови та літератури, вища категорія',
-    department: 'philology',
-    photo: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
-    subjects: ['Українська мова', 'Українська література'],
-  },
-  
-  // History
-  {
-    id: 'hist1',
-    name: 'Тарасенко Михайло Андрійович',
-    position: 'Вчитель історії, вища категорія',
-    department: 'history',
-    photo: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81',
-    subjects: ['Історія України', 'Всесвітня історія'],
-  },
-  
-  // Foreign Languages
-  {
-    id: 'lang1',
-    name: 'Іваненко Світлана Володимирівна',
-    position: 'Вчитель англійської мови, перша категорія',
-    department: 'foreign-languages',
-    photo: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
-    subjects: ['Англійська мова'],
+    id: 'philology',
+    name: 'Філологія',
+    icon: BookOpen,
+    description: 'Вчителі української мови та літератури',
+    color: 'bg-purple-100 text-purple-700'
   },
   {
-    id: 'lang2',
-    name: 'Кузьменко Олег Петрович',
-    position: 'Вчитель німецької мови, друга категорія',
-    department: 'foreign-languages',
-    photo: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
-    subjects: ['Німецька мова'],
-  },
-  
-  // Natural Sciences
-  {
-    id: 'nat1',
-    name: 'Віталенко Вікторія Анатоліївна',
-    position: 'Вчитель біології, вища категорія',
-    department: 'natural-sciences',
-    photo: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81',
-    subjects: ['Біологія', 'Екологія'],
+    id: 'history',
+    name: 'Історія',
+    icon: BookOpen,
+    description: 'Вчителі історії та суспільних наук',
+    color: 'bg-amber-100 text-amber-700'
   },
   {
-    id: 'nat2',
-    name: 'Климчук Олександр Сергійович',
-    position: 'Вчитель хімії та фізики, перша категорія',
-    department: 'natural-sciences',
-    photo: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
-    subjects: ['Хімія', 'Фізика'],
-  },
-  
-  // Math and Informatics
-  {
-    id: 'math1',
-    name: 'Зінченко Марія Вікторівна',
-    position: 'Вчитель математики, вища категорія',
-    department: 'math-informatics',
-    photo: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
-    subjects: ['Алгебра', 'Геометрія'],
+    id: 'foreign-languages',
+    name: 'Іноземні мови',
+    icon: Globe,
+    description: 'Вчителі англійської, німецької та інших мов',
+    color: 'bg-green-100 text-green-700'
   },
   {
-    id: 'math2',
-    name: 'Данилюк Сергій Олегович',
-    position: 'Вчитель інформатики, перша категорія',
-    department: 'math-informatics',
-    photo: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81',
-    subjects: ['Інформатика', 'Технології'],
-  },
-  
-  // Arts and Technologies
-  {
-    id: 'arts1',
-    name: 'Романенко Дарія Романівна',
-    position: 'Вчитель образотворчого мистецтва, вища категорія',
-    department: 'arts-technologies',
-    photo: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
-    subjects: ['Образотворче мистецтво'],
+    id: 'natural-sciences',
+    name: 'Природничі науки',
+    icon: Flask,
+    description: 'Вчителі біології, хімії, фізики, географії',
+    color: 'bg-teal-100 text-teal-700'
   },
   {
-    id: 'arts2',
-    name: 'Павленко Ігор Миколайович',
-    position: 'Вчитель трудового навчання, перша категорія',
-    department: 'arts-technologies',
-    photo: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
-    subjects: ['Трудове навчання', 'Технології'],
-  },
-  
-  // Physical Culture and Defense of Ukraine
-  {
-    id: 'phys1',
-    name: 'Григоренко Артем Валентинович',
-    position: 'Вчитель фізичної культури, вища категорія',
-    department: 'physical-defense',
-    photo: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81',
-    subjects: ['Фізична культура'],
+    id: 'math-informatics',
+    name: 'Математика та інформатика',
+    icon: Calculator,
+    description: 'Вчителі математики та інформатики',
+    color: 'bg-indigo-100 text-indigo-700'
   },
   {
-    id: 'phys2',
-    name: 'Марченко Валентин Ігорович',
-    position: 'Вчитель захисту України, перша категорія',
-    department: 'physical-defense',
-    photo: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c',
-    subjects: ['Захист України'],
+    id: 'arts-technologies',
+    name: 'Мистецтво та технології',
+    icon: Palette,
+    description: 'Вчителі мистецтва, трудового навчання, технологій',
+    color: 'bg-pink-100 text-pink-700'
   },
-];
-
-// Department name mapping for display
-const departmentNames: Record<Department, string> = {
-  'elementary': 'Початкова школа',
-  'philology': 'Філологія',
-  'history': 'Історія',
-  'foreign-languages': 'Іноземні мови',
-  'natural-sciences': 'Природничі науки',
-  'math-informatics': 'Математика та інформатика',
-  'arts-technologies': 'Мистецтво та технології',
-  'physical-defense': 'Фізична культура та Захист України',
-};
-
-// Department value mapping for tabs
-const departmentValues: Department[] = [
-  'elementary',
-  'philology',
-  'history',
-  'foreign-languages',
-  'natural-sciences',
-  'math-informatics',
-  'arts-technologies',
-  'physical-defense',
+  {
+    id: 'physical-defense',
+    name: 'Фізична культура та Захист України',
+    icon: Dumbbell,
+    description: 'Вчителі фізичної культури та Захисту України',
+    color: 'bg-orange-100 text-orange-700'
+  },
 ];
 
 const Faculty = () => {
-  const [activeTab, setActiveTab] = useState<Department>('elementary');
+  const navigate = useNavigate();
+  
+  const handleDepartmentClick = (departmentId: string) => {
+    navigate(`/institution/faculty/${departmentId}`);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -197,66 +96,29 @@ const Faculty = () => {
             description="Професійна команда Таїровського ліцею"
           />
           
-          <Tabs 
-            defaultValue="elementary" 
-            value={activeTab}
-            onValueChange={(value) => setActiveTab(value as Department)}
-            className="mt-12"
-          >
-            <div className="overflow-x-auto pb-4">
-              <TabsList className="flex flex-nowrap w-max">
-                {departmentValues.map(dept => (
-                  <TabsTrigger 
-                    key={dept} 
-                    value={dept}
-                    className="whitespace-nowrap"
-                  >
-                    {departmentNames[dept]}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </div>
-
-            {departmentValues.map(dept => (
-              <TabsContent key={dept} value={dept} className="animate-fade-in">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-                  {teachers
-                    .filter(teacher => teacher.department === dept)
-                    .map(teacher => (
-                      <Card key={teacher.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                        <div className="w-full h-64 relative overflow-hidden">
-                          <img 
-                            src={teacher.photo} 
-                            alt={teacher.name}
-                            className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
-                          />
-                        </div>
-                        <CardHeader>
-                          <CardTitle className="text-xl">{teacher.name}</CardTitle>
-                          <CardDescription className="text-blue-600 font-medium">
-                            {teacher.position}
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          {teacher.subjects && (
-                            <div className="mb-2">
-                              <p className="text-sm text-gray-500 font-medium">Предмети:</p>
-                              <p className="text-sm">{teacher.subjects.join(', ')}</p>
-                            </div>
-                          )}
-                          {teacher.experience && (
-                            <div>
-                              <p className="text-sm text-gray-500 font-medium">Досвід роботи:</p>
-                              <p className="text-sm">{teacher.experience}</p>
-                            </div>
-                          )}
-                        </CardContent>
-                      </Card>
-                    ))}
-                </div>
-              </TabsContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
+            {departments.map(department => (
+              <Card 
+                key={department.id}
+                className={`${department.color} border-0 hover:shadow-lg transition-all duration-300 cursor-pointer group overflow-hidden`}
+                onClick={() => handleDepartmentClick(department.id)}
+              >
+                <CardHeader className="pb-2 relative">
+                  <div className="absolute top-0 right-0 p-4 opacity-20">
+                    <department.icon size={64} className="text-current transition-transform duration-300 group-hover:scale-110" />
+                  </div>
+                  <CardTitle className="text-xl z-10">{department.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm opacity-80">{department.description}</p>
+                  <div className="flex items-center mt-4 text-sm font-medium">
+                    <Users className="mr-2 h-4 w-4" />
+                    <span>Переглянути викладачів</span>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
-          </Tabs>
+          </div>
         </div>
       </main>
       
