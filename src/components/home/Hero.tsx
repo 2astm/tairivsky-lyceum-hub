@@ -1,9 +1,15 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BackgroundGradient from '../ui/BackgroundGradient';
 
 const Hero = () => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsImageLoaded(true);
+  }, []);
+
   return (
     <BackgroundGradient className="pt-20 md:pt-32 pb-16 md:pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -44,17 +50,18 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className="relative animate-fade-in order-first md:order-last">
-            <div className="relative mx-auto max-w-md">
+          <div className="relative order-first md:order-last overflow-hidden">
+            <div className={`relative mx-auto max-w-md transition-all duration-1000 ${isImageLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1232&q=80"
-                  alt="Таїровський ліцей"
+                  src="/lovable-uploads/fb6e1f18-6165-43c6-85bd-a633ac4c990a.png"
+                  alt="Таїровський ліцей - фото будівлі школи"
                   className="object-cover w-full h-full"
+                  onLoad={() => setIsImageLoaded(true)}
                 />
               </div>
-              <div className="absolute -right-4 -bottom-4 w-32 h-32 md:w-40 md:h-40 bg-blue-500 rounded-xl -z-10"></div>
-              <div className="absolute -left-4 -top-4 w-24 h-24 md:w-32 md:h-32 bg-teal-500 rounded-xl -z-10"></div>
+              <div className={`absolute -right-4 -bottom-4 w-32 h-32 md:w-40 md:h-40 bg-blue-500 rounded-xl -z-10 transition-all duration-1000 delay-300 ${isImageLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}></div>
+              <div className={`absolute -left-4 -top-4 w-24 h-24 md:w-32 md:h-32 bg-teal-500 rounded-xl -z-10 transition-all duration-1000 delay-500 ${isImageLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}></div>
             </div>
           </div>
         </div>
