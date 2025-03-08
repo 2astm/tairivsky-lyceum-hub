@@ -95,14 +95,18 @@ const Index = () => {
                                     </div>
 
                                     <div className="pl-16">
-                                        {event?.time && <div className="flex items-center mb-2 text-gray-600">
-                                            <Clock className="w-4 h-4 mr-2"/>
-                                            <span>{event?.time}</span>
-                                        </div>}
-                                        {event?.location && <div className="flex items-center text-gray-600">
-                                            <MapPinIcon className="w-4 h-4 mr-2"/>
-                                            <span>{event?.location}</span>
-                                        </div>}
+                                        {event.time && (
+                                            <div className="flex items-center mb-2 text-gray-600">
+                                                <Clock className="w-4 h-4 mr-2"/>
+                                                <span>{event.time}</span>
+                                            </div>
+                                        )}
+                                        {event.location && (
+                                            <div className="flex items-center text-gray-600">
+                                                <MapPinIcon className="w-4 h-4 mr-2"/>
+                                                <span>{event.location}</span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             ))}
