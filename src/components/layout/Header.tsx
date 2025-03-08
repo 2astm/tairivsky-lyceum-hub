@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
@@ -9,13 +9,23 @@ const navItems = [
   { name: 'Новини', path: '/news' },
   { name: 'Дистанційне навчання', path: '/distance-learning' },
   { name: 'Допомога і безпека', path: '/help-and-safety' },
-  { name: 'Викладачі', path: '/teachers' },
+  { 
+    name: 'Заклад', 
+    dropdown: true,
+    items: [
+      { name: 'Адміністрація', path: '/institution/administration' },
+      { name: 'Педагогічний колектив', path: '/institution/faculty' },
+      { name: 'Контакти', path: '/institution/contacts' },
+    ]
+  },
   { name: 'Розклад', path: '/schedule' },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -30,7 +40,24 @@ const Header = () => {
   // Close mobile menu when changing routes
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setOpenDropdown(null);
   }, [location.pathname]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleDropdown = (name: string) => {
+    setOpenDropdown(prev => prev === name ? null : name);
+  };
 
   return (
     <header
@@ -57,18 +84,56 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-1">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  'px-3 py-2 text-sm font-medium rounded-md transition-all',
-                  location.pathname === item.path
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                )}
-              >
-                {item.name}
-              </Link>
+              item.dropdown ? (
+                <div key={item.name} className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => toggleDropdown(item.name)}
+                    className={cn(
+                      'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all',
+                      openDropdown === item.name
+                        ? 'text-blue-600 bg-blue-50'
+                        : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                    )}
+                  >
+                    {item.name}
+                    {openDropdown === item.name ? (
+                      <ChevronUp className="ml-1 h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    )}
+                  </button>
+                  
+                  {openDropdown === item.name && (
+                    <div className="absolute mt-1 py-1 w-56 bg-white rounded-md shadow-lg border border-gray-100 z-50">
+                      {item.items.map((subItem) => (
+                        <Link
+                          key={subItem.path}
+                          to={subItem.path}
+                          className={cn(
+                            'block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600',
+                            location.pathname === subItem.path && 'bg-blue-50 text-blue-600'
+                          )}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    'px-3 py-2 text-sm font-medium rounded-md transition-all',
+                    location.pathname === item.path
+                      ? 'text-blue-600 bg-blue-50'
+                      : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                  )}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -94,18 +159,58 @@ const Header = () => {
           <div className="bg-white border-t border-gray-200 shadow-lg">
             <div className="max-w-7xl mx-auto px-4 py-4">
               {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={cn(
-                    'block px-3 py-3 text-base font-medium rounded-md my-1 transition-all',
-                    location.pathname === item.path
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                  )}
-                >
-                  {item.name}
-                </Link>
+                item.dropdown ? (
+                  <div key={item.name}>
+                    <button
+                      onClick={() => toggleDropdown(item.name)}
+                      className={cn(
+                        'flex items-center justify-between w-full px-3 py-3 text-base font-medium rounded-md my-1 transition-all',
+                        openDropdown === item.name
+                          ? 'text-blue-600 bg-blue-50'
+                          : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                      )}
+                    >
+                      {item.name}
+                      {openDropdown === item.name ? (
+                        <ChevronUp className="ml-1 h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="ml-1 h-4 w-4" />
+                      )}
+                    </button>
+                    
+                    {openDropdown === item.name && (
+                      <div className="pl-4 border-l-2 border-blue-100 ml-3 mt-1">
+                        {item.items.map((subItem) => (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            className={cn(
+                              'block px-3 py-2 text-sm rounded-md my-1 transition-all',
+                              location.pathname === subItem.path
+                                ? 'text-blue-600 bg-blue-50'
+                                : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                            )}
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={cn(
+                      'block px-3 py-3 text-base font-medium rounded-md my-1 transition-all',
+                      location.pathname === item.path
+                        ? 'text-blue-600 bg-blue-50'
+                        : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                )
               ))}
             </div>
           </div>

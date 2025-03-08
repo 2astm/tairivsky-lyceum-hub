@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Calendar, Users, Shield, Newspaper, Laptop } from 'lucide-react';
+import { BookOpen, Calendar, Users, Shield, Newspaper, Laptop, Building } from 'lucide-react';
 
 const features = [
   {
@@ -29,10 +29,10 @@ const features = [
     to: '/help-and-safety'
   },
   {
-    name: 'Викладачі',
-    description: 'Познайомтеся з нашими кваліфікованими педагогами.',
-    icon: Users,
-    to: '/teachers'
+    name: 'Заклад',
+    description: 'Інформація про адміністрацію, педагогічний колектив та контакти.',
+    icon: Building,
+    to: '/institution/administration'
   },
   {
     name: 'Розклад',
