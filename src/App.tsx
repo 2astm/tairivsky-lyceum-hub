@@ -11,6 +11,7 @@ import Faculty from "./pages/institution/Faculty";
 import FacultyDepartment from "./pages/institution/FacultyDepartment";
 import Contacts from "./pages/institution/Contacts";
 import LegalInformation from "./pages/LegalInformation";
+import InformationPage from "./pages/InformationPage";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/information" element={<div>Інформація</div>} />
+          <Route path="/information" element={<InformationPage />} />
           <Route path="/news" element={<div>Новини</div>} />
           <Route path="/distance-learning" element={<div>Дистанційне навчання</div>} />
           <Route path="/help-and-safety" element={<div>Допомога і безпека</div>} />
