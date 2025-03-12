@@ -5,9 +5,29 @@ import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card } from '@/components/ui/card';
-import { FileText, Book, Certificate, Building, Users, GraduationCap, Map, UserCheck, Languages, Briefcase, 
-  Warehouse, ScrollText, Home, BarChart3, FileBarChart, UserPlus, Accessibility, DollarSign, 
-  ListChecks, ShieldAlert, FileQuestion } from 'lucide-react';
+import { 
+  FileText, 
+  Book, 
+  Certificate, 
+  Building, 
+  Users, 
+  GraduationCap, 
+  Map, 
+  UserCheck, 
+  Languages, 
+  Briefcase, 
+  Warehouse, 
+  ScrollText, 
+  Home, 
+  BarChart3, 
+  FileBarChart, 
+  UserPlus, 
+  Accessibility, 
+  DollarSign, 
+  ListChecks, 
+  ShieldAlert, 
+  FileQuestion 
+} from 'lucide-react';
 
 // Legal information sections based on Ukrainian law
 const legalSections = [
@@ -153,14 +173,14 @@ const LegalInformation = () => {
   const getFilteredSections = () => {
     if (activeCategory === 'all') return legalSections;
     
-    const categoryMapping = {
+    const categoryMapping: Record<string, string[]> = {
       general: ['statute', 'license', 'accreditation', 'structure', 'annual-report'],
       education: ['programs', 'language', 'monitoring', 'behavior-rules', 'anti-violence', 'accessibility'],
       administrative: ['staff', 'territory', 'capacity', 'vacancies', 'facilities', 'dormitory', 'admission-rules', 'tuition', 'additional-services', 'faq']
     };
     
     return legalSections.filter(section => 
-      categoryMapping[activeCategory as keyof typeof categoryMapping].includes(section.id)
+      categoryMapping[activeCategory].includes(section.id)
     );
   };
 
