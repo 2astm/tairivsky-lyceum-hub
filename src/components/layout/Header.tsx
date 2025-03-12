@@ -1,10 +1,26 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { name: 'Інформація', path: '/information' },
+  { 
+    name: 'Інформація', 
+    dropdown: true,
+    items: [
+      { name: 'Умови прийому', path: '/information/admission' },
+      { name: 'Гуртки', path: '/information/extracurricular' },
+      { name: 'Харчування', path: '/information/nutrition' },
+      { name: 'Критерії оцінювання', path: '/information/evaluation' },
+      { name: 'Профорієнтація', path: '/information/career-guidance' },
+      { name: 'Патріотичне виховання', path: '/information/patriotic-education' },
+      { name: 'Права учнів', path: '/information/student-rights' },
+      { name: 'Права батьків', path: '/information/parent-rights' },
+      { name: 'Електронний журнал', path: '/information/electronic-journal' },
+      { name: 'Самоврядування', path: '/information/self-government' },
+    ]
+  },
   { name: 'Новини', path: '/news' },
   { name: 'Дистанційне навчання', path: '/distance-learning' },
   { name: 'Допомога і безпека', path: '/help-and-safety' },

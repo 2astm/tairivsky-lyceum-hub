@@ -11,7 +11,8 @@ import Faculty from "./pages/institution/Faculty";
 import FacultyDepartment from "./pages/institution/FacultyDepartment";
 import Contacts from "./pages/institution/Contacts";
 import LegalInformation from "./pages/LegalInformation";
-import InformationPage from "./pages/InformationPage";
+import InformationPage from "./pages/information/InformationPage";
+import InformationSection from "./pages/information/InformationSection";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/information" element={<InformationPage />} />
+          <Route path="/information/:sectionId" element={<InformationSection />} />
           <Route path="/news" element={<div>Новини</div>} />
           <Route path="/distance-learning" element={<div>Дистанційне навчання</div>} />
           <Route path="/help-and-safety" element={<div>Допомога і безпека</div>} />
