@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Calendar, Users, Shield, Newspaper, Laptop, Building } from 'lucide-react';
+import { BookOpen, Calendar, Users, Shield, Newspaper, Laptop, Building, FileText } from 'lucide-react';
 
 const features = [
   {
@@ -33,6 +32,12 @@ const features = [
     description: 'Інформація про адміністрацію, педагогічний колектив та контакти.',
     icon: Building,
     to: '/institution/administration'
+  },
+  {
+    name: 'Документи',
+    description: 'Нормативні документи, статут, ліцензії та інша обов\'язкова інформація.',
+    icon: FileText,
+    to: '/legal-information'
   },
   {
     name: 'Розклад',

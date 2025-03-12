@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
@@ -19,6 +18,7 @@ const navItems = [
     ]
   },
   { name: 'Розклад', path: '/schedule' },
+  { name: 'Документи', path: '/legal-information' },
 ];
 
 const Header = () => {
@@ -37,13 +37,11 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when changing routes
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setOpenDropdown(null);
   }, [location.pathname]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -81,7 +79,6 @@ const Header = () => {
             <span>Таїровський ліцей</span>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-1">
             {navItems.map((item) => (
               item.dropdown ? (
@@ -137,7 +134,6 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
             type="button"
             className="md:hidden p-2 rounded-md text-gray-700"
@@ -153,7 +149,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <div className="md:hidden animate-scale-in">
           <div className="bg-white border-t border-gray-200 shadow-lg">

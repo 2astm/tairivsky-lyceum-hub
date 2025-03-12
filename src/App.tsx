@@ -10,6 +10,7 @@ import Administration from "./pages/institution/Administration";
 import Faculty from "./pages/institution/Faculty";
 import FacultyDepartment from "./pages/institution/FacultyDepartment";
 import Contacts from "./pages/institution/Contacts";
+import LegalInformation from "./pages/LegalInformation";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/institution/faculty" element={<Faculty />} />
           <Route path="/institution/faculty/:departmentId" element={<FacultyDepartment />} />
           <Route path="/institution/contacts" element={<Contacts />} />
+          <Route path="/legal-information" element={<LegalInformation />} />
           <Route path="/schedule" element={<div>Розклад</div>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
