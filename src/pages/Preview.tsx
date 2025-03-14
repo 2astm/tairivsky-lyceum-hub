@@ -36,12 +36,21 @@ const Preview = () => {
               Це нова версія сайту з оновленим дизайном. Будь ласка, зверніть увагу, що сайт 
               знаходиться в розробці і містить тестові дані.
             </p>
-            <Link to="/home">
-              <Button className="w-full">
-                Перейти до нової версії
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            <div className="flex flex-col space-y-3">
+              <Link to="/home">
+                <Button className="w-full">
+                  Перейти до нової версії
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <a 
+                href="mailto:YevhenMolchaniuk@tairivsky-lyceum.od.ua?subject=Побажання стосовно нового сайту"
+                className="inline-flex items-center justify-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Надіслати відгук
+              </a>
+            </div>
           </Card>
 
           <Card className="p-6 border-green-200 hover:border-green-400 transition-all">
@@ -62,20 +71,12 @@ const Preview = () => {
           </Card>
         </div>
 
-        <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="bg-blue-50 p-4 rounded-lg flex-grow text-center">
+        <div className="mt-6 flex justify-center">
+          <div className="bg-blue-50 p-4 rounded-lg text-center w-full">
             <p className="text-blue-700 text-sm">
               © 2024 Таїровський ліцей. Усі права захищені.
             </p>
           </div>
-          
-          <a 
-            href="mailto:YevhenMolchaniuk@tairivsky-lyceum.od.ua?subject=Побажання стосовно нового сайту"
-            className="inline-flex items-center justify-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
-          >
-            <MessageCircle className="h-4 w-4" />
-            Надіслати відгук
-          </a>
         </div>
       </Card>
     </div>
