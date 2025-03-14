@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileText, Download, ExternalLink, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, FileText, Download, ExternalLink, AlertTriangle, MessageCircle } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -39,14 +39,23 @@ const InformationSection = () => {
       
       <main className="flex-grow pt-28 pb-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Button 
-            variant="outline" 
-            className="mb-6"
-            onClick={() => navigate('/information')}
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Назад до інформації
-          </Button>
+          <div className="flex justify-between items-center mb-6">
+            <Button 
+              variant="outline"
+              onClick={() => navigate('/information')}
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Назад до інформації
+            </Button>
+            
+            <a 
+              href="mailto:YevhenMolchaniuk@tairivsky-lyceum.od.ua?subject=Побажання стосовно нового сайту"
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Надіслати відгук
+            </a>
+          </div>
           
           <Alert className="mb-6 border-amber-300 bg-amber-50">
             <AlertTriangle className="h-5 w-5 text-amber-600" />

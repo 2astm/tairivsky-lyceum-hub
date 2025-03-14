@@ -4,6 +4,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Mail, MessageCircle } from 'lucide-react';
 
 const Contacts = () => {
   return (
@@ -12,10 +14,20 @@ const Contacts = () => {
       
       <main className="flex-grow pt-28 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            title="Контакти"
-            description="Зв'яжіться з Таїровським ліцеєм"
-          />
+          <div className="flex justify-between items-center mb-8">
+            <SectionHeading
+              title="Контакти"
+              description="Зв'яжіться з Таїровським ліцеєм"
+            />
+            
+            <a 
+              href="mailto:YevhenMolchaniuk@tairivsky-lyceum.od.ua?subject=Побажання стосовно нового сайту"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+            >
+              <MessageCircle className="h-4 w-4" />
+              <span className="hidden sm:inline">Надіслати відгук</span>
+            </a>
+          </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
             <Card className="shadow-md">
@@ -105,6 +117,35 @@ const Contacts = () => {
               </CardContent>
             </Card>
           </div>
+          
+          <Card className="shadow-md mt-8">
+            <CardHeader>
+              <CardTitle className="text-2xl">Зворотний зв'язок</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-gray-700">
+                Маєте питання, пропозиції або зауваження? Ми завжди відкриті до спілкування. 
+                Надішліть нам повідомлення, і ми обов'язково вам відповімо.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                <a 
+                  href="mailto:info@tairovskyj-liceum.od.ua"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                >
+                  <Mail className="h-4 w-4" />
+                  Написати на загальну пошту
+                </a>
+                
+                <a 
+                  href="mailto:YevhenMolchaniuk@tairivsky-lyceum.od.ua?subject=Побажання стосовно нового сайту"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-blue-200 bg-white text-blue-600 hover:bg-blue-50 transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Відгук про новий сайт
+                </a>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </main>
       

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ExternalLink, AlertTriangle, HardHat, ArrowRight } from 'lucide-react';
+import { ExternalLink, AlertTriangle, HardHat, ArrowRight, MessageCircle } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 
 const Preview = () => {
@@ -62,10 +62,20 @@ const Preview = () => {
           </Card>
         </div>
 
-        <div className="bg-blue-50 p-4 rounded-lg mt-6">
-          <p className="text-blue-700 text-sm text-center">
-            © 2024 Таїровський ліцей. Усі права захищені.
-          </p>
+        <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="bg-blue-50 p-4 rounded-lg flex-grow text-center">
+            <p className="text-blue-700 text-sm">
+              © 2024 Таїровський ліцей. Усі права захищені.
+            </p>
+          </div>
+          
+          <a 
+            href="mailto:YevhenMolchaniuk@tairivsky-lyceum.od.ua?subject=Побажання стосовно нового сайту"
+            className="inline-flex items-center justify-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Надіслати відгук
+          </a>
         </div>
       </Card>
     </div>
