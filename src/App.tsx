@@ -13,6 +13,7 @@ import Contacts from "./pages/institution/Contacts";
 import LegalInformation from "./pages/LegalInformation";
 import InformationPage from "./pages/information/InformationPage";
 import InformationSection from "./pages/information/InformationSection";
+import Preview from "./pages/Preview";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Preview />} />
+          <Route path="/home" element={<Index />} />
           <Route path="/information" element={<InformationPage />} />
           <Route path="/information/:sectionId" element={<InformationSection />} />
           <Route path="/news" element={<div>Новини</div>} />

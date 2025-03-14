@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileText, Download } from 'lucide-react';
+import { ArrowLeft, FileText, Download, ExternalLink } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { getSectionById } from '@/data/informationSections';
 
 const InformationSection = () => {
@@ -46,6 +47,24 @@ const InformationSection = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Назад до інформації
           </Button>
+          
+          <Alert className="mb-6 border-amber-300 bg-amber-50">
+            <AlertTriangle className="h-5 w-5 text-amber-600" />
+            <AlertTitle className="text-amber-800">Тестові дані</AlertTitle>
+            <AlertDescription className="text-amber-700">
+              Ця сторінка містить тестову інформацію. Для отримання актуальної інформації, 
+              будь ласка, відвідайте{' '}
+              <a 
+                href="https://sites.google.com/view/tairovskyi-zaklad/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="underline hover:text-amber-900 inline-flex items-center"
+              >
+                офіційний сайт
+                <ExternalLink className="ml-1 h-4 w-4" />
+              </a>
+            </AlertDescription>
+          </Alert>
           
           <SectionHeading
             title={section.title}
