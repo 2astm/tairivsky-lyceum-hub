@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://yourwebsite.com/sitemap.xml
+Sitemap: https://tairivsky-lyceum.od.ua/sitemap.xml
