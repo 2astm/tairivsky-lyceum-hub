@@ -14,6 +14,8 @@ import LegalInformation from "./pages/LegalInformation";
 import InformationPage from "./pages/information/InformationPage";
 import InformationSection from "./pages/information/InformationSection";
 import Preview from "./pages/Preview";
+import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
 
 const queryClient = new QueryClient();
 
@@ -28,7 +30,8 @@ const App = () => (
           <Route path="/home" element={<Index />} />
           <Route path="/information" element={<InformationPage />} />
           <Route path="/information/:sectionId" element={<InformationSection />} />
-          <Route path="/news" element={<div>Новини</div>} />
+          <Route path="/news" element={<News />} />
+          <Route path="/news/:id" element={<NewsDetail />} />
           <Route path="/distance-learning" element={<div>Дистанційне навчання</div>} />
           <Route path="/help-and-safety" element={<div>Допомога і безпека</div>} />
           <Route path="/institution/administration" element={<Administration />} />

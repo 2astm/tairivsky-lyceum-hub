@@ -11,6 +11,7 @@ export interface NewsItem {
   date: string;
   image?: string;
   category?: string;
+  content?: string;
 }
 
 interface NewsCardProps {
