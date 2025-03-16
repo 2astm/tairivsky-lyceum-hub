@@ -22,41 +22,7 @@
         <priority>1.0</priority>
     </url>
     <url>
-<<<<<<< HEAD
         <loc>https://tairivsky-lyceum.od.ua/#/distance-learning</loc>
-=======
-        <loc>https://tairivsky-lyceum.od.ua/news/1</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://tairivsky-lyceum.od.ua/news/2</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://tairivsky-lyceum.od.ua/news/3</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://tairivsky-lyceum.od.ua/news/4</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://tairivsky-lyceum.od.ua/news/5</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://tairivsky-lyceum.od.ua/news/6</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://tairivsky-lyceum.od.ua/distance-learning</loc>
->>>>>>> e8d9e78b35c75b62fbb33f2e2e707ff0e976118d
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
@@ -89,5 +55,35 @@
         <loc>https://tairivsky-lyceum.od.ua/#/schedule</loc>
         <changefreq>hourly</changefreq>
         <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://tairivsky-lyceum.od.ua/news/1</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://tairivsky-lyceum.od.ua/news/2</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://tairivsky-lyceum.od.ua/news/3</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://tairivsky-lyceum.od.ua/news/4</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://tairivsky-lyceum.od.ua/news/5</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://tairivsky-lyceum.od.ua/news/6</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
     </url>
 </urlset>
