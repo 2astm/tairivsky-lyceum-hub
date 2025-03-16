@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -11,13 +10,6 @@ import SectionHeading from '@/components/ui/SectionHeading';
 const Preview = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4">
-      <Helmet>
-        <title>Таїровський ліцей - Вибір версії сайту</title>
-        <meta name="description" content="Виберіть між новою версією сайту Таїровського ліцею, що знаходиться в розробці, та поточною офіційною версією." />
-        <meta property="og:title" content="Таїровський ліцей - Вибір версії сайту" />
-        <meta property="og:description" content="Виберіть між новою версією сайту Таїровського ліцею, що знаходиться в розробці, та поточною офіційною версією." />
-      </Helmet>
-      
       <Card className="max-w-3xl w-full p-8 shadow-lg">
         <SectionHeading
           title="Таїровський ліцей"
