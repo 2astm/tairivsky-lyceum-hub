@@ -25,18 +25,18 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route index={true} path="/" element={<Preview />} />
-          <Route index={true} path="/home" element={<Index />} />
-          <Route index={true} path="/information" element={<InformationPage />} />
-          <Route index={true} path="/information/:sectionId" element={<InformationSection />} />
-          <Route index={true} path="/news" element={<div>Новини</div>} />
-          <Route index={true} path="/distance-learning" element={<div>Дистанційне навчання</div>} />
-          <Route index={true} path="/help-and-safety" element={<div>Допомога і безпека</div>} />
-          <Route index={true} path="/institution/administration" element={<Administration />} />
-          <Route index={true} path="/institution/faculty" element={<Faculty />} />
-          <Route index={true} path="/institution/faculty/:departmentId" element={<FacultyDepartment />} />
-          <Route index={true} path="/institution/contacts" element={<Contacts />} />
-          <Route index={true} path="/legal-information" element={<LegalInformation />} />
-          <Route index={true} path="/schedule" element={<div>Розклад</div>} />
+          <Route path="/home" element={<Index />} />
+          <Route path="/information" element={<InformationPage />} />
+          <Route path="/information/:sectionId" element={<InformationSection />} />
+          <Route path="/news" element={<div>Новини</div>} />
+          <Route path="/distance-learning" element={<div>Дистанційне навчання</div>} />
+          <Route path="/help-and-safety" element={<div>Допомога і безпека</div>} />
+          <Route path="/institution/administration" element={<Administration />} />
+          <Route path="/institution/faculty" element={<Faculty />} />
+          <Route path="/institution/faculty/:departmentId" element={<FacultyDepartment />} />
+          <Route path="/institution/contacts" element={<Contacts />} />
+          <Route path="/legal-information" element={<LegalInformation />} />
+          <Route path="/schedule" element={<div>Розклад</div>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route  path="*" element={<NotFound />} />
         </Routes>
