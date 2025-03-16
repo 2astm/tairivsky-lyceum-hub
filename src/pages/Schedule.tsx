@@ -9,6 +9,8 @@ import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Calendar as CalendarIcon, Clock, Filter, Download, Printer, Search } from 'lucide-react';
+import { add, format, startOfWeek, endOfWeek } from 'date-fns';
+import { uk } from 'date-fns/locale';
 
 const Schedule = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -30,6 +32,42 @@ const Schedule = () => {
     { time: '12:30 - 13:15', subject: 'Англійська мова', teacher: 'Сидоренко Т.І.', room: '207' },
     { time: '13:25 - 14:10', subject: 'Фізична культура', teacher: 'Мельник О.В.', room: 'Спортзал' },
   ];
+
+  // Weekly schedule data - example
+  const weeklyScheduleData = {
+    'Понеділок': [
+      { time: '8:30 - 9:15', subject: 'Математика', teacher: 'Іванова О.П.', room: '301' },
+      { time: '9:25 - 10:10', subject: 'Українська мова', teacher: 'Петренко С.В.', room: '205' },
+      { time: '10:30 - 11:15', subject: 'Історія України', teacher: 'Кравченко І.М.', room: '104' },
+    ],
+    'Вівторок': [
+      { time: '8:30 - 9:15', subject: 'Фізика', teacher: 'Бондаренко В.О.', room: '302' },
+      { time: '9:25 - 10:10', subject: 'Англійська мова', teacher: 'Сидоренко Т.І.', room: '207' },
+      { time: '10:30 - 11:15', subject: 'Хімія', teacher: 'Коваленко Н.А.', room: '305' },
+    ],
+    'Середа': [
+      { time: '8:30 - 9:15', subject: 'Біологія', teacher: 'Шевченко К.Л.', room: '204' },
+      { time: '9:25 - 10:10', subject: 'Географія', teacher: 'Павленко Р.С.', room: '306' },
+      { time: '10:30 - 11:15', subject: 'Українська література', teacher: 'Петренко С.В.', room: '205' },
+    ],
+    'Четвер': [
+      { time: '8:30 - 9:15', subject: 'Математика', teacher: 'Іванова О.П.', room: '301' },
+      { time: '9:25 - 10:10', subject: 'Фізична культура', teacher: 'Мельник О.В.', room: 'Спортзал' },
+      { time: '10:30 - 11:15', subject: 'Інформатика', teacher: 'Ткаченко В.І.', room: '210' },
+    ],
+    'П\'ятниця': [
+      { time: '8:30 - 9:15', subject: 'Зарубіжна література', teacher: 'Кузьменко Л.В.', room: '208' },
+      { time: '9:25 - 10:10', subject: 'Історія України', teacher: 'Кравченко І.М.', room: '104' },
+      { time: '10:30 - 11:15', subject: 'Мистецтво', teacher: 'Лисенко О.В.', room: '106' },
+    ]
+  };
+
+  // Format the date range for week view
+  const getWeekRangeText = (date: Date) => {
+    const start = startOfWeek(date, { locale: uk });
+    const end = endOfWeek(date, { locale: uk });
+    return `${format(start, 'd', { locale: uk })} - ${format(end, 'd MMMM yyyy', { locale: uk })}`;
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -121,11 +159,10 @@ const Schedule = () => {
                     </span>{' '}
                     на{' '}
                     <span className="font-semibold text-blue-600">
-                      {date ? date.toLocaleDateString('uk-UA', { 
-                        day: 'numeric', 
-                        month: 'long', 
-                        year: 'numeric' 
-                      }) : 'сьогодні'}
+                      {date && viewMode === 'day' ? 
+                        format(date, 'd MMMM yyyy', { locale: uk }) : 
+                        date && viewMode === 'week' ? 
+                        getWeekRangeText(date) : 'сьогодні'}
                     </span>
                   </p>
                 </div>
@@ -153,35 +190,69 @@ const Schedule = () => {
                       Розклад для {selectedClass} класу
                     </h2>
                     <p className="text-sm text-gray-500">
-                      {date?.toLocaleDateString('uk-UA', {
-                        weekday: 'long',
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      })}
+                      {viewMode === 'day' 
+                        ? date?.toLocaleDateString('uk-UA', {
+                            weekday: 'long',
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                          })
+                        : date && getWeekRangeText(date)
+                      }
                     </p>
                   </div>
                   
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-[100px]">Час</TableHead>
-                        <TableHead>Предмет</TableHead>
-                        <TableHead>Викладач</TableHead>
-                        <TableHead className="w-[80px]">Кабінет</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {scheduleData.map((lesson, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">{lesson.time}</TableCell>
-                          <TableCell>{lesson.subject}</TableCell>
-                          <TableCell>{lesson.teacher}</TableCell>
-                          <TableCell>{lesson.room}</TableCell>
+                  {viewMode === 'day' ? (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-[100px]">Час</TableHead>
+                          <TableHead>Предмет</TableHead>
+                          <TableHead>Викладач</TableHead>
+                          <TableHead className="w-[80px]">Кабінет</TableHead>
                         </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {scheduleData.map((lesson, index) => (
+                          <TableRow key={index}>
+                            <TableCell className="font-medium">{lesson.time}</TableCell>
+                            <TableCell>{lesson.subject}</TableCell>
+                            <TableCell>{lesson.teacher}</TableCell>
+                            <TableCell>{lesson.room}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  ) : (
+                    // Weekly schedule view
+                    <div className="divide-y">
+                      {Object.entries(weeklyScheduleData).map(([day, lessons]) => (
+                        <div key={day} className="p-4">
+                          <h3 className="text-lg font-medium mb-3">{day}</h3>
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead className="w-[100px]">Час</TableHead>
+                                <TableHead>Предмет</TableHead>
+                                <TableHead>Викладач</TableHead>
+                                <TableHead className="w-[80px]">Кабінет</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {lessons.map((lesson, index) => (
+                                <TableRow key={index}>
+                                  <TableCell className="font-medium">{lesson.time}</TableCell>
+                                  <TableCell>{lesson.subject}</TableCell>
+                                  <TableCell>{lesson.teacher}</TableCell>
+                                  <TableCell>{lesson.room}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </div>
                       ))}
-                    </TableBody>
-                  </Table>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ) : (
