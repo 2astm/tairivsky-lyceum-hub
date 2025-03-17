@@ -85,7 +85,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 md:py-6">
           <Link 
-            to="/" 
+            to="/home" 
             className="flex items-center space-x-2 text-2xl font-semibold"
             aria-label="Таїровський ліцей"
           >
@@ -126,6 +126,7 @@ const Header = () => {
                             'block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600',
                             location.pathname === subItem.path && 'bg-blue-50 text-blue-600'
                           )}
+                          onClick={() => setOpenDropdown(null)}
                         >
                           {subItem.name}
                         </Link>

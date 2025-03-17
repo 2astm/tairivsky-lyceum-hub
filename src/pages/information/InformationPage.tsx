@@ -14,6 +14,16 @@ const InformationPage = () => {
     navigate(`/information/${sectionId}`);
   };
 
+  // Group sections by category for better organization
+  const categorizedSections = {
+    enrollment: informationSections.filter(s => 
+      ['admission', 'evaluation', 'electronic-journal'].includes(s.id)),
+    development: informationSections.filter(s => 
+      ['extracurricular', 'nutrition', 'career-guidance', 'patriotic-education', 'self-government'].includes(s.id)),
+    rights: informationSections.filter(s => 
+      ['student-rights', 'parent-rights'].includes(s.id))
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
