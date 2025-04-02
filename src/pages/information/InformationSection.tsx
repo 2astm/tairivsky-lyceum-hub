@@ -59,7 +59,7 @@ const InformationSection = () => {
           
           <Alert className="mb-6 border-amber-300 bg-amber-50">
             <AlertTriangle className="h-5 w-5 text-amber-600" />
-            <AlertTitle className="text-amber-800">Тестові дані</AlertTitle>
+            <AlertTitle className="text-amber-800">Увага! Ця сторінка все ще має тестову інформацію та не є коректною!</AlertTitle>
             <AlertDescription className="text-amber-700">
               Ця сторінка містить тестову інформацію. Для отримання актуальної інформації, 
               будь ласка, відвідайте{' '}

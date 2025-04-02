@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { Card } from '@/components/ui/card';
 import { ShieldX, AlertTriangle, Phone } from 'lucide-react';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 const StopBullying = () => {
   return (
@@ -17,6 +18,14 @@ const StopBullying = () => {
             title="Стоп булінг"
             description="Запобігання та протидія булінгу в шкільному середовищі"
           />
+          
+          <Alert className="my-6 border-amber-300 bg-amber-50">
+            <AlertTriangle className="h-5 w-5 text-amber-600" />
+            <AlertTitle className="text-amber-800">Увага! Ця сторінка все ще має тестову інформацію та не є коректною!</AlertTitle>
+            <AlertDescription className="text-amber-700">
+              Інформація на цій сторінці може бути неточною або неповною. Для отримання актуальної інформації, будь ласка, зверніться до адміністрації ліцею.
+            </AlertDescription>
+          </Alert>
           
           <div className="prose prose-lg max-w-none mt-12">
             <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
