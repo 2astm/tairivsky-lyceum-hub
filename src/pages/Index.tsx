@@ -7,19 +7,8 @@ import Hero from '@/components/home/Hero';
 import QuickLinks from '@/components/home/QuickLinks';
 import NewsCard from '@/components/ui/NewsCard';
 import SectionHeading from '@/components/ui/SectionHeading';
-import { Button } from '@/components/ui/button';
-
-// Mock data for news
-const latestNews = [
-    {
-        id: '1',
-        title: 'Призові місця на Всеукраїнському колоквіумі',
-        excerpt: 'Наші учні здобули призові місця в обласному(заочному) етапі Всеукраїнського колоквіуму "Космос. Людина. Духовність". Вітаємо переможців та їхніх наставників!',
-        date: '06 березня 2025',
-        image: 'https://kucprppkmr.od.gov.ua/wp-content/uploads/2024/03/Ukrayinets-v-kosmosi_-SHavlovskyj-Vladyslav-Ruslanovych-Odeska-obl-1024x576.png',
-        category: 'Досягнення'
-    }
-];
+import {Button} from '@/components/ui/button';
+import {news as latestNews} from "@/data/news.ts";
 
 // Mock data for upcoming events
 const upcomingEvents = [
@@ -137,7 +126,8 @@ const Index = () => {
                                 Таїровський ліцей - це місце, де кожен учень може розкрити свій потенціал
                                 та отримати якісну освіту в дружньому та підтримуючому середовищі.
                             </p>
-                            <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                            <div
+                                className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
                                 <Link
                                     to="/information"
                                     className="px-6 py-3 rounded-lg bg-white text-blue-600 font-medium shadow-sm
@@ -153,13 +143,13 @@ const Index = () => {
                                     Зв'язатися з нами
                                 </a>
                             </div>
-                            
+
                             <div className="mt-8">
-                                <a 
+                                <a
                                     href="mailto:YevhenMolchaniuk@tairivsky-lyceum.od.ua?subject=Побажання стосовно нового сайту"
                                     className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-400 transition-colors"
                                 >
-                                    <MessageCircle className="h-4 w-4" />
+                                    <MessageCircle className="h-4 w-4"/>
                                     Залишити відгук про новий сайт
                                 </a>
                             </div>
