@@ -13,7 +13,7 @@ const navItems = [
       { name: 'Гуртки', path: '/information/extracurricular' },
       { name: 'Харчування', path: '/information/nutrition' },
       { name: 'Критерії оцінювання', path: '/information/evaluation' },
-      { name: 'Профорієнтація', path: '/information/career-guidance' },
+      { name: 'Профорієнтація', path: '/career-guidance' },
       { name: 'Патріотичне виховання', path: '/information/patriotic-education' },
       { name: 'Права учнів', path: '/information/student-rights' },
       { name: 'Права батьків', path: '/information/parent-rights' },
