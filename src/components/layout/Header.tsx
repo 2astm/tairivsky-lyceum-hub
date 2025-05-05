@@ -52,8 +52,14 @@ const Header = () => {
   const [overflowItems, setOverflowItems] = useState<typeof navItems>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
+  const navItemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const location = useLocation();
   const isMobile = useIsMobile();
+  
+  // Reset refs array when nav items change
+  useEffect(() => {
+    navItemsRef.current = navItemsRef.current.slice(0, navItems.length);
+  }, [navItems]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,6 +88,7 @@ const Header = () => {
 
   useEffect(() => {
     const calculateVisibleItems = () => {
+      // If mobile, show all items in mobile menu (no overflow)
       if (isMobile || !navRef.current) {
         setVisibleItems(navItems);
         setOverflowItems([]);
@@ -89,18 +96,32 @@ const Header = () => {
       }
 
       const navWidth = navRef.current.offsetWidth;
-      const logoWidth = 250; // Estimated width of the logo
-      const menuButtonWidth = 50; // Estimated width of the menu button
-      const itemPadding = 28; // Estimated padding for each item
-      const overflowButtonWidth = 50; // Width of the "more" button
-
-      let availableWidth = navWidth - logoWidth - menuButtonWidth - overflowButtonWidth;
+      const logoWidth = 250; // Estimated logo width
+      const menuButtonWidth = 50; // Estimated menu button width
+      const overflowButtonWidth = 50; // Width for the "more" button
+      const itemMargin = 4; // Small margin between items
+      
+      let availableWidth = navWidth - logoWidth - menuButtonWidth;
+      
+      // Reserve space for the overflow dropdown button
+      const moreButtonSpace = overflowButtonWidth + itemMargin;
+      availableWidth -= moreButtonSpace;
+      
       const visible: typeof navItems = [];
       const overflow: typeof navItems = [];
       
-      // Estimate width for each nav item
-      for (const item of navItems) {
-        const itemWidth = item.name.length * 10 + itemPadding; // Rough estimate of item width
+      // Get actual widths of each nav item
+      for (let i = 0; i < navItems.length; i++) {
+        const item = navItems[i];
+        const itemEl = navItemsRef.current[i];
+        
+        if (!itemEl) {
+          // If we can't measure the element, add it to visible items as fallback
+          visible.push(item);
+          continue;
+        }
+        
+        const itemWidth = itemEl.offsetWidth + itemMargin;
         
         if (availableWidth >= itemWidth) {
           visible.push(item);
@@ -109,31 +130,66 @@ const Header = () => {
           overflow.push(item);
         }
       }
+      
+      // If all items fit, we don't need the overflow button
+      // So we can redistribute that space
+      if (overflow.length === 0) {
+        availableWidth += moreButtonSpace;
+        
+        // Check if the last visible item that didn't fit now fits
+        if (visible.length < navItems.length) {
+          const lastItem = navItems[visible.length];
+          const lastItemEl = navItemsRef.current[visible.length];
+          
+          if (lastItemEl && lastItemEl.offsetWidth + itemMargin <= availableWidth) {
+            visible.push(lastItem);
+          } else {
+            overflow.push(lastItem);
+          }
+        }
+      }
 
       setVisibleItems(visible);
       setOverflowItems(overflow);
     };
 
-    calculateVisibleItems();
-    window.addEventListener('resize', calculateVisibleItems);
+    // Wait for elements to render before measuring
+    const timer = setTimeout(calculateVisibleItems, 0);
     
-    return () => {
-      window.removeEventListener('resize', calculateVisibleItems);
+    const handleResize = () => {
+      calculateVisibleItems();
     };
-  }, [isMobile]);
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isMobile, navItemsRef]);
 
   const toggleDropdown = (name: string) => {
     setOpenDropdown(prev => prev === name ? null : name);
   };
 
-  const renderNavItem = (item: typeof navItems[0], inOverflow = false) => {
+  const renderNavItem = (item: typeof navItems[0], inOverflow = false, index?: number) => {
+    // Create a ref for measuring the width of this item
+    const ref = (el: HTMLDivElement | null) => {
+      if (typeof index === 'number') {
+        navItemsRef.current[index] = el;
+      }
+    };
+    
     if (item.dropdown) {
       return (
-        <div key={item.name} className={inOverflow ? "" : "relative"} ref={!inOverflow ? dropdownRef : undefined}>
+        <div 
+          key={item.name} 
+          className={inOverflow ? "" : "relative"} 
+          ref={!inOverflow ? (typeof index === 'number' ? ref : dropdownRef) : undefined}
+        >
           <button
             onClick={() => toggleDropdown(item.name)}
             className={cn(
-              'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all',
+              'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap',
               openDropdown === item.name
                 ? 'text-blue-600 bg-blue-50'
                 : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50',
@@ -189,19 +245,20 @@ const Header = () => {
     }
     
     return (
-      <Link
-        key={item.path}
-        to={item.path}
-        className={cn(
-          'px-3 py-2 text-sm font-medium rounded-md transition-all',
-          location.pathname === item.path
-            ? 'text-blue-600 bg-blue-50'
-            : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50',
-          inOverflow && "block w-full text-left"
-        )}
-      >
-        {item.name}
-      </Link>
+      <div key={item.path} ref={typeof index === 'number' ? ref : undefined}>
+        <Link
+          to={item.path}
+          className={cn(
+            'px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap',
+            location.pathname === item.path
+              ? 'text-blue-600 bg-blue-50'
+              : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50',
+            inOverflow && "block w-full text-left"
+          )}
+        >
+          {item.name}
+        </Link>
+      </div>
     );
   };
 
@@ -227,8 +284,8 @@ const Header = () => {
             <span>Таїровський ліцей</span>
           </Link>
 
-          <div ref={navRef} className="hidden md:flex space-x-1 items-center">
-            {visibleItems.map((item) => renderNavItem(item))}
+          <div ref={navRef} className="hidden md:flex items-center space-x-1">
+            {visibleItems.map((item, index) => renderNavItem(item, false, index))}
 
             {overflowItems.length > 0 && (
               <DropdownMenu>
