@@ -43,8 +43,8 @@ const Contacts = () => {
                   <div>
                     <h3 className="text-lg font-medium text-gray-900">Адреса</h3>
                     <p className="mt-1">
-                      65015, Україна, Одеська область<br />
-                      смт Таїрове, вул. Шкільна, 3
+                      65496, Україна, Одеська область<br />
+                      с-ще Таїрове, вулиця Перемоги, 24
                     </p>
                   </div>
                 </div>
@@ -56,8 +56,7 @@ const Contacts = () => {
                   <div>
                     <h3 className="text-lg font-medium text-gray-900">Телефон</h3>
                     <p className="mt-1">
-                      +380 48 123 4567 (приймальня)<br />
-                      +380 48 123 4568 (директор)
+                      +380 98 811 2128 (директор)
                     </p>
                   </div>
                 </div>
@@ -69,8 +68,8 @@ const Contacts = () => {
                   <div>
                     <h3 className="text-lg font-medium text-gray-900">Email</h3>
                     <p className="mt-1">
-                      <a href="mailto:info@tairovskyj-liceum.od.ua" className="text-blue-600 hover:underline">
-                        info@tairovskyj-liceum.od.ua
+                      <a href="mailto:tairovo_2006@ukr.net" className="text-blue-600 hover:underline">
+                        tairovo_2006@ukr.net
                       </a>
                     </p>
                   </div>

@@ -4,7 +4,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import BackgroundGradient from '@/components/ui/BackgroundGradient';
-import { CheckCircle, Award, BookOpen, Users, School, PenTool } from 'lucide-react';
+import {CheckCircle, Award, BookOpen, Users, School, PenTool, AlertTriangle} from 'lucide-react';
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 
 const Information = () => {
   return (
@@ -28,6 +29,13 @@ const Information = () => {
         
         {/* Mission Section */}
         <section className="py-16 md:py-24">
+          <Alert className="my-6 border-amber-300 bg-amber-50">
+            <AlertTriangle className="h-5 w-5 text-amber-600" />
+            <AlertTitle className="text-amber-800">Увага! Ця сторінка все ще має тестову інформацію та не є коректною!</AlertTitle>
+            <AlertDescription className="text-amber-700">
+              Інформація на цій сторінці може бути неточною або неповною. Для отримання актуальної інформації, будь ласка, зверніться до адміністрації ліцею.
+            </AlertDescription>
+          </Alert>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>

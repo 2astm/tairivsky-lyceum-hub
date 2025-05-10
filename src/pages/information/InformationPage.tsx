@@ -6,6 +6,8 @@ import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { Card } from '@/components/ui/card';
 import { informationSections } from '@/data/informationSections';
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
+import {AlertTriangle} from "lucide-react";
 
 const InformationPage = () => {
   const navigate = useNavigate();
@@ -34,7 +36,14 @@ const InformationPage = () => {
             title="Інформація"
             description="Корисна інформація для учнів та батьків Таїровського ліцею"
           />
-          
+
+          <Alert className="my-6 border-amber-300 bg-amber-50">
+            <AlertTriangle className="h-5 w-5 text-amber-600" />
+            <AlertTitle className="text-amber-800">Увага! Ця сторінка все ще має тестову інформацію та не є коректною!</AlertTitle>
+            <AlertDescription className="text-amber-700">
+              Інформація на цій сторінці може бути неточною або неповною. Для отримання актуальної інформації, будь ласка, зверніться до адміністрації ліцею.
+            </AlertDescription>
+          </Alert>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {informationSections.map((section) => (
               <Card 

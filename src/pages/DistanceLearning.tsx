@@ -4,12 +4,14 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import BackgroundGradient from '@/components/ui/BackgroundGradient';
-import { Laptop, BookOpen, Video, FileText, Link as LinkIcon, Play } from 'lucide-react';
+import {Laptop, BookOpen, Video, FileText, Link as LinkIcon, Play, AlertTriangle} from 'lucide-react';
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 
 const DistanceLearning = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+
       
       <main className="flex-grow pt-16">
         {/* Hero Section */}
@@ -29,6 +31,13 @@ const DistanceLearning = () => {
         {/* Info Section */}
         <section className="py-16 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Alert className="my-6 border-amber-300 bg-amber-50">
+              <AlertTriangle className="h-5 w-5 text-amber-600" />
+              <AlertTitle className="text-amber-800">Увага! Ця сторінка все ще має тестову інформацію та не є коректною!</AlertTitle>
+              <AlertDescription className="text-amber-700">
+                Інформація на цій сторінці може бути неточною або неповною. Для отримання актуальної інформації, будь ласка, зверніться до адміністрації ліцею.
+              </AlertDescription>
+            </Alert>
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <SectionHeading 
@@ -143,76 +152,6 @@ const DistanceLearning = () => {
                   </div>
                 </a>
               ))}
-            </div>
-          </div>
-        </section>
-        
-        {/* Schedule Section */}
-        <section className="py-16 md:py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeading 
-              title="Розклад онлайн-занять"
-              description="Графік проведення онлайн-уроків для всіх класів"
-            />
-            
-            <div className="mt-12 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Клас
-                      </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Понеділок
-                      </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Вівторок
-                      </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Середа
-                      </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Четвер
-                      </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        П'ятниця
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {['5-А', '6-Б', '7-А', '8-В', '9-Б', '10-А', '11-Б'].map((className, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {className}
-                        </td>
-                        {[...Array(5)].map((_, dayIndex) => (
-                          <td key={dayIndex} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <a 
-                              href="#link-to-class-schedule" 
-                              className="text-blue-600 hover:text-blue-800 hover:underline"
-                            >
-                              Переглянути
-                            </a>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            
-            <div className="mt-8 text-center">
-              <a 
-                href="#download-schedule" 
-                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-              >
-                Завантажити повний розклад
-                <svg className="ml-2 -mr-1 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-              </a>
             </div>
           </div>
         </section>

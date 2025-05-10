@@ -16,12 +16,12 @@ const Preview = () => {
           description="Вибір версії сайту"
           align="center"
         />
-        
+
         <Alert className="my-6 border-amber-300 bg-amber-50">
           <AlertTriangle className="h-5 w-5 text-amber-600" />
-          <AlertTitle className="text-amber-800 font-semibold">Увага! Ця сторінка все ще має тестову інформацію та не є коректною!</AlertTitle>
+          <AlertTitle className="text-amber-800 font-semibold">Увага! Сайт у розробці</AlertTitle>
           <AlertDescription className="text-amber-700">
-            Нова версія сайту знаходиться в процесі розробки. Інформація на новому сайті 
+            Нова версія сайту знаходиться в процесі розробки. Інформація на новому сайті
             може бути неточною або неповною.
           </AlertDescription>
         </Alert>

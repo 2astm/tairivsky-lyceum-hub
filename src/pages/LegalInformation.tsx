@@ -5,30 +5,31 @@ import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card } from '@/components/ui/card';
-import { 
-  FileText, 
-  Book, 
-  Award, 
+import {
+  FileText,
+  Book,
+  Award,
   FileCheck,
-  Building, 
-  Users, 
-  GraduationCap, 
-  Map, 
-  UserCheck, 
-  Languages, 
-  Briefcase, 
-  Warehouse, 
-  ScrollText, 
-  Home, 
-  BarChart3, 
-  FileBarChart, 
-  UserPlus, 
-  Accessibility, 
-  DollarSign, 
-  ListChecks, 
-  ShieldAlert, 
-  FileQuestion 
+  Building,
+  Users,
+  GraduationCap,
+  Map,
+  UserCheck,
+  Languages,
+  Briefcase,
+  Warehouse,
+  ScrollText,
+  Home,
+  BarChart3,
+  FileBarChart,
+  UserPlus,
+  Accessibility,
+  DollarSign,
+  ListChecks,
+  ShieldAlert,
+  FileQuestion, AlertTriangle
 } from 'lucide-react';
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 
 // Legal information sections based on Ukrainian law
 const legalSections = [
@@ -235,7 +236,14 @@ const LegalInformation = () => {
             title="Інформаційна відкритість та доступність"
             description="Згідно статті 30 Закону України «Про освіту» та принципів прозорості у діяльності закладів освіти"
           />
-          
+
+          <Alert className="my-6 border-amber-300 bg-amber-50">
+            <AlertTriangle className="h-5 w-5 text-amber-600" />
+            <AlertTitle className="text-amber-800">Увага! Ця сторінка все ще має тестову інформацію та не є коректною!</AlertTitle>
+            <AlertDescription className="text-amber-700">
+              Інформація на цій сторінці може бути неточною або неповною. Для отримання актуальної інформації, будь ласка, зверніться до адміністрації ліцею.
+            </AlertDescription>
+          </Alert>
           <div className="mb-8 flex flex-wrap gap-2 justify-center">
             {categories.map(category => (
               <button

@@ -8,9 +8,10 @@ import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@
 import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Calendar as CalendarIcon, Clock, Filter, Download, Printer, Search } from 'lucide-react';
+import {Calendar as CalendarIcon, Clock, Filter, Download, Printer, Search, AlertTriangle} from 'lucide-react';
 import { add, format, startOfWeek, endOfWeek } from 'date-fns';
 import { uk } from 'date-fns/locale';
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 
 const Schedule = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -91,6 +92,13 @@ const Schedule = () => {
         {/* Schedule Filter Section */}
         <section className="py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Alert className="my-6 border-amber-300 bg-amber-50">
+              <AlertTriangle className="h-5 w-5 text-amber-600" />
+              <AlertTitle className="text-amber-800">Увага! Ця сторінка все ще має тестову інформацію та не є коректною!</AlertTitle>
+              <AlertDescription className="text-amber-700">
+                Інформація на цій сторінці може бути неточною або неповною. Для отримання актуальної інформації, будь ласка, зверніться до адміністрації ліцею.
+              </AlertDescription>
+            </Alert>
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
               <div className="flex flex-col md:flex-row md:items-start gap-8">
                 {/* Date Selector */}
