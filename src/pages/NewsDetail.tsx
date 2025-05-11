@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Tag, X, Expand } from 'lucide-react';
+import { ArrowLeft, Calendar, Tag, X, ChevronLeft, ChevronRight, Images } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -22,13 +22,30 @@ const NewsDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [expandedImageIndex, setExpandedImageIndex] = useState<number | null>(null);
+  const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   
   // Find the specific news item
   const newsItem = news.find(item => item.id === id);
   
   // Determine which images to show (either from images array or single image)
   const images = newsItem?.images?.length ? newsItem.images : (newsItem?.image ? [newsItem.image] : []);
+
+  // Auto-rotate images
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    
+    if (autoplayEnabled && images.length > 1) {
+      interval = setInterval(() => {
+        setCurrentImageIndex(prev => (prev + 1) % images.length);
+      }, 5000);
+    }
+    
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [autoplayEnabled, images.length]);
   
   useEffect(() => {
     if (!newsItem) {
@@ -39,6 +56,8 @@ const NewsDetail: React.FC = () => {
       });
       navigate('/news');
     }
+    // Reset current image index when news changes
+    setCurrentImageIndex(0);
     // Scroll to top when news detail page loads
     window.scrollTo(0, 0);
   }, [id, newsItem, toast, navigate]);
@@ -64,24 +83,54 @@ const NewsDetail: React.FC = () => {
             
             {images.length > 0 && (
               <div className="mb-8">
-                {/* Image Gallery Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-4">
-                  {images.map((image, index) => (
+                <div className="relative">
+                  {images.length === 1 ? (
                     <div 
-                      key={index} 
-                      className="relative aspect-square rounded-md overflow-hidden cursor-pointer group"
-                      onClick={() => setExpandedImageIndex(index)}
+                      className="w-full h-[400px] rounded-xl overflow-hidden cursor-pointer"
+                      onClick={() => setExpandedImageIndex(0)}
                     >
                       <img
-                        src={image}
-                        alt={`${newsItem.title} - зображення ${index + 1}`}
+                        src={images[0]}
+                        alt={newsItem.title}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-200 flex items-center justify-center">
-                        <Expand className="text-white opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6" />
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <Carousel className="w-full">
+                        <CarouselContent>
+                          {images.map((image, index) => (
+                            <CarouselItem key={index}>
+                              <div 
+                                className="w-full h-[400px] rounded-xl overflow-hidden cursor-pointer"
+                                onClick={() => setExpandedImageIndex(index)}
+                              >
+                                <img
+                                  src={image}
+                                  alt={`${newsItem.title} - зображення ${index + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </CarouselItem>
+                          ))}
+                        </CarouselContent>
+                        <CarouselPrevious 
+                          className="-left-4 bg-white/80 hover:bg-white" 
+                          onClick={() => setAutoplayEnabled(false)}
+                        />
+                        <CarouselNext 
+                          className="-right-4 bg-white/80 hover:bg-white"
+                          onClick={() => setAutoplayEnabled(false)}
+                        />
+                      </Carousel>
+
+                      {/* Multi-image indicator */}
+                      <div className="absolute top-3 right-3 bg-black/70 text-white text-xs font-semibold px-2 py-1 rounded flex items-center">
+                        <Images className="h-4 w-4 mr-1" />
+                        <span>{currentImageIndex + 1} / {images.length}</span>
                       </div>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             )}
