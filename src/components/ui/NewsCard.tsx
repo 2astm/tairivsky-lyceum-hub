@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 export interface NewsItem {
   id: string;
   title: string;
-  excerpt: string;
+  excerpt?: string;
   date: string;
   image?: string;
   images?: string[];  // Added support for multiple images
