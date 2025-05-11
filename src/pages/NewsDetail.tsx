@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Tag, X, ChevronLeft, ChevronRight, Images } from 'lucide-react';
 import Header from '@/components/layout/Header';
@@ -25,6 +25,7 @@ const NewsDetail: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [expandedImageIndex, setExpandedImageIndex] = useState<number | null>(null);
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+  const carouselRef = useRef<any>(null);
   
   // Find the specific news item
   const newsItem = news.find(item => item.id === id);
@@ -39,6 +40,10 @@ const NewsDetail: React.FC = () => {
     if (autoplayEnabled && images.length > 1) {
       interval = setInterval(() => {
         setCurrentImageIndex(prev => (prev + 1) % images.length);
+        // If we have access to the carousel API, scroll to the next item
+        if (carouselRef.current?.scrollNext) {
+          carouselRef.current.scrollNext();
+        }
       }, 5000);
     }
     
@@ -61,6 +66,34 @@ const NewsDetail: React.FC = () => {
     // Scroll to top when news detail page loads
     window.scrollTo(0, 0);
   }, [id, newsItem, toast, navigate]);
+
+  // Handle carousel API events
+  const handleCarouselApi = (api: any) => {
+    carouselRef.current = api;
+    
+    if (api) {
+      api.on('select', () => {
+        // Update currentImageIndex when slide changes
+        const selectedIndex = api.selectedScrollSnap();
+        setCurrentImageIndex(selectedIndex);
+      });
+    }
+  };
+
+  // Handle next/prev clicks on normal carousel
+  const handlePrevClick = () => {
+    setAutoplayEnabled(false);
+    if (carouselRef.current?.scrollPrev) {
+      carouselRef.current.scrollPrev();
+    }
+  };
+
+  const handleNextClick = () => {
+    setAutoplayEnabled(false);
+    if (carouselRef.current?.scrollNext) {
+      carouselRef.current.scrollNext();
+    }
+  };
   
   if (!newsItem) return null;
   
@@ -97,7 +130,10 @@ const NewsDetail: React.FC = () => {
                     </div>
                   ) : (
                     <div className="relative">
-                      <Carousel className="w-full">
+                      <Carousel 
+                        className="w-full"
+                        setApi={handleCarouselApi}
+                      >
                         <CarouselContent>
                           {images.map((image, index) => (
                             <CarouselItem key={index}>
@@ -115,12 +151,12 @@ const NewsDetail: React.FC = () => {
                           ))}
                         </CarouselContent>
                         <CarouselPrevious 
-                          className="-left-4 bg-white/80 hover:bg-white" 
-                          onClick={() => setAutoplayEnabled(false)}
+                          className="-left-6 bg-white/80 hover:bg-white h-12 w-12" 
+                          onClick={handlePrevClick}
                         />
                         <CarouselNext 
-                          className="-right-4 bg-white/80 hover:bg-white"
-                          onClick={() => setAutoplayEnabled(false)}
+                          className="-right-6 bg-white/80 hover:bg-white h-12 w-12"
+                          onClick={handleNextClick}
                         />
                       </Carousel>
 
@@ -147,7 +183,10 @@ const NewsDetail: React.FC = () => {
                     <X className="h-5 w-5" />
                   </Button>
                   
-                  <Carousel className="w-full">
+                  <Carousel 
+                    className="w-full"
+                    opts={{ startIndex: expandedImageIndex }}
+                  >
                     <CarouselContent>
                       {images.map((image, index) => (
                         <CarouselItem key={index}>
@@ -161,8 +200,8 @@ const NewsDetail: React.FC = () => {
                         </CarouselItem>
                       ))}
                     </CarouselContent>
-                    <CarouselPrevious className="bg-white/80 hover:bg-white" />
-                    <CarouselNext className="bg-white/80 hover:bg-white" />
+                    <CarouselPrevious className="bg-white/80 hover:bg-white h-12 w-12" />
+                    <CarouselNext className="bg-white/80 hover:bg-white h-12 w-12" />
                   </Carousel>
                   
                   <div className="text-white text-center mt-4">
