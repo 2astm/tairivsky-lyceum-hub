@@ -1,13 +1,20 @@
 
-import React, { useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Tag } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Calendar, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { NewsItem } from '@/components/ui/NewsCard';
 import { useToast } from '@/components/ui/use-toast';
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from '@/components/ui/carousel';
 
 import { news } from '@/data/news';
 
@@ -15,9 +22,13 @@ const NewsDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   // Find the specific news item
   const newsItem = news.find(item => item.id === id);
+  
+  // Determine which images to show (either from images array or single image)
+  const images = newsItem?.images?.length ? newsItem.images : (newsItem?.image ? [newsItem.image] : []);
   
   useEffect(() => {
     if (!newsItem) {
@@ -28,6 +39,8 @@ const NewsDetail: React.FC = () => {
       });
       navigate('/news');
     }
+    // Reset current image index when news changes
+    setCurrentImageIndex(0);
     // Scroll to top when news detail page loads
     window.scrollTo(0, 0);
   }, [id, newsItem, toast, navigate]);
@@ -51,13 +64,35 @@ const NewsDetail: React.FC = () => {
               Назад до новин
             </Button>
             
-            {newsItem.image && (
-              <div className="w-full h-[400px] rounded-xl overflow-hidden mb-8">
-                <img
-                  src={newsItem.image}
-                  alt={newsItem.title}
-                  className="w-full h-full object-cover"
-                />
+            {images.length > 0 && (
+              <div className="mb-8">
+                {images.length === 1 ? (
+                  <div className="w-full h-[400px] rounded-xl overflow-hidden">
+                    <img
+                      src={images[0]}
+                      alt={newsItem.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {images.map((image, index) => (
+                        <CarouselItem key={index}>
+                          <div className="w-full h-[400px] rounded-xl overflow-hidden">
+                            <img
+                              src={image}
+                              alt={`${newsItem.title} - зображення ${index + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="-left-4 bg-white/80 hover:bg-white" />
+                    <CarouselNext className="-right-4 bg-white/80 hover:bg-white" />
+                  </Carousel>
+                )}
               </div>
             )}
             
