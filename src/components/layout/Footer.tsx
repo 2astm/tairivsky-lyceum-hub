@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, MapPin, Mail, Clock, MessageCircle } from 'lucide-react';
+import {SchoolInfo} from "@/data/school-info.ts";
 
 const Footer = () => {
   return (
@@ -99,20 +100,23 @@ const Footer = () => {
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 text-blue-500 mr-3 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-600">
-                  вул. Шкільна 1, смт. Таїрове, Одеська область, 65496
+                  {SchoolInfo.address}
                 </span>
               </li>
-              <li className="flex items-center">
-                <Phone className="w-5 h-5 text-blue-500 mr-3 flex-shrink-0" />
-                <span className="text-gray-600">+380 (48) 123-45-67</span>
-              </li>
-              <li className="flex items-center">
-                <Mail className="w-5 h-5 text-blue-500 mr-3 flex-shrink-0" />
-                <span className="text-gray-600">info@tairivsky-lyceum.com</span>
-              </li>
+              {SchoolInfo.phones.map((phone) =>
+                  <li key={phone} className="flex items-center">
+                    <Phone className="w-5 h-5 text-blue-500 mr-3 flex-shrink-0" />
+                    <span className="text-gray-600">{phone}</span>
+                  </li>
+               )}
+              {SchoolInfo.emails.map((email) =>
+                  <li className="flex items-center">
+                    <Mail className="w-5 h-5 text-blue-500 mr-3 flex-shrink-0" />
+                    <span className="text-gray-600">{email}</span>
+                  </li>)}
               <li className="flex items-center">
                 <Clock className="w-5 h-5 text-blue-500 mr-3 flex-shrink-0" />
-                <span className="text-gray-600">Пн-Пт: 8:00 - 17:00</span>
+                <span className="text-gray-600">{SchoolInfo.workTime}</span>
               </li>
             </ul>
           </div>
