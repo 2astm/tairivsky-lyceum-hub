@@ -26,6 +26,7 @@ const NewsDetail: React.FC = () => {
   const [expandedImageIndex, setExpandedImageIndex] = useState<number | null>(null);
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   const carouselRef = useRef<any>(null);
+  const expandedCarouselRef = useRef<any>(null);
   
   // Find the specific news item
   const newsItem = news.find(item => item.id === id);
@@ -76,6 +77,19 @@ const NewsDetail: React.FC = () => {
         // Update currentImageIndex when slide changes
         const selectedIndex = api.selectedScrollSnap();
         setCurrentImageIndex(selectedIndex);
+      });
+    }
+  };
+
+  // Handle expanded carousel API events
+  const handleExpandedCarouselApi = (api: any) => {
+    expandedCarouselRef.current = api;
+    
+    if (api) {
+      api.on('select', () => {
+        // Update expandedImageIndex when slide changes in expanded view
+        const selectedIndex = api.selectedScrollSnap();
+        setExpandedImageIndex(selectedIndex);
       });
     }
   };
@@ -186,6 +200,7 @@ const NewsDetail: React.FC = () => {
                   <Carousel 
                     className="w-full"
                     opts={{ startIndex: expandedImageIndex }}
+                    setApi={handleExpandedCarouselApi}
                   >
                     <CarouselContent>
                       {images.map((image, index) => (
@@ -205,7 +220,7 @@ const NewsDetail: React.FC = () => {
                   </Carousel>
                   
                   <div className="text-white text-center mt-4">
-                    {expandedImageIndex + 1} / {images.length}
+                    {(expandedImageIndex !== null ? expandedImageIndex : 0) + 1} / {images.length}
                   </div>
                 </div>
               </div>
