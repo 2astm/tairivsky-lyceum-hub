@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Calendar, Tag, X, Expand } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ const NewsDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [expandedImageIndex, setExpandedImageIndex] = useState<number | null>(null);
   
   // Find the specific news item
   const newsItem = news.find(item => item.id === id);
@@ -39,8 +39,6 @@ const NewsDetail: React.FC = () => {
       });
       navigate('/news');
     }
-    // Reset current image index when news changes
-    setCurrentImageIndex(0);
     // Scroll to top when news detail page loads
     window.scrollTo(0, 0);
   }, [id, newsItem, toast, navigate]);
@@ -66,33 +64,62 @@ const NewsDetail: React.FC = () => {
             
             {images.length > 0 && (
               <div className="mb-8">
-                {images.length === 1 ? (
-                  <div className="w-full h-[400px] rounded-xl overflow-hidden">
-                    <img
-                      src={images[0]}
-                      alt={newsItem.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ) : (
+                {/* Image Gallery Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-4">
+                  {images.map((image, index) => (
+                    <div 
+                      key={index} 
+                      className="relative aspect-square rounded-md overflow-hidden cursor-pointer group"
+                      onClick={() => setExpandedImageIndex(index)}
+                    >
+                      <img
+                        src={image}
+                        alt={`${newsItem.title} - зображення ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-200 flex items-center justify-center">
+                        <Expand className="text-white opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Modal for expanded image */}
+            {expandedImageIndex !== null && (
+              <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+                <div className="relative max-w-5xl w-full">
+                  <Button 
+                    className="absolute right-0 top-0 z-10 m-2 rounded-full bg-black/50 text-white hover:bg-black/70" 
+                    size="icon"
+                    onClick={() => setExpandedImageIndex(null)}
+                  >
+                    <X className="h-5 w-5" />
+                  </Button>
+                  
                   <Carousel className="w-full">
                     <CarouselContent>
                       {images.map((image, index) => (
                         <CarouselItem key={index}>
-                          <div className="w-full h-[400px] rounded-xl overflow-hidden">
+                          <div className="flex items-center justify-center">
                             <img
                               src={image}
                               alt={`${newsItem.title} - зображення ${index + 1}`}
-                              className="w-full h-full object-cover"
+                              className="max-h-[80vh] object-contain"
                             />
                           </div>
                         </CarouselItem>
                       ))}
                     </CarouselContent>
-                    <CarouselPrevious className="-left-4 bg-white/80 hover:bg-white" />
-                    <CarouselNext className="-right-4 bg-white/80 hover:bg-white" />
+                    <CarouselPrevious className="bg-white/80 hover:bg-white" />
+                    <CarouselNext className="bg-white/80 hover:bg-white" />
                   </Carousel>
-                )}
+                  
+                  <div className="text-white text-center mt-4">
+                    {expandedImageIndex + 1} / {images.length}
+                  </div>
+                </div>
               </div>
             )}
             
