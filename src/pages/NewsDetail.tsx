@@ -197,12 +197,17 @@ const NewsDetail: React.FC = () => {
                     <X className="h-5 w-5" />
                   </Button>
                   
+<<<<<<< Updated upstream
                   <Carousel 
                     className="w-full"
                     opts={{ startIndex: expandedImageIndex }}
                     setApi={handleExpandedCarouselApi}
                   >
                     <CarouselContent>
+=======
+                  <Carousel className="w-full">
+                    <CarouselContent tabIndex={expandedImageIndex}>
+>>>>>>> Stashed changes
                       {images.map((image, index) => (
                         <CarouselItem key={index}>
                           <div className="flex items-center justify-center">
