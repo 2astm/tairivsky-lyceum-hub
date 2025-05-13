@@ -10,17 +10,7 @@ import NewsCard from '@/components/ui/NewsCard';
 import SectionHeading from '@/components/ui/SectionHeading';
 import {Button} from '@/components/ui/button';
 import {news as latestNews} from "@/data/news.ts";
-
-// Mock data for upcoming events
-const upcomingEvents = [
-    {
-        id: '1',
-        title: 'Міжнародний жіночий день',
-        date: '8 вересня 2025',
-        time: '18:00',
-        location: 'Актова зала'
-    }
-];
+import {upcomingEvents} from "@/data/upcoming-events.ts";
 
 const Index = () => {
     return (
