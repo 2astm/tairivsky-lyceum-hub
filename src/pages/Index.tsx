@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {CalendarIcon, MapPinIcon, Clock, MessageCircle, ExternalLink, Link as LinkIcon} from 'lucide-react';
@@ -20,25 +19,27 @@ const Index = () => {
             {/* Mental Health Banner - positioned between Header and Hero */}
             <div className="bg-purple-100 py-4 shadow-md border-y border-purple-200 mt-28">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <a 
-                        href="https://howareu.com" 
-                        target="_blank" 
+                    <a
+                        href="https://howareu.com"
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-3 group"
                     >
                         <div className="flex items-center">
-                            <img 
-                                src="/lovable-uploads/76851caa-aa48-4801-9c98-32eeac30581c.png" 
-                                alt="Піклуватися про ментальне здоров'я" 
+                            <img
+                                src="/lovable-uploads/76851caa-aa48-4801-9c98-32eeac30581c.png"
+                                alt="Піклуватися про ментальне здоров'я"
                                 className="w-16 h-16 md:w-24 md:h-24 object-contain"
                             />
                             <div className="ml-4">
                                 <p className="text-gray-800 font-medium text-sm md:text-base">
-                                    Піклуватися про ментальне здоров'я із <span className="font-bold text-purple-700">ТИ ЯК?</span> на howareu.com
+                                    Піклуватися про ментальне здоров'я із <span className="font-bold text-purple-700">ТИ ЯК?</span> на
+                                    howareu.com
                                 </p>
-                                <div className="flex items-center text-purple-600 font-semibold text-xs md:text-sm mt-1">
+                                <div
+                                    className="flex items-center text-purple-600 font-semibold text-xs md:text-sm mt-1">
                                     <span>Дізнатися більше</span>
-                                    <ExternalLink className="w-3 h-3 ml-1" />
+                                    <ExternalLink className="w-3 h-3 ml-1"/>
                                 </div>
                             </div>
                         </div>
@@ -97,8 +98,15 @@ const Index = () => {
                                             className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-4">
                                             <CalendarIcon className="w-6 h-6"/>
                                         </div>
-                                        <div>
-                                            <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">{event.title}</h3>
+                                        <div style={{
+                                            maxWidth: '250px', // Обмежує ширину елемента
+                                        }}>
+                                            <h3 className="text-lg font-semibold text-gray-900"
+                                                style={{
+                                                    wordWrap: 'break-word', // Розрив слів для довгого тексту
+                                                    whiteSpace: 'normal', // Дозволяє перенесення тексту
+                                            }}>
+                                                {event.title}</h3>
                                             <p className="text-blue-600">{event.date}</p>
                                         </div>
                                     </div>
@@ -114,14 +122,14 @@ const Index = () => {
                                             <div className="flex items-start text-gray-600">
                                                 <MapPinIcon className="w-4 h-4 mr-2 mt-1 flex-shrink-0"/>
                                                 {event.location.startsWith('http') ? (
-                                                    <a 
-                                                        href={event.location} 
-                                                        target="_blank" 
+                                                    <a
+                                                        href={event.location}
+                                                        target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="text-blue-500 hover:text-blue-700 flex items-center break-words"
                                                     >
                                                         <span className="mr-1 break-words">Онлайн трансляція</span>
-                                                        <LinkIcon className="w-3 h-3 flex-shrink-0" />
+                                                        <LinkIcon className="w-3 h-3 flex-shrink-0"/>
                                                     </a>
                                                 ) : (
                                                     <span>{event.location}</span>
