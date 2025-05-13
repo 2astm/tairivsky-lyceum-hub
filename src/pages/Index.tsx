@@ -17,7 +17,7 @@ const Index = () => {
             <Header/>
 
             {/* Mental Health Banner - positioned between Header and Hero */}
-            <div className="bg-purple-100 py-4 shadow-md border-y border-purple-200 mt-20">
+            <div className="bg-purple-100 py-4 shadow-md border-y border-purple-200 mt-28">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <a 
                         href="https://howareu.com" 
@@ -127,7 +127,7 @@ const Index = () => {
                   bg-gray-50 text-gray-800 font-medium border border-gray-200
                   hover:bg-gray-100 transition-all duration-300"
                             >
-                                Переглянути ��озклад
+                                Переглянути розклад
                             </Link>
                         </div>
                     </div>
