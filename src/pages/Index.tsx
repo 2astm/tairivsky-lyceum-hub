@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {CalendarIcon, MapPinIcon, Clock, MessageCircle, ExternalLink} from 'lucide-react';
@@ -17,38 +16,37 @@ const Index = () => {
         <div className="min-h-screen flex flex-col">
             <Header/>
 
-            <main className="flex-grow">
-                <Hero/>
-
-                {/* Mental Health Banner moved here - after Hero, before QuickLinks */}
-                <div className="bg-purple-100 py-4 shadow-md border-y border-purple-200">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <a 
-                            href="https://howareu.com" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-3 group"
-                        >
-                            <div className="flex items-center">
-                                <img 
-                                    src="/lovable-uploads/76851caa-aa48-4801-9c98-32eeac30581c.png" 
-                                    alt="Піклуватися про ментальне здоров'я" 
-                                    className="w-16 h-16 md:w-24 md:h-24 object-contain"
-                                />
-                                <div className="ml-4">
-                                    <p className="text-gray-800 font-medium text-sm md:text-base">
-                                        Піклуватися про ментальне здоров'я із <span className="font-bold text-purple-700">ТИ ЯК?</span> на howareu.com
-                                    </p>
-                                    <div className="flex items-center text-purple-600 font-semibold text-xs md:text-sm mt-1">
-                                        <span>Дізнатися більше</span>
-                                        <ExternalLink className="w-3 h-3 ml-1" />
-                                    </div>
+            {/* Mental Health Banner - positioned between Header and Hero */}
+            <div className="bg-purple-100 py-4 shadow-md border-y border-purple-200 mt-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <a 
+                        href="https://howareu.com" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-3 group"
+                    >
+                        <div className="flex items-center">
+                            <img 
+                                src="/lovable-uploads/76851caa-aa48-4801-9c98-32eeac30581c.png" 
+                                alt="Піклуватися про ментальне здоров'я" 
+                                className="w-16 h-16 md:w-24 md:h-24 object-contain"
+                            />
+                            <div className="ml-4">
+                                <p className="text-gray-800 font-medium text-sm md:text-base">
+                                    Піклуватися про ментальне здоров'я із <span className="font-bold text-purple-700">ТИ ЯК?</span> на howareu.com
+                                </p>
+                                <div className="flex items-center text-purple-600 font-semibold text-xs md:text-sm mt-1">
+                                    <span>Дізнатися більше</span>
+                                    <ExternalLink className="w-3 h-3 ml-1" />
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
+            </div>
 
+            <main className="flex-grow">
+                <Hero/>
                 <QuickLinks/>
 
                 {/* Latest News Section */}
@@ -129,7 +127,7 @@ const Index = () => {
                   bg-gray-50 text-gray-800 font-medium border border-gray-200
                   hover:bg-gray-100 transition-all duration-300"
                             >
-                                Переглянути розклад
+                                Переглянути ��озклад
                             </Link>
                         </div>
                     </div>

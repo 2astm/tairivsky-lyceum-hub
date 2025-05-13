@@ -11,7 +11,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <BackgroundGradient className="pt-20 md:pt-32 pb-16 md:pb-24">
+    <BackgroundGradient className="pt-10 md:pt-20 pb-16 md:pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="text-center md:text-left animate-fade-up">
