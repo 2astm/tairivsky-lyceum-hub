@@ -29,7 +29,7 @@ const Index = () => {
 
             <main className="flex-grow">
                 {/* Mental Health Banner */}
-                <div className="bg-pink-50 py-4">
+                <div className="bg-purple-100 py-4 shadow-md relative z-10 border-b border-purple-200">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <a 
                             href="https://howareu.com" 
@@ -45,9 +45,9 @@ const Index = () => {
                                 />
                                 <div className="ml-4">
                                     <p className="text-gray-800 font-medium text-sm md:text-base">
-                                        Піклуватися про ментальне здоров'я із <span className="font-bold">ТИ ЯК?</span> на howareu.com
+                                        Піклуватися про ментальне здоров'я із <span className="font-bold text-purple-700">ТИ ЯК?</span> на howareu.com
                                     </p>
-                                    <div className="flex items-center text-pink-500 text-xs md:text-sm mt-1">
+                                    <div className="flex items-center text-purple-600 font-semibold text-xs md:text-sm mt-1">
                                         <span>Дізнатися більше</span>
                                         <ExternalLink className="w-3 h-3 ml-1" />
                                     </div>
