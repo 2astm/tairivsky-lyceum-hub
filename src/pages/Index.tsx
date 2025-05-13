@@ -1,6 +1,7 @@
+
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {CalendarIcon, MapPinIcon, Clock, MessageCircle} from 'lucide-react';
+import {CalendarIcon, MapPinIcon, Clock, MessageCircle, ExternalLink} from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
@@ -27,6 +28,35 @@ const Index = () => {
             <Header/>
 
             <main className="flex-grow">
+                {/* Mental Health Banner */}
+                <div className="bg-pink-50 py-4">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <a 
+                            href="https://howareu.com" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-3 group"
+                        >
+                            <div className="flex items-center">
+                                <img 
+                                    src="/lovable-uploads/76851caa-aa48-4801-9c98-32eeac30581c.png" 
+                                    alt="Піклуватися про ментальне здоров'я" 
+                                    className="w-16 h-16 md:w-24 md:h-24 object-contain"
+                                />
+                                <div className="ml-4">
+                                    <p className="text-gray-800 font-medium text-sm md:text-base">
+                                        Піклуватися про ментальне здоров'я із <span className="font-bold">ТИ ЯК?</span> на howareu.com
+                                    </p>
+                                    <div className="flex items-center text-pink-500 text-xs md:text-sm mt-1">
+                                        <span>Дізнатися більше</span>
+                                        <ExternalLink className="w-3 h-3 ml-1" />
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
                 <Hero/>
 
                 <QuickLinks/>
