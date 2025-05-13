@@ -1,6 +1,7 @@
+
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {CalendarIcon, MapPinIcon, Clock, MessageCircle, ExternalLink} from 'lucide-react';
+import {CalendarIcon, MapPinIcon, Clock, MessageCircle, ExternalLink, Link as LinkIcon} from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
@@ -97,7 +98,7 @@ const Index = () => {
                                             <CalendarIcon className="w-6 h-6"/>
                                         </div>
                                         <div>
-                                            <h3 className="text-lg font-semibold text-gray-900">{event.title}</h3>
+                                            <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">{event.title}</h3>
                                             <p className="text-blue-600">{event.date}</p>
                                         </div>
                                     </div>
@@ -110,9 +111,21 @@ const Index = () => {
                                             </div>
                                         )}
                                         {event.location && (
-                                            <div className="flex items-center text-gray-600">
-                                                <MapPinIcon className="w-4 h-4 mr-2"/>
-                                                <span>{event.location}</span>
+                                            <div className="flex items-start text-gray-600">
+                                                <MapPinIcon className="w-4 h-4 mr-2 mt-1 flex-shrink-0"/>
+                                                {event.location.startsWith('http') ? (
+                                                    <a 
+                                                        href={event.location} 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer"
+                                                        className="text-blue-500 hover:text-blue-700 flex items-center break-words"
+                                                    >
+                                                        <span className="mr-1 break-words">Онлайн трансляція</span>
+                                                        <LinkIcon className="w-3 h-3 flex-shrink-0" />
+                                                    </a>
+                                                ) : (
+                                                    <span>{event.location}</span>
+                                                )}
                                             </div>
                                         )}
                                     </div>
