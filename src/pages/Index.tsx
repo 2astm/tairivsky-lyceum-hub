@@ -28,8 +28,10 @@ const Index = () => {
             <Header/>
 
             <main className="flex-grow">
-                {/* Mental Health Banner */}
-                <div className="bg-purple-100 py-4 shadow-md relative z-10 border-b border-purple-200">
+                <Hero/>
+
+                {/* Mental Health Banner moved here - after Hero, before QuickLinks */}
+                <div className="bg-purple-100 py-4 shadow-md border-y border-purple-200">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <a 
                             href="https://howareu.com" 
@@ -56,8 +58,6 @@ const Index = () => {
                         </a>
                     </div>
                 </div>
-
-                <Hero/>
 
                 <QuickLinks/>
 
