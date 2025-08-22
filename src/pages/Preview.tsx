@@ -74,7 +74,7 @@ const Preview = () => {
         <div className="mt-6 flex justify-center">
           <div className="bg-blue-50 p-4 rounded-lg text-center w-full">
             <p className="text-blue-700 text-sm">
-              © 2024 Таїровський ліцей. Усі права захищені.
+              © 2025 Таїровський ліцей. Усі права захищені.
             </p>
           </div>
         </div>
