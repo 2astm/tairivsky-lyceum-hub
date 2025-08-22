@@ -128,13 +128,12 @@ const LegalInformation = () => {
                                             <p className="text-gray-700">{section.content}</p>
                                             {section.documents && section.documents.length > 0 && (
                                                 <div className="mt-6">
-                                                    <h4 className="text-sm font-medium text-gray-900 mb-3">Документи для завантаження:</h4>
+                                                    <h4 className="text-sm font-medium text-gray-900 mb-3">Документи:</h4>
                                                     <div className="flex flex-col space-y-3">
                                                         {section.documents.map((document, docIndex) => (
                                                             <a
                                                                 key={docIndex}
                                                                 href={document.url}
-                                                                download
                                                                 className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors group"
                                                             >
                                                                 <div className="flex items-center">
