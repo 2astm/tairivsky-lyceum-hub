@@ -142,7 +142,7 @@ const LegalInformation = () => {
                                                                     <span className="text-blue-900 font-medium">{document.label}</span>
                                                                 </div>
                                                                 <span className="text-xs text-blue-600 uppercase bg-blue-200 px-2 py-1 rounded">
-                                                                    {document.type || 'PDF'}
+                                                                    {document.type}
                                                                 </span>
                                                             </a>
                                                         ))}
