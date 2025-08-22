@@ -112,19 +112,33 @@ const InformationSection = () => {
             ))}
           </Card>
           
-          {section.hasPdf && (
+          {section.documents && section.documents.length > 0 && (
             <Card className="p-6 mt-6 bg-blue-50">
-              <div className="flex items-center">
+              <div className="flex items-center mb-4">
                 <FileText className="h-8 w-8 text-blue-600 mr-4" />
                 <div>
                   <h3 className="font-medium text-blue-900">Завантажити документи</h3>
-                  <p className="text-sm text-blue-700 mb-3">Ви можете завантажити необхідні документи нижче</p>
+                  <p className="text-sm text-blue-700">Ви можете завантажити необхідні документи нижче</p>
                 </div>
               </div>
-              <Button className="mt-2" variant="default">
-                <Download className="mr-2 h-4 w-4" />
-                {section.pdfLabel}
-              </Button>
+              <div className="grid gap-3">
+                {section.documents.map((document, index) => (
+                  <a
+                    key={index}
+                    href={document.url}
+                    download
+                    className="inline-flex items-center justify-between p-3 bg-white rounded-md border border-blue-200 hover:bg-blue-50 transition-colors group"
+                  >
+                    <div className="flex items-center">
+                      <Download className="mr-3 h-4 w-4 text-blue-600" />
+                      <span className="text-blue-900 font-medium">{document.label}</span>
+                    </div>
+                    <span className="text-xs text-blue-600 uppercase bg-blue-100 px-2 py-1 rounded">
+                      {document.type || 'PDF'}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </Card>
           )}
         </div>
