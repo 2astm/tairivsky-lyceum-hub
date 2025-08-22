@@ -40,8 +40,8 @@ const legalSections = [
         content: "Оголошення про проведення конкурсу на заміщення вакантної посади директора Таїровського ліцею Таїровської селищної ради Одеського району Одеської області",
         documents: [
             {
-                label: 'Завантажити оголошення (PDF)',
-                url: "https://tairivsky-lyceum.od.ua/files/ogoloshennya-pro-konkurs-na-zamishhennya-vakantnoyi-posadi-direktora.pdf",
+                label: 'Оголошення (PDF)',
+                url: "/files/ogoloshennya-pro-konkurs-na-zamishhennya-vakantnoyi-posadi-direktora.pdf",
                 type: 'pdf'
             }
         ]
