@@ -127,18 +127,26 @@ const LegalInformation = () => {
                                         <div className="pl-8 border-l-2 border-blue-100 ml-1">
                                             <p className="text-gray-700">{section.content}</p>
                                             {section.documents && section.documents.length > 0 && (
-                                                <div className="mt-4 space-y-2">
-                                                    {section.documents.map((document, docIndex) => (
-                                                        <a
-                                                            key={docIndex}
-                                                            href={document.url}
-                                                            download
-                                                            className="inline-flex items-center text-blue-600 hover:text-blue-800"
-                                                        >
-                                                            <FileText className="mr-2 h-4 w-4"/>
-                                                            {document.label}
-                                                        </a>
-                                                    ))}
+                                                <div className="mt-6">
+                                                    <h4 className="text-sm font-medium text-gray-900 mb-3">Документи для завантаження:</h4>
+                                                    <div className="flex flex-col space-y-3">
+                                                        {section.documents.map((document, docIndex) => (
+                                                            <a
+                                                                key={docIndex}
+                                                                href={document.url}
+                                                                download
+                                                                className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors group"
+                                                            >
+                                                                <div className="flex items-center">
+                                                                    <FileText className="mr-3 h-5 w-5 text-blue-600"/>
+                                                                    <span className="text-blue-900 font-medium">{document.label}</span>
+                                                                </div>
+                                                                <span className="text-xs text-blue-600 uppercase bg-blue-200 px-2 py-1 rounded">
+                                                                    {document.type || 'PDF'}
+                                                                </span>
+                                                            </a>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             )}
                                         </div>
