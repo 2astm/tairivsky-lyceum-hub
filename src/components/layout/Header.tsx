@@ -41,7 +41,7 @@ const navItems = [
   },
   { name: 'Профорієнтація', path: '/career-guidance' },
   { name: 'Розклад', path: '/schedule' },
-  { name: 'Документи', path: '/legal-information' },
+  { name: 'Прозорість', path: '/legal-information' },
 ];
 
 const Header = () => {

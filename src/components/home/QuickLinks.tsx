@@ -34,8 +34,8 @@ const features = [
     to: '/institution/administration'
   },
   {
-    name: 'Документи',
-    description: 'Нормативні документи, статут, ліцензії та інша обов\'язкова інформація.',
+    name: 'Прозорість',
+    description: 'Прозорість та інформаційна відкритість закладу освіти',
     icon: FileText,
     to: '/legal-information'
   },
