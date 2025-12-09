@@ -10,6 +10,7 @@ import Administration from "./pages/institution/Administration";
 import Faculty from "./pages/institution/Faculty";
 import FacultyDepartment from "./pages/institution/FacultyDepartment";
 import Contacts from "./pages/institution/Contacts";
+import Structure from "./pages/institution/Structure";
 import LegalInformation from "./pages/LegalInformation";
 import InformationPage from "./pages/information/InformationPage";
 import InformationSection from "./pages/information/InformationSection";
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/institution/faculty" element={<Faculty />} />
           <Route path="/institution/faculty/:departmentId" element={<FacultyDepartment />} />
           <Route path="/institution/contacts" element={<Contacts />} />
+          <Route path="/institution/structure" element={<Structure />} />
           <Route path="/legal-information" element={<LegalInformation />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/career-guidance" element={<CareerGuidance />} />
