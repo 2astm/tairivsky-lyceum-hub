@@ -17,185 +17,177 @@ const Structure = () => {
           Структура управління ліцеєм
         </h1>
         
-        <div className="overflow-x-auto">
-          <div className="min-w-[900px] p-8">
-            {/* Top level - External bodies */}
-            <div className="flex justify-center gap-8 mb-6">
-              <div className="bg-blue-100 dark:bg-blue-900/30 border-2 border-blue-500 rounded-lg px-4 py-3 text-center min-w-[200px]">
-                <span className="font-semibold text-blue-800 dark:text-blue-200">Таїровська селищна рада</span>
-              </div>
-            </div>
+        <div className="overflow-x-auto pb-4">
+          <svg viewBox="0 0 1200 900" className="min-w-[900px] w-full max-w-5xl mx-auto" style={{ height: 'auto' }}>
+            {/* Defs for arrow markers */}
+            <defs>
+              <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6" />
+              </marker>
+              <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#22c55e" />
+              </marker>
+              <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#a855f7" />
+              </marker>
+              <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#f59e0b" />
+              </marker>
+              <marker id="arrowAmberReverse" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto">
+                <path d="M9,0 L9,6 L0,3 z" fill="#f59e0b" />
+              </marker>
+              <marker id="arrowTeal" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#14b8a6" />
+              </marker>
+              <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#f97316" />
+              </marker>
+              <marker id="arrowCyan" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#06b6d4" />
+              </marker>
+              <marker id="arrowIndigo" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#6366f1" />
+              </marker>
+            </defs>
             
-            {/* Arrow down */}
-            <div className="flex justify-center mb-2">
-              <div className="w-0.5 h-8 bg-blue-500"></div>
-            </div>
-            <div className="flex justify-center mb-4">
-              <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-blue-500"></div>
-            </div>
+            {/* ========== BOXES ========== */}
+            
+            {/* Таїровська селищна рада */}
+            <rect x="450" y="20" width="200" height="40" rx="8" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2" />
+            <text x="550" y="45" textAnchor="middle" fontSize="12" fontWeight="600" fill="#1e40af">Таїровська селищна рада</text>
             
             {/* Управління гуманітарної політики */}
-            <div className="flex justify-center mb-6">
-              <div className="bg-blue-100 dark:bg-blue-900/30 border-2 border-blue-500 rounded-lg px-4 py-3 text-center min-w-[250px]">
-                <span className="font-semibold text-blue-800 dark:text-blue-200">Управління гуманітарної політики</span>
-              </div>
-            </div>
+            <rect x="420" y="100" width="260" height="40" rx="8" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2" />
+            <text x="550" y="125" textAnchor="middle" fontSize="12" fontWeight="600" fill="#1e40af">Управління гуманітарної політики</text>
             
-            {/* Arrows to Director from multiple sources */}
-            <div className="flex justify-center items-end gap-8 mb-2">
-              <div className="flex flex-col items-center">
-                <div className="bg-green-100 dark:bg-green-900/30 border-2 border-green-500 rounded-lg px-3 py-2 text-center text-sm mb-2">
-                  <span className="font-medium text-green-800 dark:text-green-200">Загальні збори<br/>(конференція) колективу</span>
-                </div>
-                <div className="w-0.5 h-6 bg-green-500"></div>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-0.5 h-8 bg-blue-500"></div>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="bg-green-100 dark:bg-green-900/30 border-2 border-green-500 rounded-lg px-3 py-2 text-center text-sm mb-2">
-                  <span className="font-medium text-green-800 dark:text-green-200">Педагогічна рада</span>
-                </div>
-                <div className="w-0.5 h-6 bg-green-500"></div>
-              </div>
-            </div>
+            {/* Загальні збори */}
+            <rect x="180" y="170" width="160" height="50" rx="8" fill="#dcfce7" stroke="#22c55e" strokeWidth="2" />
+            <text x="260" y="192" textAnchor="middle" fontSize="11" fontWeight="500" fill="#166534">Загальні збори</text>
+            <text x="260" y="207" textAnchor="middle" fontSize="11" fontWeight="500" fill="#166534">(конференція) колективу</text>
             
-            {/* Arrows pointing down */}
-            <div className="flex justify-center mb-4">
-              <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-blue-500"></div>
-            </div>
+            {/* Педагогічна рада */}
+            <rect x="760" y="170" width="160" height="50" rx="8" fill="#dcfce7" stroke="#22c55e" strokeWidth="2" />
+            <text x="840" y="200" textAnchor="middle" fontSize="11" fontWeight="500" fill="#166534">Педагогічна рада</text>
             
-            {/* Director with parent body */}
-            <div className="flex justify-center items-center gap-8 mb-6">
-              <div className="bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-500 rounded-lg px-3 py-2 text-center text-sm">
-                <span className="font-medium text-amber-800 dark:text-amber-200">Орган батьківського<br/>самоврядування</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-8 h-0.5 bg-amber-500"></div>
-                <div className="w-0 h-0 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-amber-500"></div>
-              </div>
-              <div className="bg-red-100 dark:bg-red-900/30 border-2 border-red-500 rounded-lg px-6 py-4 text-center">
-                <span className="font-bold text-lg text-red-800 dark:text-red-200">Директор</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-0 h-0 border-t-4 border-b-4 border-r-6 border-t-transparent border-b-transparent border-r-amber-500"></div>
-                <div className="w-8 h-0.5 bg-amber-500"></div>
-              </div>
-              <div className="invisible bg-amber-100 rounded-lg px-3 py-2 text-center text-sm min-w-[120px]">
-                placeholder
-              </div>
-            </div>
+            {/* Директор */}
+            <rect x="480" y="270" width="140" height="50" rx="8" fill="#fee2e2" stroke="#ef4444" strokeWidth="2" />
+            <text x="550" y="300" textAnchor="middle" fontSize="14" fontWeight="700" fill="#991b1b">Директор</text>
             
-            {/* Arrows from Director */}
-            <div className="flex justify-center gap-16 mb-2">
-              <div className="w-0.5 h-8 bg-purple-500"></div>
-              <div className="w-0.5 h-8 bg-purple-500"></div>
-              <div className="w-0.5 h-8 bg-purple-500"></div>
-            </div>
-            <div className="flex justify-center gap-16 mb-4">
-              <div className="w-0 h-0 border-l-6 border-r-6 border-t-6 border-l-transparent border-r-transparent border-t-purple-500"></div>
-              <div className="w-0 h-0 border-l-6 border-r-6 border-t-6 border-l-transparent border-r-transparent border-t-purple-500"></div>
-              <div className="w-0 h-0 border-l-6 border-r-6 border-t-6 border-l-transparent border-r-transparent border-t-purple-500"></div>
-            </div>
+            {/* Орган батьківського самоврядування */}
+            <rect x="100" y="270" width="160" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
+            <text x="180" y="290" textAnchor="middle" fontSize="10" fontWeight="500" fill="#92400e">Орган батьківського</text>
+            <text x="180" y="305" textAnchor="middle" fontSize="10" fontWeight="500" fill="#92400e">самоврядування</text>
             
-            {/* Deputy directors level */}
-            <div className="flex justify-center gap-6 mb-6">
-              <div className="bg-purple-100 dark:bg-purple-900/30 border-2 border-purple-500 rounded-lg px-3 py-2 text-center text-sm min-w-[180px]">
-                <span className="font-medium text-purple-800 dark:text-purple-200">Заступник директора<br/>з господарської роботи</span>
-              </div>
-              <div className="bg-purple-100 dark:bg-purple-900/30 border-2 border-purple-500 rounded-lg px-3 py-2 text-center text-sm min-w-[180px]">
-                <span className="font-medium text-purple-800 dark:text-purple-200">Заступник директора<br/>з виховної роботи</span>
-              </div>
-              <div className="bg-purple-100 dark:bg-purple-900/30 border-2 border-purple-500 rounded-lg px-3 py-2 text-center text-sm min-w-[180px]">
-                <span className="font-medium text-purple-800 dark:text-purple-200">Заступник директора<br/>з навчально-виховної роботи</span>
-              </div>
-            </div>
+            {/* Заступник з господарської */}
+            <rect x="100" y="400" width="170" height="50" rx="8" fill="#f3e8ff" stroke="#a855f7" strokeWidth="2" />
+            <text x="185" y="420" textAnchor="middle" fontSize="10" fontWeight="500" fill="#6b21a8">Заступник директора</text>
+            <text x="185" y="435" textAnchor="middle" fontSize="10" fontWeight="500" fill="#6b21a8">з господарської роботи</text>
             
-            {/* Arrows from deputies */}
-            <div className="flex justify-center mb-6">
-              <div className="grid grid-cols-3 gap-6 w-full max-w-3xl">
-                {/* From виховної роботи */}
-                <div></div>
-                <div className="flex flex-col items-center">
-                  <div className="flex gap-16">
-                    <div className="flex flex-col items-center">
-                      <div className="w-0.5 h-6 bg-teal-500"></div>
-                      <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-teal-500"></div>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <div className="w-0.5 h-6 bg-teal-500"></div>
-                      <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-teal-500"></div>
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <div className="w-0.5 h-6 bg-teal-500"></div>
-                      <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-teal-500"></div>
-                    </div>
-                  </div>
-                </div>
-                {/* From навчально-виховної */}
-                <div className="flex justify-center">
-                  <div className="flex flex-col items-center">
-                    <div className="w-0.5 h-6 bg-indigo-500"></div>
-                    <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-indigo-500"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Заступник з виховної */}
+            <rect x="465" y="400" width="170" height="50" rx="8" fill="#f3e8ff" stroke="#a855f7" strokeWidth="2" />
+            <text x="550" y="420" textAnchor="middle" fontSize="10" fontWeight="500" fill="#6b21a8">Заступник директора</text>
+            <text x="550" y="435" textAnchor="middle" fontSize="10" fontWeight="500" fill="#6b21a8">з виховної роботи</text>
             
-            {/* Middle management level */}
-            <div className="flex justify-center gap-4 mb-6 flex-wrap">
-              <div className="bg-teal-100 dark:bg-teal-900/30 border-2 border-teal-500 rounded-lg px-3 py-2 text-center text-sm">
-                <span className="font-medium text-teal-800 dark:text-teal-200">Психологічна<br/>служба</span>
-              </div>
-              <div className="bg-teal-100 dark:bg-teal-900/30 border-2 border-teal-500 rounded-lg px-3 py-2 text-center text-sm">
-                <span className="font-medium text-teal-800 dark:text-teal-200">Педагог-<br/>організатор</span>
-              </div>
-              <div className="bg-teal-100 dark:bg-teal-900/30 border-2 border-teal-500 rounded-lg px-3 py-2 text-center text-sm">
-                <span className="font-medium text-teal-800 dark:text-teal-200">Класні<br/>керівники</span>
-              </div>
-              <div className="bg-indigo-100 dark:bg-indigo-900/30 border-2 border-indigo-500 rounded-lg px-3 py-2 text-center text-sm">
-                <span className="font-medium text-indigo-800 dark:text-indigo-200">Учителі-<br/>предметники</span>
-              </div>
-            </div>
+            {/* Заступник з навчально-виховної */}
+            <rect x="830" y="400" width="170" height="50" rx="8" fill="#f3e8ff" stroke="#a855f7" strokeWidth="2" />
+            <text x="915" y="420" textAnchor="middle" fontSize="10" fontWeight="500" fill="#6b21a8">Заступник директора</text>
+            <text x="915" y="435" textAnchor="middle" fontSize="10" fontWeight="500" fill="#6b21a8">з навчально-виховної роботи</text>
             
-            {/* Arrows to student self-governance */}
-            <div className="flex justify-center gap-8 mb-2">
-              <div className="w-0.5 h-6 bg-orange-500"></div>
-              <div className="w-0.5 h-6 bg-orange-500"></div>
-            </div>
-            <div className="flex justify-center gap-8 mb-4">
-              <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-orange-500"></div>
-              <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-orange-500"></div>
-            </div>
+            {/* Психологічна служба */}
+            <rect x="320" y="520" width="130" height="50" rx="8" fill="#ccfbf1" stroke="#14b8a6" strokeWidth="2" />
+            <text x="385" y="540" textAnchor="middle" fontSize="10" fontWeight="500" fill="#115e59">Психологічна</text>
+            <text x="385" y="555" textAnchor="middle" fontSize="10" fontWeight="500" fill="#115e59">служба</text>
             
-            {/* Student self-governance */}
-            <div className="flex justify-center mb-6">
-              <div className="bg-orange-100 dark:bg-orange-900/30 border-2 border-orange-500 rounded-lg px-4 py-3 text-center">
-                <span className="font-semibold text-orange-800 dark:text-orange-200">Орган учнівського самоврядування</span>
-              </div>
-            </div>
+            {/* Педагог-організатор */}
+            <rect x="485" y="520" width="130" height="50" rx="8" fill="#ccfbf1" stroke="#14b8a6" strokeWidth="2" />
+            <text x="550" y="540" textAnchor="middle" fontSize="10" fontWeight="500" fill="#115e59">Педагог-</text>
+            <text x="550" y="555" textAnchor="middle" fontSize="10" fontWeight="500" fill="#115e59">організатор</text>
             
-            {/* Arrow to student */}
-            <div className="flex justify-center mb-2">
-              <div className="w-0.5 h-8 bg-cyan-500"></div>
-            </div>
-            <div className="flex justify-center mb-4">
-              <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-cyan-500"></div>
-            </div>
+            {/* Класні керівники */}
+            <rect x="650" y="520" width="130" height="50" rx="8" fill="#ccfbf1" stroke="#14b8a6" strokeWidth="2" />
+            <text x="715" y="540" textAnchor="middle" fontSize="10" fontWeight="500" fill="#115e59">Класні</text>
+            <text x="715" y="555" textAnchor="middle" fontSize="10" fontWeight="500" fill="#115e59">керівники</text>
             
-            {/* Student */}
-            <div className="flex justify-center">
-              <div className="bg-cyan-100 dark:bg-cyan-900/30 border-2 border-cyan-500 rounded-lg px-6 py-4 text-center">
-                <span className="font-bold text-lg text-cyan-800 dark:text-cyan-200">Здобувач освіти</span>
-              </div>
-            </div>
-          </div>
+            {/* Учителі-предметники */}
+            <rect x="870" y="520" width="130" height="50" rx="8" fill="#e0e7ff" stroke="#6366f1" strokeWidth="2" />
+            <text x="935" y="540" textAnchor="middle" fontSize="10" fontWeight="500" fill="#3730a3">Учителі-</text>
+            <text x="935" y="555" textAnchor="middle" fontSize="10" fontWeight="500" fill="#3730a3">предметники</text>
+            
+            {/* Орган учнівського самоврядування */}
+            <rect x="450" y="650" width="200" height="50" rx="8" fill="#ffedd5" stroke="#f97316" strokeWidth="2" />
+            <text x="550" y="670" textAnchor="middle" fontSize="10" fontWeight="500" fill="#9a3412">Орган учнівського</text>
+            <text x="550" y="685" textAnchor="middle" fontSize="10" fontWeight="500" fill="#9a3412">самоврядування</text>
+            
+            {/* Здобувач освіти */}
+            <rect x="450" y="770" width="200" height="50" rx="8" fill="#cffafe" stroke="#06b6d4" strokeWidth="2" />
+            <text x="550" y="800" textAnchor="middle" fontSize="14" fontWeight="700" fill="#155e75">Здобувач освіти</text>
+            
+            {/* ========== CONNECTIONS ========== */}
+            
+            {/* Таїровська селищна рада -> Управління гуманітарної політики */}
+            <line x1="550" y1="60" x2="550" y2="98" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowBlue)" />
+            
+            {/* Управління гуманітарної політики -> Директор */}
+            <line x1="550" y1="140" x2="550" y2="268" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowBlue)" />
+            
+            {/* Загальні збори -> Директор */}
+            <path d="M 260 220 L 260 250 Q 260 260 270 260 L 478 285" stroke="#22c55e" strokeWidth="2" fill="none" markerEnd="url(#arrowGreen)" />
+            
+            {/* Педагогічна рада -> Директор */}
+            <path d="M 840 220 L 840 250 Q 840 260 830 260 L 622 285" stroke="#22c55e" strokeWidth="2" fill="none" markerEnd="url(#arrowGreen)" />
+            
+            {/* Директор <-> Орган батьківського самоврядування (bidirectional) */}
+            <line x1="262" y1="295" x2="478" y2="295" stroke="#f59e0b" strokeWidth="2" markerEnd="url(#arrowAmber)" markerStart="url(#arrowAmberReverse)" />
+            
+            {/* Директор -> Заступник з господарської */}
+            <path d="M 500 320 L 500 355 Q 500 365 490 365 L 185 365 Q 175 365 175 375 L 185 398" stroke="#a855f7" strokeWidth="2" fill="none" markerEnd="url(#arrowPurple)" />
+            
+            {/* Директор -> Заступник з виховної */}
+            <line x1="550" y1="320" x2="550" y2="398" stroke="#a855f7" strokeWidth="2" markerEnd="url(#arrowPurple)" />
+            
+            {/* Директор -> Заступник з навчально-виховної */}
+            <path d="M 600 320 L 600 355 Q 600 365 610 365 L 915 365 Q 925 365 925 375 L 915 398" stroke="#a855f7" strokeWidth="2" fill="none" markerEnd="url(#arrowPurple)" />
+            
+            {/* Директор -> Психологічна служба */}
+            <path d="M 480 310 L 410 310 Q 400 310 400 320 L 400 480 Q 400 490 395 490 L 385 518" stroke="#14b8a6" strokeWidth="2" fill="none" markerEnd="url(#arrowTeal)" />
+            
+            {/* Директор -> Учителі-предметники */}
+            <path d="M 620 300 L 1020 300 Q 1030 300 1030 310 L 1030 540 Q 1030 550 1020 550 L 1002 545" stroke="#6366f1" strokeWidth="2" fill="none" markerEnd="url(#arrowIndigo)" />
+            
+            {/* Заступник з виховної -> Психологічна служба */}
+            <path d="M 490 450 L 490 485 Q 490 495 480 495 L 390 495 Q 380 495 385 505 L 385 518" stroke="#14b8a6" strokeWidth="2" fill="none" markerEnd="url(#arrowTeal)" />
+            
+            {/* Заступник з виховної -> Педагог-організатор */}
+            <line x1="550" y1="450" x2="550" y2="518" stroke="#14b8a6" strokeWidth="2" markerEnd="url(#arrowTeal)" />
+            
+            {/* Заступник з виховної -> Класні керівники */}
+            <path d="M 610 450 L 610 485 Q 610 495 620 495 L 710 495 Q 720 495 715 505 L 715 518" stroke="#14b8a6" strokeWidth="2" fill="none" markerEnd="url(#arrowTeal)" />
+            
+            {/* Заступник з навчально-виховної -> Учителі-предметники */}
+            <line x1="915" y1="450" x2="935" y2="518" stroke="#6366f1" strokeWidth="2" markerEnd="url(#arrowIndigo)" />
+            
+            {/* Психологічна служба -> Класні керівники */}
+            <path d="M 450 545" stroke="#14b8a6" strokeWidth="2" fill="none" />
+            <line x1="450" y1="545" x2="648" y2="545" stroke="#14b8a6" strokeWidth="2" markerEnd="url(#arrowTeal)" />
+            
+            {/* Педагог-організатор -> Орган учнівського самоврядування */}
+            <path d="M 550 570 L 550 600 Q 550 610 545 610 L 545 648" stroke="#f97316" strokeWidth="2" fill="none" markerEnd="url(#arrowOrange)" />
+            
+            {/* Класні керівники -> Орган учнівського самоврядування */}
+            <path d="M 715 570 L 715 610 Q 715 620 705 620 L 600 648" stroke="#f97316" strokeWidth="2" fill="none" markerEnd="url(#arrowOrange)" />
+            
+            {/* Орган учнівського самоврядування -> Здобувач освіти */}
+            <line x1="550" y1="700" x2="550" y2="768" stroke="#06b6d4" strokeWidth="2" markerEnd="url(#arrowCyan)" />
+            
+            {/* Учителі-предметники -> Здобувач освіти */}
+            <path d="M 935 570 L 935 730 Q 935 740 925 740 L 652 785" stroke="#06b6d4" strokeWidth="2" fill="none" markerEnd="url(#arrowCyan)" />
+          </svg>
         </div>
         
         {/* Legend */}
-        <div className="mt-8 p-4 bg-muted/50 rounded-lg">
+        <div className="mt-8 p-4 bg-muted/50 rounded-lg max-w-4xl mx-auto">
           <h3 className="font-semibold mb-3 text-foreground">Умовні позначення:</h3>
-          <div className="flex flex-wrap gap-4 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-blue-500 rounded"></div>
               <span>Органи місцевого самоврядування</span>
@@ -213,8 +205,24 @@ const Structure = () => {
               <span>Заступники директора</span>
             </div>
             <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-teal-500 rounded"></div>
+              <span>Педагогічний персонал</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-indigo-500 rounded"></div>
+              <span>Учителі-предметники</span>
+            </div>
+            <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-amber-500 rounded"></div>
-              <span>Самоврядування</span>
+              <span>Батьківське самоврядування</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-orange-500 rounded"></div>
+              <span>Учнівське самоврядування</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-cyan-500 rounded"></div>
+              <span>Здобувачі освіти</span>
             </div>
           </div>
         </div>
