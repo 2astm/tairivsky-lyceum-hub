@@ -103,7 +103,7 @@ const LegalInformation = () => {
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <SectionHeading
                         title="Прозорість та інформаційна відкритість закладу освіти"
-                        description="Відповідно до вимог статті 30 Закону України «Про освіту» та принципів прозорості в діяльності закладів загальної середньої освіти"
+                        description='Відповідно до вимог <a href="https://zakon.rada.gov.ua/laws/show/2145-19#n442">статті 30 Закону України «Про освіту»</a> та принципів прозорості в діяльності закладів загальної середньої освіти'
                     />
 
                     <div className="mb-8 flex flex-wrap gap-2 justify-center">

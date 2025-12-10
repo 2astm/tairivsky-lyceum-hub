@@ -18,7 +18,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
   tag: Tag = 'h2',
 }) => {
   return (
-    <div 
+    <div
       className={cn(
         'max-w-3xl mx-auto mb-12',
         {
@@ -36,17 +36,18 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           Таїровський ліцей
         </span>
       </div>
-      
+
       <Tag className={cn(
         'text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4'
       )}>
         {title}
       </Tag>
-      
+
       {description && (
-        <p className="text-lg text-gray-600">
-          {description}
-        </p>
+          <p
+              className="text-lg text-gray-600 [&_a]:text-blue-600 [&_a]:underline hover:[&_a]:text-blue-800"
+              dangerouslySetInnerHTML={{__html: description}}
+          />
       )}
     </div>
   );
