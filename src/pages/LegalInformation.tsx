@@ -70,7 +70,7 @@ const legalSections = [
         categories: ['administrative'],
         title: 'Мова освітнього процесу',
         icon: BarChart3,
-        content: "Відповідно до статті 7 Закону України « Про освіту» мовою освітнього процесу в закладах освіти є державна мова.\nВідповідно до п.1 статті 1 Закону України « Про забезпечення функціонування української мови як державної» єдиною державною (офіційною) мовою в Україні є українська мова.",
+        content: `Відповідно до <a href='https://zakon.rada.gov.ua/laws/show/2145-19#n111'>статті 7 Закону України «Про освіту»</a> мовою освітнього процесу в закладах освіти є державна мова.\nВідповідно до <a href="https://zakon.rada.gov.ua/laws/show/2704-19#n16">п.1 статті 1 Закону України «Про забезпечення функціонування української мови як державної»</a> єдиною державною (офіційною) мовою в Україні є українська мова.`,
         documents: []
     }
 ];
@@ -133,7 +133,10 @@ const LegalInformation = () => {
                                     </AccordionTrigger>
                                     <AccordionContent className="px-4 pb-4 pt-1">
                                         <div className="pl-8 border-l-2 border-blue-100 ml-1">
-                                            <p className="text-gray-700">{section.content}</p>
+                                            <div
+                                                className="text-gray-700 [&_a]:text-blue-600 [&_a]:underline hover:[&_a]:text-blue-800"
+                                                dangerouslySetInnerHTML={{__html: section.content}}
+                                            />
                                             {section.documents && section.documents.length > 0 && (
                                                 <div className="mt-6">
                                                     <h4 className="text-sm font-medium text-gray-900 mb-3">Документи:</h4>
@@ -146,9 +149,11 @@ const LegalInformation = () => {
                                                             >
                                                                 <div className="flex items-center">
                                                                     <FileText className="mr-3 h-5 w-5 text-blue-600"/>
-                                                                    <span className="text-blue-900 font-medium">{document.label}</span>
+                                                                    <span
+                                                                        className="text-blue-900 font-medium">{document.label}</span>
                                                                 </div>
-                                                                <span className="text-xs text-blue-600 uppercase bg-blue-200 px-2 py-1 rounded">
+                                                                <span
+                                                                    className="text-xs text-blue-600 uppercase bg-blue-200 px-2 py-1 rounded">
                                                                     {document.type}
                                                                 </span>
                                                             </a>
