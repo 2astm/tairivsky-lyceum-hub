@@ -8,7 +8,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { getSectionById } from '@/data/informationSections';
+import { getSectionById } from '@/data/information-sections.ts';
 
 const InformationSection = () => {
   const { sectionId } = useParams<{ sectionId: string }>();

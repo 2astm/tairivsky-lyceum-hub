@@ -5,7 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { Card } from '@/components/ui/card';
-import { informationSections } from '@/data/informationSections';
+import { informationSections } from '@/data/information-sections.ts';
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
 import {AlertTriangle} from "lucide-react";
 
