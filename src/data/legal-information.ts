@@ -102,7 +102,7 @@ export const legalSections = [
         documents: [
             {
                 label: 'Прийом документів (PDF)',
-                url: "/files/prijom-documentiv-2026.pdf",
+                url: "/files/prijom-documentiv-2026",
                 type: 'pdf'
             }
         ]
