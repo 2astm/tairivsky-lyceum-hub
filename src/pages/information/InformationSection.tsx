@@ -81,36 +81,46 @@ const InformationSection = () => {
             align="left"
           />
           
-          <Card className="p-8 my-8 prose prose-blue max-w-none">
-            {section.content.split('\n\n').map((paragraph, index) => (
-              <React.Fragment key={index}>
-                {paragraph.startsWith('# ') ? (
-                  <h2 className="text-xl font-bold mt-6 mb-3">{paragraph.substring(2)}</h2>
-                ) : paragraph.startsWith('## ') ? (
-                  <h3 className="text-lg font-semibold mt-5 mb-2">{paragraph.substring(3)}</h3>
-                ) : paragraph.startsWith('### ') ? (
-                  <h4 className="text-md font-medium mt-4 mb-1">{paragraph.substring(4)}</h4>
-                ) : paragraph.startsWith('- ') ? (
-                  <ul className="list-disc pl-5 my-3">
-                    {paragraph.split('\n- ').map((item, i) => (
-                      <li key={i} className="mb-1">{item.replace('- ', '')}</li>
-                    ))}
-                  </ul>
-                ) : paragraph.startsWith('1. ') ? (
-                  <ol className="list-decimal pl-5 my-3">
-                    {paragraph.split('\n').map((item, i) => {
-                      const match = item.match(/^(\d+)\.\s(.*)$/);
-                      return match ? (
-                        <li key={i} className="mb-2">{match[2]}</li>
-                      ) : null;
-                    })}
-                  </ol>
-                ) : (
-                  <p className="mb-4">{paragraph}</p>
-                )}
-              </React.Fragment>
-            ))}
-          </Card>
+          {section.poster ? (
+            <div className="my-8">
+              <img 
+                src={section.poster} 
+                alt={section.title}
+                className="w-full rounded-lg shadow-md"
+              />
+            </div>
+          ) : (
+            <Card className="p-8 my-8 prose prose-blue max-w-none">
+              {section.content.split('\n\n').map((paragraph, index) => (
+                <React.Fragment key={index}>
+                  {paragraph.startsWith('# ') ? (
+                    <h2 className="text-xl font-bold mt-6 mb-3">{paragraph.substring(2)}</h2>
+                  ) : paragraph.startsWith('## ') ? (
+                    <h3 className="text-lg font-semibold mt-5 mb-2">{paragraph.substring(3)}</h3>
+                  ) : paragraph.startsWith('### ') ? (
+                    <h4 className="text-md font-medium mt-4 mb-1">{paragraph.substring(4)}</h4>
+                  ) : paragraph.startsWith('- ') ? (
+                    <ul className="list-disc pl-5 my-3">
+                      {paragraph.split('\n- ').map((item, i) => (
+                        <li key={i} className="mb-1">{item.replace('- ', '')}</li>
+                      ))}
+                    </ul>
+                  ) : paragraph.startsWith('1. ') ? (
+                    <ol className="list-decimal pl-5 my-3">
+                      {paragraph.split('\n').map((item, i) => {
+                        const match = item.match(/^(\d+)\.\s(.*)$/);
+                        return match ? (
+                          <li key={i} className="mb-2">{match[2]}</li>
+                        ) : null;
+                      })}
+                    </ol>
+                  ) : (
+                    <p className="mb-4">{paragraph}</p>
+                  )}
+                </React.Fragment>
+              ))}
+            </Card>
+          )}
           
           {section.documents && section.documents.length > 0 && (
             <Card className="p-6 mt-6 bg-blue-50">
