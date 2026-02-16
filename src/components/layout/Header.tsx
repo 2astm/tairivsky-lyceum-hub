@@ -18,7 +18,6 @@ const navItems = [
     items: [
       { name: 'Умови прийому', path: '/information/admission' },
       { name: 'Гуртки', path: '/information/extracurricular' },
-      { name: 'Харчування', path: '/information/nutrition' },
       { name: 'Критерії оцінювання', path: '/information/evaluation' },
       { name: 'Патріотичне виховання', path: '/information/patriotic-education' },
       { name: 'Права учнів', path: '/information/student-rights' },
@@ -27,6 +26,7 @@ const navItems = [
       { name: 'Самоврядування', path: '/information/self-government' },
     ]
   },
+  { name: 'Харчування', path: '/information/nutrition' },
   { name: 'Новини', path: '/news' },
   { name: 'Дистанційне навчання', path: '/distance-learning' },
   { name: 'Допомога і безпека', path: '/help-and-safety' },
