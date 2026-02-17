@@ -26,6 +26,7 @@ import StopViolence from "./pages/help-safety/StopViolence";
 import InternetSafety from "./pages/help-safety/InternetSafety";
 import Psychologist from "./pages/help-safety/Psychologist";
 import CareerGuidance from "./pages/career-guidance/CareerGuidance";
+import Tykanka from "./pages/Tykanka";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/legal-information" element={<LegalInformation />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/career-guidance" element={<CareerGuidance />} />
+          <Route path="/tykanka" element={<Tykanka />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
