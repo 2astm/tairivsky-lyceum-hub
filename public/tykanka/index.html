@@ -247,7 +247,7 @@ function showProgress(){
   const name = document.getElementById("name").value;
   let content = "час виконання: "+tTime+"<br>натикано символів: "+correctChars+"<br>швидкість: "+speed+" симв/хв<br>правильність: "+correctness+"%<br> оцінка:"+mark + " балів <br>";
   customAlert.alert(content,'Результати виконання вправи')
-    return `час виконання: ${tTime}\nнатикано символів: ${correctChars}\nшвидкість: ${speed}\nсимв/хв\nправильність: ${correctness}% \n ${surname} ${name} бал: ${mark}`;
+    return `час виконання: ${tTime}\nнатикано символів: ${correctChars}\nшвидкість: ${speed}\nсимв/хв\nправильність: ${correctness}% \n ${taskNum} ${surname} ${name} бал: ${mark}`;
 }
 function lessonSelect(){
 	let content = '<select id="taskSelect" size="15">\
