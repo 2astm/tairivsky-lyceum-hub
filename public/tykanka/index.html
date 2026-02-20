@@ -40,7 +40,12 @@
 	"...,,, я,я,, я, ти, він, вона... раз, два, три, чотири... точка, точка, кома. загалом, все так само.",
 	"...,,, я,я,, я, ти, він, вона... раз, два, три, чотири... точка, точка, кома. загалом, все так само.",
 	"Токмак Київ Львів Миргород Нетішин Одеса Полтава Рівне Тернопіль Ужгород Харків Чернігів Шостка Белз",
-	"Джек Лондон. Смок Беллью йшов здовж берега, хитаючись від поривів чужого вітру, що взявши майже ненастанно. У сірому світі шестеро човнів навантажували дорогоцінною поклажею, перенесенню через Чількут... Фаїна, Європа."
+	"Джек Лондон. Смок Беллью йшов здовж берега, хитаючись від поривів чужого вітру, що взявши майже ненастанно. У сірому світі шестеро човнів навантажували дорогоцінною поклажею, перенесенню через Чількут... Фаїна, Європа.",
+	"Сучасний світ швидко змінюється, і разом із ним змінюються вимоги до людини. Сьогодні недостатньо лише знати шкільну програму - важливо вміти мислити критично, працювати з інформацією та приймати відповідальні рішення. Інтернет відкриває перед нами великі можливості для навчання, спілкування та саморозвитку. Проте разом із можливостями з'являються й нові виклики. "+
+    "Однією з головних навичок 21 століття є вміння відрізняти правдиву інформацію від неправдивої. У соціальних мережах та на різних сайтах можна знайти безліч новин, але не всі вони є достовірними. Тому кожна людина повинна перевіряти джерела, аналізувати факти та робити власні висновки. Це допомагає уникати помилок і формувати об'єктивну думку. " +
+    "Не менш важливою є здатність працювати в команді. У школі учні часто виконують спільні проєкти, готують презентації або беруть участь у конкурсах. Під час такої роботи кожен має свою роль і відповідальність. Взаємоповага, уміння слухати інших та готовність до компромісу допомагають досягти кращого результату. " +
+    "Також варто пам'ятати про важливість здорового способу життя. Регулярна фізична активність, збалансоване харчування та достатній сон позитивно впливають на самопочуття й успішність у навчанні. Людина, яка дбає про своє здоров'я, має більше енергії для досягнення поставлених цілей. " +
+    "Отже, сучасний учень повинен бути не лише освіченим, а й відповідальним, активним та відкритим до нового. Саме такі якості допоможуть йому стати успішним у майбутньому та зробити свій внесок у розвиток суспільства."
 	];
 	var taskString = exercises[0];
 </script>
@@ -55,6 +60,10 @@
   <a class="button" title="Тут можна обрати потрібну вправу" onclick="lessonSelect()">&nbsp;&nbsp;&nbsp;Вправи&nbsp;&nbsp;&nbsp;</a>
   <a class="button" title="Тут можна переглянути поступ у виконанні вправи" id = "exercise" onclick="showProgress()">&nbsp;&nbsp;&nbsp;Поступ&nbsp;&nbsp;&nbsp;</a>
   <a class="button" title="Тут можна дізнатися про цю програму" onclick="about()">&nbsp;&nbsp;Про "Тиканку"&nbsp;&nbsp;</a>
+  <label class="title" for="name">Ім'я:</label>
+  <input type="text" id="name"/>
+  <label class="title">Прізвище:</label>
+  <input type="text" id="surname"/>
 </div>
 </div>
 
@@ -139,6 +148,7 @@
 </div>
 
 <script>
+var TOKEN = '8120809238:AAGTVpgBKD_iH6HgFvLTu_FCctuxoDCYcjM';
 var totalChars;
 var lang = "ua";
 var taskNum    = 1;
@@ -218,8 +228,26 @@ function showProgress(){
 	let tTime = ""+tMinuts + " хвилин "+ tSeconds + " секунд";
 	let speed = Math.floor(correctChars/taskTime*60);
 	let correctness = Math.floor(correctChars/countChars*100);
-	let content = "час виконання: "+tTime+"<br>натикано символів: "+correctChars+"<br>швидкість: "+speed+" симв/хв<br>правильність: "+correctness+"%<br>";
-	customAlert.alert(content,'Результати виконання вправи');
+    let mark = 0;
+    if (correctness>98) mark = 6;
+    else if (correctness>95) mark = 5;
+    else if (correctness>90) mark = 4;
+    else if (correctness>85) mark = 3;
+    else if (correctness>80) mark = 2;
+    else if (correctness>70) mark = 1;
+
+    if (speed >160) mark+=6;
+    else if (speed>140) mark+=5;
+    else if (speed>120) mark+=4;
+    else if (speed>100) mark+=3;
+    else if (speed>80) mark+=2;
+    else if (speed>60) mark+=1;
+
+  const surname = document.getElementById("surname").value;
+  const name = document.getElementById("name").value;
+  let content = "час виконання: "+tTime+"<br>натикано символів: "+correctChars+"<br>швидкість: "+speed+" симв/хв<br>правильність: "+correctness+"%<br> оцінка:"+mark + " балів <br>";
+  customAlert.alert(content,'Результати виконання вправи')
+    return `час виконання: ${tTime}\nнатикано символів: ${correctChars}\nшвидкість: ${speed}\nсимв/хв\nправильність: ${correctness}% \n ${surname} ${name} бал: ${mark}`;
 }
 function lessonSelect(){
 	let content = '<select id="taskSelect" size="15">\
@@ -257,6 +285,8 @@ function lessonSelect(){
 <option>Вправа 32: ї</option>\
 <option>Вправа 33: ВЕЛИКІ літери</option>\
 <option>Вправа 34: Іспит (218 знаків)</option>\
+<option>Іспит 9 клас</option>\
+<option>Іспит 11 клас</option>\
 </select>';
 	customAlert.alert(content,'Оберіть вправу для виконання');
 	var select = document.getElementById("taskSelect");
@@ -268,9 +298,19 @@ function lessonSelect(){
 }
 
 function taskEnd() {
-	showProgress();
+	const progress = showProgress();
 	taskNum++;
 	startTyping(taskNum);
+    fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: '317175238',
+        text: progress
+      })
+    })
 }
 
 function kbdSetup(up){
