@@ -1,12 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Тиканка</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Тиканка — клавіатурний тренажер</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Unbounded:wght@400;600&display=swap" rel="stylesheet">
+    <link href="./tykstyle.css" rel="stylesheet">
 </head>
+<body>
+
+<!-- ══ HEADER ═══════════════════════════════════════════ -->
+<header class="app-header">
+    <div class="app-logo">Тика<span>нка</span></div>
+    <div class="name-row">
+        <label for="inp-name">Ім'я</label>
+        <input id="inp-name" type="text" placeholder="Іван">
+        <label for="inp-surname">Прізвище</label>
+        <input id="inp-surname" type="text" placeholder="Петренко">
+    </div>
+</header>
+
+<!-- ══ NAV ══════════════════════════════════════════════ -->
+<nav class="nav-row">
+    <button class="btn" onclick="openLessonModal()">Вправи</button>
+    <button class="btn" onclick="openProgressModal()">Поступ</button>
+    <button class="btn" onclick="openHandsModal()">Постановка рук</button>
+    <button class="btn" onclick="openAboutModal()">Про тренажер</button>
+    <button class="btn" onclick="openCalibModal()" title="Визначити розкладку клавіатури повторно">Розкладка</button>
+    <button class="btn active" id="lbl-exercise">Вправа 1</button>
+</nav>
+
+<!-- ══ PRE-CALIB MESSAGE (hidden once layout known) ══════ -->
+<div id="pre-calib-msg" style="width:100%;max-width:900px;
+     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+     padding:1.5rem;margin-bottom:1.25rem;text-align:center;">
+    <div style="font-size:15px;font-weight:500;color:var(--txt);margin-bottom:8px">Визначення розкладки клавіатури</div>
+    <div style="font-size:13px;color:var(--txt-2);line-height:1.7">
+        Зачекайте — визначаємо розкладку автоматично…<br>
+        Якщо це займає більше кількох секунд, натисніть кнопку <b style="color:var(--txt)">Розкладка</b> у меню вище.
+    </div>
+</div>
+
+<!-- ══ TYPING AREA (hidden until layout ready) ══════════ -->
+<div id="typing-area" style="display:none;width:100%;max-width:900px">
+
+    <!-- ══ STATS ═════════════════════════════════════════════ -->
+    <div class="stats-bar">
+        <div class="stat-card"><div class="val" id="stat-speed">0</div><div class="lbl">симв/хв</div></div>
+        <div class="stat-card"><div class="val" id="stat-acc">—</div><div class="lbl">точність</div></div>
+        <div class="stat-card"><div class="val" id="stat-correct">0</div><div class="lbl">правильно</div></div>
+        <div class="stat-card"><div class="val" id="stat-errors">0</div><div class="lbl">помилки</div></div>
+    </div>
+
+    <!-- ══ PROGRESS ══════════════════════════════════════════ -->
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+
+    <!-- ══ TASK TEXT ═════════════════════════════════════════ -->
+    <div class="task-box" id="task-render"></div>
+
+    <!-- ══ STATUS ════════════════════════════════════════════ -->
+    <div id="status-msg"></div>
+
+</div><!-- /typing-area -->
+
+<!-- ══ CALIB PANEL (inline, shown above keyboard) ════════ -->
+<div id="calib-panel" style="display:none;width:100%;max-width:900px;
+     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+     padding:1rem 1.25rem;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:12px;flex-wrap:wrap">
+        <div id="calib-phase" style="font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;font-weight:500"></div>
+        <div style="display:flex;align-items:center;gap:10px;flex:1;max-width:280px">
+            <div style="flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden">
+                <div id="calib-bar" style="height:100%;width:0%;background:var(--ok);border-radius:3px;transition:width .15s"></div>
+            </div>
+            <div id="calib-count" style="font-size:11px;color:var(--txt-3);white-space:nowrap"></div>
+        </div>
+    </div>
+    <div id="calib-instr" style="font-size:13px;color:var(--txt-2);line-height:1.6"></div>
+</div>
+
+<!-- ══ KEYBOARD ══════════════════════════════════════════ -->
+<div class="keyboard" id="keyboard">
+    <div class="kb-row" id="row-0"></div>
+    <div class="kb-row" id="row-1"></div>
+    <div class="kb-row" id="row-2"></div>
+    <div class="kb-row" id="row-3"></div>
+    <div class="kb-row" id="row-4"></div>
+</div>
+
+<!-- ══ FINGER LEGEND ══════════════════════════════════════ -->
+<div style="width:100%;max-width:900px;display:flex;gap:16px;flex-wrap:wrap;
+     justify-content:center;margin-top:10px;margin-bottom:4px">
+  <span style="font-size:11px;color:#8892a4;display:flex;align-items:center;gap:5px">
+    <span style="width:18px;height:3px;border-radius:2px;background:#f76f6f;display:inline-block"></span>мізинець
+  </span>
+    <span style="font-size:11px;color:#8892a4;display:flex;align-items:center;gap:5px">
+    <span style="width:18px;height:3px;border-radius:2px;background:#f5a623;display:inline-block"></span>підмізинний
+  </span>
+    <span style="font-size:11px;color:#8892a4;display:flex;align-items:center;gap:5px">
+    <span style="width:18px;height:3px;border-radius:2px;background:#3ecf8e;display:inline-block"></span>середній
+  </span>
+    <span style="font-size:11px;color:#8892a4;display:flex;align-items:center;gap:5px">
+    <span style="width:18px;height:3px;border-radius:2px;background:#4f8ef7;display:inline-block"></span>вказівний
+  </span>
+    <span style="font-size:11px;color:#8892a4;display:flex;align-items:center;gap:5px">
+    <span style="width:18px;height:3px;border-radius:2px;background:#a78bfa;display:inline-block"></span>великий
+  </span>
+    <span style="font-size:11px;color:#8892a4;display:flex;align-items:center;gap:5px">
+    <span style="width:6px;height:6px;border-radius:50%;background:#8892a4;display:inline-block;opacity:.6"></span>домашня клавіша
+  </span>
+</div>
+
+<!-- ══ MODALS ════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <div class="modal-head" id="modal-head"></div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-foot">
+            <button class="btn-primary" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+</div>
+
+
 <script>
-    var exercises = [
+    /* ══════════════════════════════════════════════════════
+       DATA
+    ══════════════════════════════════════════════════════ */
+    const EXERCISES = [
         "аааооо ааоао оааоо аоаоа ао оао вввооо ввово оввоо вовов во ввава авваа вавав аавав ав ав вова вова",
         "лллввв ллвлв вллвв аааллл аалал лаалл алала алла вал лава оолол лоолл ололо лов лола овал алло олово",
         "дддввв дввдв двдвд ададд адада даада да дав два д лдллд лддлд одоод ододо до лад ода лада вода влада",
@@ -17,6 +138,7 @@
         "мммттт ммтмт тмттм мтмтм ттмтм та фата літа тотто мото лот літо том тоді ліфт та фото флот атом жмот",
         "иииттт иитит тиитт ти ви аиааи аиаиа жадати жито иимим миими ми ти мимо мило ждати мати жалити живіт",
         "ьььиии ььиьи ттьть ьттьь жить ловить ммьмь ьмьмь тьма міль фільм вимить оььоь толь виводить молотить",
+        "вал лава овал алло вода влада лада ода лад далі від діло воді доволі даф фал лафа філіал аж іж діжа ложа жало жалів вам мало мама мода міла між мова та літа мото лот літо том тоді ліфт фото флот атом ти ви жито мимо мило мати живіт ждати жадати фільм тьма міль вимить виводить молотить",
         "пппооо ппапа вппвв піпіп ллплп пффпф ппжж мпипм птпьп пола піп пол пиж випав фап падав підвал помити",
         "пппррр ппрпр рппрр прпрп ррпрп пир пар ріпа риф рило пара пори порт правда прорив рапіра пир пропажа",
         "кккррр кклкл іккіі рік крик рик вк вік викрик кооко код кілок кіт лікоть аккак макі підковка плакати",
@@ -41,541 +163,815 @@
         "...,,, я,я,, я, ти, він, вона... раз, два, три, чотири... точка, точка, кома. загалом, все так само.",
         "Токмак Київ Львів Миргород Нетішин Одеса Полтава Рівне Тернопіль Ужгород Харків Чернігів Шостка Белз",
         "Джек Лондон. Смок Беллью йшов здовж берега, хитаючись від поривів чужого вітру, що взявши майже ненастанно. У сірому світі шестеро човнів навантажували дорогоцінною поклажею, перенесенню через Чількут... Фаїна, Європа.",
-        "У школі учні використовують техніку для виконання домашніх завдань, пошуку інформації та створення різних проєктів. Інтернет відкриває доступ до великої кількості книг, статей та навчальних матеріалів. Проте важливо пам'ятати, що користуватися технологіями потрібно відповідально."
+        "У школі учні використовують техніку для виконання домашніх завдань, пошуку інформації та створення різних проєктів. Інтернет відкриває доступ до великої кількості книг, статей та навчальних матеріалів. Проте важливо пам'ятати, що користуватися технологіями потрібно відповідально.",
     ];
-    var taskString = exercises[0];
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link href="tykstyle.css" rel="stylesheet" type="text/css">
 
-<script type="text/javascript"></script>
-<noscript><p class="aRed">У вашому браузері JavaScript відключено!</p></noscript>
-<div class=upperBox>
+    const LESSON_NAMES = [
+        "Вправа 1: в, а, о", "Вправа 2: л", "Вправа 3: д", "Вправа 4: і",
+        "Вправа 5: ф", "Вправа 6: ж", "Вправа 7: м", "Вправа 8: т",
+        "Вправа 9: и", "Вправа 10: ь", "Міні іспит (вправи 1–10)",
+        "Вправа 11: п", "Вправа 12: р", "Вправа 13: к", "Вправа 14: г",
+        "Вправа 15: е", "Вправа 16: н", "Вправа 17: у", "Вправа 18: ш",
+        "Вправа 19: ц", "Вправа 20: щ", "Вправа 21: й", "Вправа 22: з",
+        "Вправа 23: х", "Вправа 24: є", "Вправа 25: с", "Вправа 26: б",
+        "Вправа 27: ч", "Вправа 28: ю", "Вправа 29: я", "Вправа 30: .",
+        "Вправа 31: ,", "Вправа 32: ї", "Вправа 33: великі літери",
+        "Вправа 34: іспит (218 знаків)", "Іспит 9 клас", "Іспит 11 клас",
+    ];
 
-    <div class="box">
-        <div class="hmenubar">
-            <a class="button" title="Тут можна обрати потрібну вправу" onclick="lessonSelect()">&nbsp;&nbsp;&nbsp;Вправи&nbsp;&nbsp;&nbsp;</a>
-            <a class="button" title="Тут можна переглянути поступ у виконанні вправи" id="exercise"
-               onclick="showProgress()">&nbsp;&nbsp;&nbsp;Поступ&nbsp;&nbsp;&nbsp;</a>
-            <a class="button" title="Тут можна дізнатися про цю програму" onclick="about()">&nbsp;&nbsp;Про "Тиканку"&nbsp;&nbsp;</a>
-            <label class="title" for="name">Ім'я:</label>
-            <input type="text" id="name"/>
-            <label class="title">Прізвище:</label>
-            <input type="text" id="surname"/>
-        </div>
-    </div>
+    /* ── Telegram bot config ────────────────────────────────── */
+    const TG_TOKEN   = '8120809238:AAGTVpgBKD_iH6HgFvLTu_FCctuxoDCYcjM';
+    const TG_CHAT_ID = '317175238';
 
-    <div id=taskBox>
-        <div id=leftPart>Щось не так,&nbsp;</div>
-        <div id=rightPart>має бути вправа</div>
-    </div>
-    <div id=progressBar noshade style="width:0%;"></div>
-</div>
-<h1 class="title" id="message">Клавіатурний тренажер 'Тиканка'</h1>
-<div class="keyboard">
-    <ul class="row row-0">
-        <li class="pinky" id="tilda">~</li>
-        <li class="pinky" id="1">1</li>
-        <li class="ring" id="2">2</li>
-        <li class="middle" id="3">3</li>
-        <li class="pointer1st" id="4">4</li>
-        <li class="pointer2nd" id="5">5</li>
-        <li class="pointer2nd" id="6">6</li>
-        <li class="pointer1st" id="7">7</li>
-        <li class="middle" id="8">8</li>
-        <li class="ring" id="9">9</li>
-        <li class="pinky" id="0">0</li>
-        <li class="pinky" id="minus">-</li>
-        <li class="pinky" id="plus">+</li>
-        <li class="pinky" id="backspace">←Back</li>
-    </ul>
-    <ul class="row row-1">
-        <li class="pinky" id="tab">Tab ↹</li>
-        <li class="pinky" id="Q">Q</li>
-        <li class="ring" id="W">W</li>
-        <li class="middle" id="E">E</li>
-        <li class="pointer1st" id="R">R</li>
-        <li class="pointer2nd" id="T">T</li>
-        <li class="pointer2nd" id="Y">Y</li>
-        <li class="pointer1st" id="U">U</li>
-        <li class="middle" id="I">I</li>
-        <li class="ring" id="O">O</li>
-        <li class="pinky" id="P">P</li>
-        <li class="pinky" id="lsc">[</li>
-        <li class="pinky" id="rsc">]</li>
-        <li class="pinky" id="bckslash">\</li>
-    </ul>
-    <ul class="row row-2">
-        <li class="pinky" id="capslock">CapsLock</li>
-        <li class="pinky" id="A">A</li>
-        <li class="ring" id="S">S</li>
-        <li class="middle" id="D">D</li>
-        <li class="pointer1st" id="F">F</li>
-        <li class="pointer2nd" id="G">G</li>
-        <li class="pointer2nd" id="H">H</li>
-        <li class="pointer1st" id="J">J</li>
-        <li class="middle" id="K">K</li>
-        <li class="ring" id="L">L</li>
-        <li class="pinky" id="ddot">:</li>
-        <li class="pinky" id="apo">''</li>
-        <li class="pinky" id="enter">Enter↵</li>
-    </ul>
-    <ul class="row row-3">
-        <li class="pinky" id="shiftleft">⇧Shift</li>
-        <li class="pinky" id="Z">Z</li>
-        <li class="ring" id="X">X</li>
-        <li class="middle" id="C">C</li>
-        <li class="pointer1st" id="V">V</li>
-        <li class="pointer2nd" id="B">B</li>
-        <li class="pointer2nd" id="N">N</li>
-        <li class="pointer1st" id="M">M</li>
-        <li class="middle" id="comma">,</li>
-        <li class="ring" id="dot">.</li>
-        <li class="pinky" id="slash">/</li>
-        <li class="pinky" id="shiftright">⇧Shift</li>
-    </ul>
-    <ul class="row row-4">
-        <li class="pinky" id="controlleft">Ctrl</li>
-        <li class="pinky" id="metaleft">⌘</li>
-        <li class="ring" id="altleft">Alt</li>
-        <li class="pointer2nd" id="space"></li>
-        <li class="ring" id="altright">AltGr</li>
-        <li class="pinky" id="metaright">⌘</li>
-        <li class="pinky" id="menu">≣</li>
-        <li class="pinky" id="controlright">Ctrl</li>
-    </ul>
-</div>
+    /* ══════════════════════════════════════════════════════
+       KEYBOARD LAYOUT MAPS
+       layoutMap: Map<code, key>  — built from calibration or fallback
+    ══════════════════════════════════════════════════════ */
 
-<script>
-    var TOKEN = '8120809238:AAGTVpgBKD_iH6HgFvLTu_FCctuxoDCYcjM';
-    let alreadyStarted = false
-    var totalChars;
-    var lang = "ua";
-    var taskNum = 1;
-    var countChars = 0;
-    var currentKey = "";
-    var key = '';
-    var keyShift;
-    var capsState = false;
-    var charRight = '',
-        correctChars = 0,
-        incorrectChars = 0,
-        started = false,
-        strLeft = '',
-        timeDuration = 0,
-        timeStart = 0,
-        timeEnd = 0,
-        charKey = ' ';
+    // Fallback Ukrainian (ЙЦУКЕН) layout  code → [normal, shifted]
+    const FALLBACK_LAYOUT = {
+        Backquote:["'","ʼ"],  Digit1:["1","!"],  Digit2:["2",'"'],  Digit3:["3","№"],
+        Digit4:["4",";"],     Digit5:["5","%"],  Digit6:["6",":"],  Digit7:["7","?"],
+        Digit8:["8","*"],     Digit9:["9","("],  Digit0:["0",")"],  Minus:["-","_"],
+        Equal:["=","+"],
+        KeyQ:["й","Й"], KeyW:["ц","Ц"], KeyE:["у","У"], KeyR:["к","К"],
+        KeyT:["е","Е"], KeyY:["н","Н"], KeyU:["г","Г"], KeyI:["ш","Ш"],
+        KeyO:["щ","Щ"], KeyP:["з","З"], BracketLeft:["х","Х"], BracketRight:["ї","Ї"],
+        Backslash:["ґ","Ґ"],
+        KeyA:["ф","Ф"], KeyS:["і","І"], KeyD:["в","В"], KeyF:["а","А"],
+        KeyG:["п","П"], KeyH:["р","Р"], KeyJ:["о","О"], KeyK:["л","Л"],
+        KeyL:["д","Д"], Semicolon:["ж","Ж"], Quote:["є","Є"],
+        KeyZ:["я","Я"], KeyX:["ч","Ч"], KeyC:["с","С"], KeyV:["м","М"],
+        KeyB:["и","И"], KeyN:["т","Т"], KeyM:["ь","Ь"],
+        Comma:["б","Б"], Period:["ю","Ю"], Slash:[".","?"],
+        Space:[" "," "],
+    };
 
-    const keys = ["tilda", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "minus", "plus", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "lsc", "rsc", "bckslash", "A", "S", "D", "F", "G", "H", "J", "K", "L", "ddot", "apo", "Z", "X", "C", "V", "B", "N", "M", "comma", "dot", "slash", "space"];
-    const cyrUp = ["ʼ", "!", '"', "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ї", "Ґ", "Ф", "І", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Є", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ",", " "];
-    const engUp = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", " "];
-    const cyrLow = ["'", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ї", "ґ", "ф", "і", "в", "а", "п", "р", "о", "л", "д", "ж", "є", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".", " "];
-    const engLow = ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", " "];
+    // code → DOM key id  (static physical mapping)
+    const CODE_TO_ID = {
+        Backquote:"tilda", Digit1:"1", Digit2:"2", Digit3:"3", Digit4:"4",
+        Digit5:"5", Digit6:"6", Digit7:"7", Digit8:"8", Digit9:"9",
+        Digit0:"0", Minus:"minus", Equal:"plus",
+        KeyQ:"Q", KeyW:"W", KeyE:"E", KeyR:"R", KeyT:"T",
+        KeyY:"Y", KeyU:"U", KeyI:"I", KeyO:"O", KeyP:"P",
+        BracketLeft:"lsc", BracketRight:"rsc", Backslash:"bckslash",
+        KeyA:"A", KeyS:"S", KeyD:"D", KeyF:"F", KeyG:"G",
+        KeyH:"H", KeyJ:"J", KeyK:"K", KeyL:"L",
+        Semicolon:"ddot", Quote:"apo",
+        KeyZ:"Z", KeyX:"X", KeyC:"C", KeyV:"V", KeyB:"B",
+        KeyN:"N", KeyM:"M", Comma:"comma", Period:"dot", Slash:"slash",
+        Space:"space",
+    };
 
-    function cyrLayoutLow() {
-        for (i = 0; i < 47; i++) {
-            document.getElementById(keys[i]).innerHTML = cyrLow[i];
+    // Runtime layout: code → [normal, shifted]
+    // Populated by calibration; falls back to FALLBACK_LAYOUT
+    let runtimeLayout = { ...FALLBACK_LAYOUT };
+
+    // char → keyId  (rebuilt after each layout update)
+    let charToKeyId = {};
+
+    function buildCharMap() {
+        charToKeyId = {};
+        for (const [code, [lo, hi]] of Object.entries(runtimeLayout)) {
+            const id = CODE_TO_ID[code];
+            if (!id) continue;
+            if (lo && !charToKeyId[lo]) charToKeyId[lo] = id;
+            if (hi && !charToKeyId[hi]) charToKeyId[hi] = id;
         }
     }
 
-    function cyrLayoutUp() {
-        for (i = 0; i < 47; i++) {
-            document.getElementById(keys[i]).innerHTML = cyrUp[i];
-        }
+    function getKeyId(ch) {
+        return charToKeyId[ch] ?? charToKeyId[ch?.toLowerCase()] ?? ch;
     }
 
-    function engLayoutLow() {
-        for (i = 0; i < 47; i++) {
-            document.getElementById(keys[i]).innerHTML = engLow[i];
-        }
-    }
-
-    function engLayoutUp() {
-        for (i = 0; i < 47; i++) {
-            document.getElementById(keys[i]).innerHTML = engUp[i];
-        }
-    }
-
-    function capsLock(state) {
-        if (state) {
-            for (i = 13; i < 47; i++) {
-                var cU = cyrUp[i]
-                if (lang === "eng") {
-                    cU = engUp[i]
-                }
-                document.getElementById(keys[i]).innerHTML = cU;
-            }
-        } else {
-            for (i = 13; i < 47; i++) {
-                var cL = cyrLow[i];
-                if (lang === "eng") {
-                    cL = engLow[i]
-                }
-                document.getElementById(keys[i]).innerHTML = cL;
+    function applyLayoutToDOM(isShift) {
+        for (const [code, [lo, hi]] of Object.entries(runtimeLayout)) {
+            const id = CODE_TO_ID[code];
+            if (!id) continue;
+            const el = document.getElementById(id);
+            if (!el) continue;
+            const char = (isShift ? hi : lo) ?? '';
+            el.textContent = char;
+            // Larger, brighter label when shifted/caps — helps learners see the character
+            if (isShift && char && char !== lo) {
+                el.style.fontSize   = '14px';
+                el.style.fontWeight = '600';
+                el.style.color      = 'var(--txt)';
+            } else {
+                el.style.fontSize   = '';
+                el.style.fontWeight = '';
+                el.style.color      = '';
             }
         }
     }
 
-    function about() {
-        let content = 'Клавіатурний онлайн-тренажер для школярів і не тільки для них.<br>\
-Щира подяка:<br>\
-- Pelle Lundgren (evilpaper) - за Keyboard Hero;<br>\
-- спільноті KDE - за уроки для Ktouch;<br>\
-- Animista.net - за css-анімацію;<br>\
-- спільноті вчителів інформатики "Шкільна інформатика від А до Я" - за натхнення.<br>\
-Автор: Громко Г.Ю.';
-        customAlert.alert(content, 'Про клавіатурний тренажер');
+    // applyLayout is called throughout the existing code — wire it here
+    function applyLayout(isShift) {
+        applyLayoutToDOM(isShift);
     }
 
-    function showProgress() {
-        timeEnd = getTimestamp();
-        if (timeStart === 0) {
-            timeStart = timeEnd
+    /* ══════════════════════════════════════════════════════
+       KEYBOARD LAYOUT DETECTION
+       1. KeyboardLayoutMap API  (Chrome/Edge)
+       2. Manual calibration fallback (Safari/Firefox/other)
+    ══════════════════════════════════════════════════════ */
+
+    const TYPEABLE_CODES = Object.keys(CODE_TO_ID).filter(c => c !== 'Space');
+
+    /* ── Step 1: try the API ──────────────────────────────── */
+    async function detectLayout() {
+        if (navigator.keyboard?.getLayoutMap) {
+            try {
+                const map      = await navigator.keyboard.getLayoutMap();
+                const detected = { ...FALLBACK_LAYOUT };
+                for (const code of TYPEABLE_CODES) {
+                    const lo = map.get(code);
+                    if (lo && lo !== 'Dead' && lo.length === 1) {
+                        detected[code] = [lo, lo.toUpperCase()];
+                    }
+                }
+                applyRuntimeLayout(detected, 'api');
+                return;
+            } catch (err) {
+                console.warn('KeyboardLayoutMap API failed:', err);
+            }
         }
-        let taskTime = timeEnd - timeStart;
-        let tMinuts = Math.floor(taskTime / 60);
-        let tSeconds = taskTime % 60;
-        let tTime = "" + tMinuts + " хвилин " + tSeconds + " секунд";
-        let speed = Math.floor(correctChars / taskTime * 60);
-        let correctness = Math.floor(correctChars / countChars * 100);
-        let mark = 0;
-        if (correctness > 98) mark = 6;
-        else if (correctness > 95) mark = 5;
-        else if (correctness > 90) mark = 4;
-        else if (correctness > 85) mark = 3;
-        else if (correctness > 80) mark = 2;
-        else if (correctness > 70) mark = 1;
-
-        if (speed > 160) mark += 6;
-        else if (speed > 140) mark += 5;
-        else if (speed > 120) mark += 4;
-        else if (speed > 100) mark += 3;
-        else if (speed > 80) mark += 2;
-        else if (speed > 60) mark += 1;
-
-        const surname = document.getElementById("surname").value;
-        const name = document.getElementById("name").value;
-        let content = "час виконання: " + tTime + "<br>натикано символів: " + correctChars + "<br>швидкість: " + speed + " симв/хв<br>правильність: " + correctness + "%<br> оцінка:" + mark + " балів <br>";
-
-        const message = `час виконання: ${tTime}\nнатикано символів: ${correctChars}\nшвидкість: ${speed}\nсимв/хв\nправильність: ${correctness}% \n ${taskNum} ${surname} ${name} бал: ${mark}`;
-        sendResults(message);
-        customAlert.alert(content, 'Результати виконання вправи')
+        // API unavailable — start manual calibration
+        startManualCalib();
     }
 
-    function lessonSelect() {
-        let content = '<select id="taskSelect" size="15">\
-<option>Вправа 1: ва\u00a0о</option>\
-<option>Вправа 2: л</option>\
-<option>Вправа 3: д</option>\
-<option>Вправа 4: і</option>\
-<option>Вправа 5: ф</option>\
-<option>Вправа 6: ж</option>\
-<option>Вправа 7: м</option>\
-<option>Вправа 8: т</option>\
-<option>Вправа 9: и</option>\
-<option>Вправа 10: ь</option>\
-<option>Вправа 11: п</option>\
-<option>Вправа 12: р</option>\
-<option>Вправа 13: к</option>\
-<option>Вправа 14: г</option>\
-<option>Вправа 15: е</option>\
-<option>Вправа 16: н</option>\
-<option>Вправа 17: у</option>\
-<option>Вправа 18: ш</option>\
-<option>Вправа 19: ц</option>\
-<option>Вправа 20: щ</option>\
-<option>Вправа 21: й</option>\
-<option>Вправа 22: з</option>\
-<option>Вправа 23: х</option>\
-<option>Вправа 24: є</option>\
-<option>Вправа 25: с</option>\
-<option>Вправа 26: б</option>\
-<option>Вправа 27: ч</option>\
-<option>Вправа 28: ю</option>\
-<option>Вправа 29: я</option>\
-<option>Вправа 30: .</option>\
-<option>Вправа 31: ,</option>\
-<option>Вправа 32: ї</option>\
-<option>Вправа 33: ВЕЛИКІ літери</option>\
-<option>Вправа 34: Іспит (218 знаків)</option>\
-<option>Іспит 9 клас</option>\
-<option>Іспит 11 клас</option>\
-</select>';
-        customAlert.alert(content, 'Оберіть вправу для виконання');
-        var select = document.getElementById("taskSelect");
-        select.addEventListener("change", function () {
-            var index = select.selectedIndex;
-            console.log("selectedIndex: ", index);
-            startTyping(index + 1);
+    function applyRuntimeLayout(layout, source) {
+        runtimeLayout = layout;
+        buildCharMap();
+        applyLayout(false);
+        if (source === 'api' || source === 'calib') {
+            // Show the typing area now that layout is known
+            document.getElementById('typing-area').style.display = '';
+            document.getElementById('pre-calib-msg').style.display = 'none';
+        }
+        if (source === 'api') showStatus('Розкладку клавіатури визначено автоматично ✓', 3000);
+        if (source === 'calib') {
+            showStatus('Розкладку збережено ✓', 3000);
+            clearKeyHighlights();
+            highlightNextKey();
+        }
+    }
+
+    /* ── Step 2: live calibration — type anything, we learn ── */
+    // All typeable codes that need to be discovered
+    const CALIB_ALL_CODES = [
+        'Backquote','Digit1','Digit2','Digit3','Digit4','Digit5','Digit6','Digit7','Digit8','Digit9','Digit0','Minus','Equal',
+        'KeyQ','KeyW','KeyE','KeyR','KeyT','KeyY','KeyU','KeyI','KeyO','KeyP','BracketLeft','BracketRight','Backslash',
+        'KeyA','KeyS','KeyD','KeyF','KeyG','KeyH','KeyJ','KeyK','KeyL','Semicolon','Quote',
+        'KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma','Period','Slash',
+    ];
+    const CALIB_TOTAL = CALIB_ALL_CODES.length; // 47 keys, but we only need lowercase pass
+
+    const calib = { active: false, captured: {}, shiftPass: false };
+
+    function startManualCalib() {
+        Object.assign(calib, { active: true, captured: {}, shiftPass: false });
+
+        // Show inline calib panel — keyboard stays fully visible below
+        document.getElementById('calib-panel').style.display = 'block';
+        document.getElementById('calib-instr').innerHTML =
+            '<b style="color:var(--txt)">Друкуйте будь-які клавіші</b> — кожна позначиться зеленим. Спочатку без Shift.';
+        document.getElementById('calib-bar').style.width = '0%';
+        document.getElementById('calib-count').textContent = `0 / ${CALIB_TOTAL}`;
+        document.getElementById('calib-phase').textContent = 'Крок 1 — без Shift';
+
+        // Reset any leftover key tints
+        CALIB_ALL_CODES.forEach(c => {
+            const ke = document.getElementById(CODE_TO_ID[c]);
+            if (ke) ke.style.background = '';
         });
     }
 
-    function taskEnd() {
-        showProgress();
-        taskNum++;
-        startTyping(taskNum);
-    }
+    function handleCalibKey(e) {
+        if (!calib.active) return;
+        e.preventDefault();
 
-    function sendResults(progress) {
-        fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                chat_id: '317175238',
-                text: progress
-            })
-        })
-    }
+        // Ignore modifier keys themselves
+        if (['Shift','Control','Meta','Alt','CapsLock'].includes(e.key)) return;
 
-    function kbdSetup(up) {
-        if (lang === "ua") {
-            if (up) {
-                cyrLayoutUp();
+        const code = e.code;
+        if (!CALIB_ALL_CODES.includes(code)) return;
+
+        // Enforce: step 1 must be without Shift, step 2 must be with Shift
+        if (calib.shiftPass && !e.shiftKey) {
+            // Flash red hint on shift keys
+            ['shiftleft','shiftright'].forEach(id => {
+                const ke = document.getElementById(id);
+                if (ke) { ke.classList.add('hit-err'); setTimeout(() => ke.classList.remove('hit-err'), 300); }
+            });
+            return;
+        }
+        if (!calib.shiftPass && e.shiftKey) {
+            // Flash red hint on shift keys — don't accept shifted input in step 1
+            ['shiftleft','shiftright'].forEach(id => {
+                const ke = document.getElementById(id);
+                if (ke) { ke.classList.add('hit-err'); setTimeout(() => ke.classList.remove('hit-err'), 300); }
+            });
+            return;
+        }
+
+        const slot = calib.shiftPass ? 1 : 0;
+        if (!calib.captured[code]) calib.captured[code] = ['', ''];
+
+        const alreadyHad = !!calib.captured[code][slot];
+        if (!alreadyHad) {
+            calib.captured[code][slot] = e.key.length === 1 ? e.key : '';
+        }
+
+        // Mark key green persistently
+        const el = document.getElementById(CODE_TO_ID[code]);
+        if (el && !alreadyHad) {
+            el.classList.add('hit-ok');
+            setTimeout(() => {
+                el.classList.remove('hit-ok');
+                el.style.background  = 'var(--ok-lo)';
+                el.style.borderColor = 'var(--ok)';
+                el.style.color       = 'var(--ok)';
+            }, 180);
+        }
+
+        // Count captured keys for current pass
+        const doneLo = CALIB_ALL_CODES.filter(c => calib.captured[c]?.[0]).length;
+        const doneHi = CALIB_ALL_CODES.filter(c => calib.captured[c]?.[1]).length;
+        const done   = calib.shiftPass ? doneHi : doneLo;
+
+        const bar   = document.getElementById('calib-bar');
+        const count = document.getElementById('calib-count');
+        if (bar)   bar.style.width   = Math.round(done / CALIB_TOTAL * 100) + '%';
+        if (count) count.textContent = `${done} / ${CALIB_TOTAL}`;
+
+        if (done >= CALIB_TOTAL) {
+            if (!calib.shiftPass) {
+                calib.shiftPass = true;
+                // Clear all key tints so step 2 starts fresh
+                CALIB_ALL_CODES.forEach(c => {
+                    const ke = document.getElementById(CODE_TO_ID[c]);
+                    if (ke) { ke.style.background = ''; ke.style.borderColor = ''; ke.style.color = ''; }
+                });
+                if (bar)   bar.style.width   = '0%';
+                if (count) count.textContent = `0 / ${CALIB_TOTAL}`;
+                const phase = document.getElementById('calib-phase');
+                const instr = document.getElementById('calib-instr');
+                if (phase) phase.textContent = 'Крок 2 — з ⇧ Shift';
+                if (instr) instr.innerHTML   = 'Затисніть <b style="color:var(--txt)">⇧ Shift</b> і пройдіться по тих самих клавішах. Сірі — ще не натиснуті.';
             } else {
-                cyrLayoutLow();
-            }
-        } else {
-            if (up) {
-                engLayoutUp();
-            } else {
-                engLayoutLow();
+                finishCalib();
             }
         }
     }
 
-    function startTyping(n) {
-        const highlightedKey = document.querySelector(".selected");
-        if (highlightedKey) {
-            highlightedKey.classList.remove("selected");
+    function finishCalib() {
+        calib.active = false;
+        CALIB_ALL_CODES.forEach(c => {
+            const ke = document.getElementById(CODE_TO_ID[c]);
+            if (ke) { ke.style.background = ''; ke.style.borderColor = ''; ke.style.color = ''; }
+        });
+        document.getElementById('calib-panel').style.display = 'none';
+
+        const merged = { ...FALLBACK_LAYOUT };
+        for (const [code, pair] of Object.entries(calib.captured)) {
+            if (pair[0] || pair[1]) merged[code] = pair;
         }
-        taskNum = n;
-        document.getElementById('exercise').innerHTML = "Вправа " + taskNum;
-        taskString = exercises[n - 1];
-        totalChars = taskString.length;
-        lang = "ua";
-        started = true;
-        countChars = 0;
-        correctChars = 0;
-        incorrectChars = 0;
-        strLeft = '';
-        document.getElementById('leftPart').innerHTML = '&nbsp;';
-        document.getElementById('rightPart').innerHTML = taskString.substr(0, 16);
-        document.getElementById('progressBar').style.width = progressBar() + '%';
-        kbdSetup(false);
-        nextKey();
+
+        // Show confirmation before activating — prevents accidental key presses leaking into exercise
+        openModal('Калібрування завершено', `
+    <div style="text-align:center;padding:8px 0">
+      <div style="font-size:32px;margin-bottom:12px">✓</div>
+      <div style="font-size:14px;color:var(--txt);font-weight:500;margin-bottom:8px">Розкладку клавіатури збережено</div>
+      <div style="font-size:13px;color:var(--txt-2)">Натисніть OK щоб почати вправу.</div>
+    </div>
+  `);
+
+        // Apply layout only after user clicks OK
+        document.querySelector('#modal .btn-primary').onclick = () => {
+            closeModal();
+            applyRuntimeLayout(merged, 'calib');
+            document.querySelector('#modal .btn-primary').onclick = closeModal; // restore default
+        };
     }
 
-    function updateAll() {
-        correctChars++;
-        strLeft = strLeft.replace("&nbsp;", " ");
-        if (charRight === " ") {
-            charRight = "&nbsp;"
-        }
-        strLeft = strLeft.substr(-11) + charRight;
-        document.getElementById('leftPart').innerHTML = strLeft;
-        taskString = taskString.slice(1);
-        nbsp = '';
-        cst = 0;
-        if (taskString[0] === ' ') {
-            nbsp = "&nbsp;";
-            cst = 1;
-        }
-        document.getElementById('rightPart').innerHTML = nbsp + taskString.substr(cst, 16);
-        document.getElementById('progressBar').style.width = progressBar() + '%';
+    // Nav button: force re-detect (API or calib)
+    async function openCalibModal() {
+        showStatus('Визначаємо розкладку…', 1200);
+        await detectLayout();
     }
 
-    function getKeyId(kkey) {
-        var kcyr = cyrUp.indexOf(kkey.toUpperCase());
-        if (kcyr === -1) {
-            kcyr = cyrLow.indexOf(kkey.toLowerCase());
-        }
-        var keng = engUp.indexOf(kkey.toUpperCase());
-        if (keng === -1) {
-            keng = engLow.indexOf(kkey.toLowerCase())
-        }
-        var keyId = kkey;
-        if (kcyr > -1) {
-            keyId = keys[kcyr];
-        }
-        if (keng > -1) {
-            keyId = keys[keng];
-        }
-        console.log("keyID=", keyId);
-        return keyId;
+    /* ══════════════════════════════════════════════════════
+       KEYBOARD DOM BUILDER
+    ══════════════════════════════════════════════════════ */
+    const KB_ROWS = [
+        // [id, extraClass]
+        [["tilda",""],["1",""],["2",""],["3",""],["4",""],["5",""],
+            ["6",""],["7",""],["8",""],["9",""],["0",""],["minus",""],
+            ["plus",""],["backspace","wide-2"]],
+        [["tab","wide-1"],["Q",""],["W",""],["E",""],["R",""],["T",""],
+            ["Y",""],["U",""],["I",""],["O",""],["P",""],["lsc",""],
+            ["rsc",""],["bckslash","wide-1"]],
+        [["capslock","wide-2"],["A",""],["S",""],["D",""],["F",""],["G",""],
+            ["H",""],["J",""],["K",""],["L",""],["ddot",""],["apo",""],
+            ["enter","wide-2"]],
+        [["shiftleft","wide-3"],["Z",""],["X",""],["C",""],["V",""],["B",""],
+            ["N",""],["M",""],["comma",""],["dot",""],["slash",""],
+            ["shiftright","wide-2"]],
+        [["controlleft","wide-1"],["metaleft",""],["altleft",""],
+            ["space","wide-5"],
+            ["altright",""],["metaright",""],["menu",""],["controlright","wide-1"]],
+    ];
+
+    const KB_LABELS = {
+        tilda:"~", backspace:"⌫", tab:"Tab", bckslash:"\\",
+        capslock:"Caps", enter:"↵", shiftleft:"⇧", shiftright:"⇧",
+        controlleft:"Ctrl", controlright:"Ctrl", metaleft:"⌘", metaright:"⌘",
+        altleft:"Alt", altright:"AltGr", menu:"≣", space:"",
+        minus:"-", plus:"+", lsc:"[", rsc:"]", ddot:":", apo:"'",
+        comma:",", dot:".", slash:"/",
+    };
+
+    // Finger assignment per physical key code
+    // pinky=л.мізинець  ring=л.підмізинний  middle=л.середній  index=вказівний  thumb=великий
+    const FINGER_MAP = {
+        // Left pinky
+        Backquote:'f-pinky', Digit1:'f-pinky', KeyQ:'f-pinky', KeyA:'f-pinky', KeyZ:'f-pinky',
+        // Left ring
+        Digit2:'f-ring', KeyW:'f-ring', KeyS:'f-ring', KeyX:'f-ring',
+        // Left middle
+        Digit3:'f-middle', KeyE:'f-middle', KeyD:'f-middle', KeyC:'f-middle',
+        // Left index (covers 2 columns)
+        Digit4:'f-index', Digit5:'f-index',
+        KeyR:'f-index', KeyT:'f-index',
+        KeyF:'f-index', KeyG:'f-index',
+        KeyV:'f-index', KeyB:'f-index',
+        // Right index (covers 2 columns)
+        Digit6:'f-index', Digit7:'f-index',
+        KeyY:'f-index', KeyU:'f-index',
+        KeyH:'f-index', KeyJ:'f-index',
+        KeyN:'f-index', KeyM:'f-index',
+        // Right middle
+        Digit8:'f-middle', KeyI:'f-middle', KeyK:'f-middle', Comma:'f-middle',
+        // Right ring
+        Digit9:'f-ring', KeyO:'f-ring', KeyL:'f-ring', Period:'f-ring',
+        // Right pinky
+        Digit0:'f-pinky', Minus:'f-pinky', Equal:'f-pinky',
+        KeyP:'f-pinky', BracketLeft:'f-pinky', BracketRight:'f-pinky', Backslash:'f-pinky',
+        Semicolon:'f-pinky', Quote:'f-pinky',
+        Slash:'f-pinky',
+        // Thumbs
+        Space:'f-thumb',
+    };
+
+    // Home-row keys (have the tactile bump)
+    const HOME_KEYS = new Set(['KeyA', 'KeyJ']); // physical F and J on QWERTY = Ф and О on ЙЦУКЕН
+
+    function buildKeyboard() {
+        KB_ROWS.forEach((rowDef, rowIdx) => {
+            const rowEl = document.getElementById(`row-${rowIdx}`);
+            rowDef.forEach(([id, cls]) => {
+                const li = document.createElement('div');
+                li.id = id;
+
+                // Find the code for this DOM id (reverse lookup)
+                const code = Object.entries(CODE_TO_ID).find(([, v]) => v === id)?.[0];
+                const fingerCls = code ? (FINGER_MAP[code] ?? '') : '';
+                const homeCls   = code && HOME_KEYS.has(code) ? ' home-key' : '';
+
+                li.className = 'key' + (cls ? ' ' + cls : '') + (fingerCls ? ' ' + fingerCls : '') + homeCls;
+                li.textContent = KB_LABELS[id] ?? id;
+                rowEl.appendChild(li);
+            });
+        });
     }
 
-    function keyShiftPressed() {
-        if (capsState) {
-            kbdSetup(false);
+    /* ── Character classification ───────────────────────────────── */
+    const isEng = ch => /[a-zA-Z]/.test(ch);
+    const isCyr = ch => /[а-яіїєґА-ЯІЇЄҐ]/.test(ch);
+
+    /* ══════════════════════════════════════════════════════
+       STATE
+    ══════════════════════════════════════════════════════ */
+    const state = {
+        taskIdx:      0,        // 0-based
+        taskText:     '',
+        cursor:       0,        // char position
+        correct:      0,
+        errors:       0,
+        lang:         'ua',
+        capsOn:       false,
+        shiftOn:      false,
+        timeStart:    0,
+        timeEnd:      0,
+        running:      false,
+    };
+
+    /* ══════════════════════════════════════════════════════
+       CORE LOGIC
+    ══════════════════════════════════════════════════════ */
+    function startTask(idx) {
+        // clamp to valid range
+        idx = Math.max(0, Math.min(EXERCISES.length - 1, idx));
+        state.taskIdx   = idx;
+        state.taskText  = EXERCISES[idx];
+        state.cursor    = 0;
+        state.correct   = 0;
+        state.errors    = 0;
+        state.running   = false;
+        state.timeStart = 0;
+        state.timeEnd   = 0;
+        state.lang      = 'ua';
+        state.capsOn    = false;
+
+        document.getElementById('lbl-exercise').textContent = LESSON_NAMES[idx] ?? `Вправа ${idx + 1}`;
+        document.getElementById('status-msg').textContent = '';
+
+        clearKeyHighlights();
+        applyLayout(false);
+        renderTask();
+        updateStats();
+        highlightNextKey();
+    }
+
+    function handleCorrectChar() {
+        if (!state.running) {
+            state.running   = true;
+            state.timeStart = Date.now();
+        }
+        state.correct++;
+        state.cursor++;
+        renderTask();
+        updateStats();
+
+        if (state.cursor >= state.taskText.length) {
+            state.timeEnd = Date.now();
+            setTimeout(openProgressModal, 300);
         } else {
-            kbdSetup(true);
+            highlightNextKey();
         }
     }
 
-    function keyShiftUnPressed() {
-        if (capsState) {
-            kbdSetup(true);
-        } else {
-            kbdSetup(false);
+    function handleWrongChar(typed, expected) {
+        state.errors++;
+        updateStats();
+
+        if (typed.toLowerCase() === expected.toLowerCase()) {
+            showStatus('Змініть регістр символів!');
+        } else if (isEng(typed) && isCyr(expected) || isCyr(typed) && isEng(expected)) {
+            showStatus('Змініть розкладку клавіатури!');
         }
     }
 
-    document.addEventListener("keydown", event => {
+    /* ══════════════════════════════════════════════════════
+       RENDER
+    ══════════════════════════════════════════════════════ */
+    function renderTask() {
+        const text = state.taskText;
+        const cur  = state.cursor;
+        const el   = document.getElementById('task-render');
+
+        // Show a sliding window: ~30 chars before cursor, rest after
+        const win    = 80;
+        const start  = Math.max(0, cur - 30);
+        const end    = Math.min(text.length, start + win);
+        const slice  = text.slice(start, end);
+
+        el.innerHTML = slice.split('').map((ch, i) => {
+            const abs = start + i;
+            const display = ch === ' ' ? '&nbsp;' : ch;
+            if (abs < cur)       return `<span class="done">${display}</span>`;
+            if (abs === cur)     return `<span class="cursor">${display}</span>`;
+            return `<span class="ahead">${display}</span>`;
+        }).join('');
+
+        // Progress bar
+        const pct = text.length > 0 ? (cur / text.length * 100).toFixed(1) : 0;
+        document.getElementById('progress-fill').style.width = pct + '%';
+    }
+
+    function updateStats() {
+        const elapsed = state.timeStart
+            ? ((state.timeEnd || Date.now()) - state.timeStart) / 1000
+            : 0;
+
+        const speed = elapsed > 0 ? Math.round(state.correct / elapsed * 60) : 0;
+        const total = state.correct + state.errors;
+        const acc   = total > 0 ? Math.round(state.correct / total * 100) : '—';
+
+        document.getElementById('stat-speed').textContent   = speed;
+        document.getElementById('stat-acc').textContent     = total > 0 ? acc + '%' : '—';
+        document.getElementById('stat-correct').textContent = state.correct;
+        document.getElementById('stat-errors').textContent  = state.errors;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       KEY HIGHLIGHT
+    ══════════════════════════════════════════════════════ */
+    function clearKeyHighlights() {
+        document.querySelectorAll('.key.selected').forEach(el => el.classList.remove('selected'));
+    }
+
+    function highlightNextKey() {
+        clearKeyHighlights();
+        const ch = state.taskText[state.cursor];
+        if (!ch) return;
+
+        state.lang = isEng(ch) ? 'eng' : 'ua';
+        applyLayout(isUppercase());
+
+        const id = getKeyId(ch);
+        const el = document.getElementById(id);
+        if (el) el.classList.add('selected');
+    }
+
+    function flashKey(id, ok) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const cls = ok ? 'hit-ok' : 'hit-err';
+        el.classList.add(cls);
+        setTimeout(() => el.classList.remove(cls), 180);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       STATUS
+    ══════════════════════════════════════════════════════ */
+    let statusTimer = null;
+    function showStatus(msg, duration = 2000) {
+        clearTimeout(statusTimer);
+        document.getElementById('status-msg').textContent = msg;
+        statusTimer = setTimeout(() => {
+            document.getElementById('status-msg').textContent = '';
+        }, duration);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       KEYBOARD EVENTS
+    ══════════════════════════════════════════════════════ */
+
+    // Single source of truth: are keys currently showing uppercase?
+    function isUppercase() {
+        return state.shiftOn !== state.capsOn; // XOR: shift alone, caps alone → upper; both → lower
+    }
+
+    document.addEventListener('keydown', e => {
         const active = document.activeElement;
-        console.log(active.id);
-        if (active.id == 'surname' || active.id == 'name')
-            return
-        console.log("Keydown =", event.code);
-        if (event.key === "Shift") {
-            keyShiftPressed();
-            if (event.code === "ShiftLeft") {
-                shiftPressed = "shiftleft";
-            } else {
-                shiftPressed = "shiftright";
-            }
-            keyShift = document.getElementById(shiftPressed);
-            keyShift.classList.add("selected");
-        }
-        if (event.key === "CapsLock") {
-            capsState = !capsState;
-            capsLock(capsState)
-        }
-    })
+        if (active.id === 'inp-name' || active.id === 'inp-surname') return;
+        if (calib.active) { handleCalibKey(e); return; }
 
-    document.addEventListener("keyup", event => {
+        if (e.key === 'Shift') {
+            state.shiftOn = true;
+            applyLayout(isUppercase());
+            const shiftId = e.code === 'ShiftLeft' ? 'shiftleft' : 'shiftright';
+            document.getElementById(shiftId)?.classList.add('selected');
+        }
+
+        if (e.key === 'CapsLock') {
+            state.capsOn = !state.capsOn;
+            applyLayout(isUppercase());
+        }
+    });
+
+    document.addEventListener('keyup', e => {
         const active = document.activeElement;
-        console.log(active.id);
-        if (active.id == 'surname' || active.id == 'name')
-            return
-        if (started) {
-            started = false;
-            timeStart = getTimestamp();
+        if (active.id === 'inp-name' || active.id === 'inp-surname') return;
+        if (calib.active) { e.preventDefault(); return; }  // block typing during calib
+        if (e.key === 'GroupNext') return;
+
+        // Special / modifier keys — ignore for typing
+        const IGNORE = ['Shift','Control','Meta','Alt','AltGraph','Enter',
+            'Tab','Backspace','CapsLock','ArrowLeft','ArrowRight',
+            'ArrowUp','ArrowDown','Escape'];
+
+        if (e.key === 'Shift') {
+            state.shiftOn = false;
+            applyLayout(isUppercase());
+            document.querySelectorAll('#shiftleft, #shiftright')
+                .forEach(el => el.classList.remove('selected'));
+            return;
         }
-        currentKey = event.key;
-        if (currentKey === 'GroupNext') {
-            return
-        }
-        countChars++;
-        var keyPressed = getKeyId(currentKey);
 
-        if (event.key === "Shift") {
-            keyShiftUnPressed();
-            keyShift.classList.remove("selected");
-        }
-        if ((keyPressed === "Shift") || (keyPressed === "Control") || (keyPressed === "Meta") ||
-            (keyPressed === "Alt") || (keyPressed === "AltGraph") || (keyPressed === "Enter") ||
-            (keyPressed === "Tab") || (keyPressed === "Backspace") || (keyPressed === "CapsLock")) {
-            keyPressed = event.code.toLowerCase();
-            countChars--;
-            console.log('KeyPressed =', keyPressed);
-        }
-        const keyElement = document.getElementById(keyPressed);
+        if (IGNORE.includes(e.key)) return;
 
-        const highlightedKey = document.querySelector(".selected");
+        const keyId   = getKeyId(e.key);
+        const expected = state.taskText[state.cursor];
+        const correct  = (e.key === expected);
 
-        keyElement.classList.add("hit")
-        keyElement.addEventListener('animationend', () => {
-            keyElement.classList.remove("hit")
-        })
+        flashKey(keyId, correct);
 
-        if (currentKey === taskString[0]) {
-            charRight = currentKey;
-            updateAll();
-            highlightedKey.classList.remove("selected");
-
-            if (correctChars < exercises[taskNum - 1].length) {
-                console.log("Length = ", correctChars, exercises[taskNum - 1].length);
-                nextKey();
-            } else {
-                taskEnd();
-            }
+        if (correct) {
+            clearKeyHighlights();
+            handleCorrectChar();
         } else {
-            if ((currentKey === taskString[0].toUpperCase()) || (currentKey === taskString[0].toLowerCase())) {
-                document.getElementById("message").innerHTML = "Змініть регістр символів!";
-                setTimeout(function () {
-                    document.getElementById("message").innerHTML = "";
-                }, 2000);
-            }
-            if (isLetter(currentKey) && (currentKey.length === 1)) {
-                if ((isEng(currentKey) && isCyr(taskString[0])) || (isEng(taskString[0]) && isCyr(currentKey))) {
-                    document.getElementById("message").innerHTML = "Змініть розкладку клавіатури!";
-                    setTimeout(function () {
-                        document.getElementById("message").innerHTML = "";
-                    }, 2000);
-                }
-            }
+            handleWrongChar(e.key, expected);
         }
-    })
+    });
 
-    function isLetter(ckey) {
-        return isEng(ckey) + isCyr(ckey)
+    /* ══════════════════════════════════════════════════════
+       SCORING
+    ══════════════════════════════════════════════════════ */
+    function calcGrade(speed, accuracy) {
+        let pts = 0;
+
+        if      (accuracy > 98) pts += 6;
+        else if (accuracy > 95) pts += 5;
+        else if (accuracy > 90) pts += 4;
+        else if (accuracy > 85) pts += 3;
+        else if (accuracy > 80) pts += 2;
+        else if (accuracy > 70) pts += 1;
+
+        if      (speed > 160) pts += 6;
+        else if (speed > 140) pts += 5;
+        else if (speed > 120) pts += 4;
+        else if (speed > 100) pts += 3;
+        else if (speed > 80)  pts += 2;
+        else if (speed > 60)  pts += 1;
+
+        return pts;
     }
 
-    function isEng(ckey) {
-        return ckey.match(/([a-zA-Z]+)/)
+    /* ══════════════════════════════════════════════════════
+       TELEGRAM
+    ══════════════════════════════════════════════════════ */
+    function sendToTelegram(text) {
+        fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: TG_CHAT_ID, text }),
+        }).catch(console.error);
     }
 
-    function isCyr(ckey) {
-        return ckey.match(/([а-яіїєґА-ЯІЇЄҐ]+)/)
+    /* ══════════════════════════════════════════════════════
+       MODALS
+    ══════════════════════════════════════════════════════ */
+    function openModal(title, bodyHTML) {
+        document.getElementById('modal-head').textContent = title;
+        document.getElementById('modal-body').innerHTML   = bodyHTML;
+        document.getElementById('modal').classList.add('open');
+    }
+    function closeModal() {
+        document.getElementById('modal').classList.remove('open');
     }
 
-    function progressBar() {
-        let z = correctChars * 98 / totalChars
-        return z.toFixed(1)
+    function openLessonModal() {
+        const options = LESSON_NAMES
+            .map((name, i) => `<option value="${i}">${name}</option>`)
+            .join('');
+
+        openModal('Оберіть вправу',
+            `<select id="lesson-select" size="12">${options}</select>`);
+
+        document.getElementById('lesson-select').addEventListener('change', e => {
+            closeModal();
+            startTask(Number(e.target.value));
+        });
     }
 
-    function nextKey() {
-        let ckey = taskString[0];
-        if (isEng(ckey)) {
-            lang = "eng";
-        }
-        if (isCyr(ckey)) {
-            lang = "ua";
-        }
-        kbdSetup(false);
-        const key = document.getElementById(getKeyId(ckey));
-        key.classList.add("selected");
+    function openProgressModal() {
+        const elapsed  = state.timeStart
+            ? ((state.timeEnd || Date.now()) - state.timeStart) / 1000
+            : 0;
+        const mins   = Math.floor(elapsed / 60);
+        const secs   = Math.floor(elapsed % 60);
+        const speed  = elapsed > 0 ? Math.round(state.correct / elapsed * 60) : 0;
+        const total  = state.correct + state.errors;
+        const acc    = total > 0 ? Math.round(state.correct / total * 100) : 0;
+        const grade  = calcGrade(speed, acc);
+
+        const name    = document.getElementById('inp-name').value;
+        const surname = document.getElementById('inp-surname').value;
+
+        sendToTelegram(
+            `${LESSON_NAMES[state.taskIdx]} | ${surname} ${name}\n` +
+            `Час: ${mins}хв ${secs}с | Швидкість: ${speed} симв/хв | Точність: ${acc}% | Балів: ${grade}`
+        );
+
+        openModal('Результати', `
+    <div class="result-grid">
+      <div class="result-cell"><div class="big">${mins}:${String(secs).padStart(2,'0')}</div><div class="sm">час</div></div>
+      <div class="result-cell"><div class="big">${speed}</div><div class="sm">симв/хв</div></div>
+      <div class="result-cell"><div class="big">${acc}%</div><div class="sm">точність</div></div>
+      <div class="result-cell"><div class="big">${state.correct}</div><div class="sm">правильно</div></div>
+    </div>
+    <div style="text-align:center">
+      <span class="grade-badge">${grade} балів</span>
+    </div>
+  `);
     }
 
-    function getTimestamp() {
-        return Math.floor(Date.now() / 1000)
+    function openHandsModal() {
+        openModal('Постановка рук', `
+<div style="margin-bottom:14px">
+<svg viewBox="0 0 540 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:var(--radius);background:var(--panel)">
+  <!-- Finger color legend -->
+  <!-- pinky=#f76f6f  ring=#f5a623  middle=#3ecf8e  index=#4f8ef7  thumb=#a78bfa -->
+
+  <!-- LEFT HAND label -->
+  <text x="90" y="22" text-anchor="middle" font-size="11" fill="#8892a4" font-family="monospace" letter-spacing="1">ЛІВА РУКА</text>
+  <!-- RIGHT HAND label -->
+  <text x="390" y="22" text-anchor="middle" font-size="11" fill="#8892a4" font-family="monospace" letter-spacing="1">ПРАВА РУКА</text>
+
+  <!-- ── LEFT HAND ── -->
+  <!-- Palm base -->
+  <rect x="30" y="140" width="120" height="60" rx="18" fill="#1e2026" stroke="#2a2d35" stroke-width="1"/>
+
+  <!-- Pinky L -->
+  <rect x="32"  y="72" width="22" height="72" rx="11" fill="#f76f6f" opacity=".85"/>
+  <!-- Ring L -->
+  <rect x="58"  y="55" width="22" height="90" rx="11" fill="#f5a623" opacity=".85"/>
+  <!-- Middle L -->
+  <rect x="84"  y="45" width="22" height="100" rx="11" fill="#3ecf8e" opacity=".85"/>
+  <!-- Index L -->
+  <rect x="110" y="58" width="22" height="88" rx="11" fill="#4f8ef7" opacity=".85"/>
+  <!-- Thumb L -->
+  <rect x="128" y="148" width="18" height="42" rx="9" fill="#a78bfa" opacity=".85" transform="rotate(-30 137 169)"/>
+
+  <!-- Home row dots L: F and J equivalent -->
+  <circle cx="121" cy="138" r="4" fill="#fff" opacity=".9"/>
+
+  <!-- Finger tip labels L -->
+  <text x="43"  y="68" text-anchor="middle" font-size="9" fill="#fff" font-family="monospace">М</text>
+  <text x="69"  y="51" text-anchor="middle" font-size="9" fill="#fff" font-family="monospace">Б</text>
+  <text x="95"  y="41" text-anchor="middle" font-size="9" fill="#fff" font-family="monospace">С</text>
+  <text x="121" y="54" text-anchor="middle" font-size="9" fill="#fff" font-family="monospace">В</text>
+
+  <!-- Key zone labels L -->
+  <text x="43"  y="108" text-anchor="middle" font-size="8" fill="#f76f6f" font-family="monospace">я ш щ</text>
+  <text x="69"  y="108" text-anchor="middle" font-size="8" fill="#f5a623" font-family="monospace">і ц х</text>
+  <text x="95"  y="108" text-anchor="middle" font-size="8" fill="#3ecf8e" font-family="monospace">в у е</text>
+  <text x="121" y="108" text-anchor="middle" font-size="8" fill="#4f8ef7" font-family="monospace">а к р</text>
+
+  <!-- ── RIGHT HAND ── -->
+  <rect x="330" y="140" width="120" height="60" rx="18" fill="#1e2026" stroke="#2a2d35" stroke-width="1"/>
+
+  <!-- Index R -->
+  <rect x="348" y="58" width="22" height="88" rx="11" fill="#4f8ef7" opacity=".85"/>
+  <!-- Middle R -->
+  <rect x="374" y="45" width="22" height="100" rx="11" fill="#3ecf8e" opacity=".85"/>
+  <!-- Ring R -->
+  <rect x="400" y="55" width="22" height="90" rx="11" fill="#f5a623" opacity=".85"/>
+  <!-- Pinky R -->
+  <rect x="426" y="72" width="22" height="72" rx="11" fill="#f76f6f" opacity=".85"/>
+  <!-- Thumb R -->
+  <rect x="330" y="148" width="18" height="42" rx="9" fill="#a78bfa" opacity=".85" transform="rotate(30 339 169)"/>
+
+  <!-- Home row dot R -->
+  <circle cx="359" cy="138" r="4" fill="#fff" opacity=".9"/>
+
+  <!-- Finger tip labels R -->
+  <text x="359" y="54" text-anchor="middle" font-size="9" fill="#fff" font-family="monospace">В</text>
+  <text x="385" y="41" text-anchor="middle" font-size="9" fill="#fff" font-family="monospace">С</text>
+  <text x="411" y="51" text-anchor="middle" font-size="9" fill="#fff" font-family="monospace">Б</text>
+  <text x="437" y="68" text-anchor="middle" font-size="9" fill="#fff" font-family="monospace">М</text>
+
+  <!-- Key zone labels R -->
+  <text x="359" y="108" text-anchor="middle" font-size="8" fill="#4f8ef7" font-family="monospace">п н г</text>
+  <text x="385" y="108" text-anchor="middle" font-size="8" fill="#3ecf8e" font-family="monospace">р о ш</text>
+  <text x="411" y="108" text-anchor="middle" font-size="8" fill="#f5a623" font-family="monospace">л щ з</text>
+  <text x="437" y="108" text-anchor="middle" font-size="8" fill="#f76f6f" font-family="monospace">д ж є</text>
+
+  <!-- Spacebar thumb indicator -->
+  <rect x="210" y="190" width="120" height="22" rx="11" fill="#a78bfa" opacity=".5"/>
+  <text x="270" y="205" text-anchor="middle" font-size="9" fill="#e8eaf0" font-family="monospace">ПРОБІЛ — великі пальці</text>
+
+  <!-- Legend -->
+  <circle cx="30"  y="220" r="5" fill="#f76f6f"/><text x="38"  y="223" font-size="9" fill="#8892a4" font-family="monospace">мізинець</text>
+  <circle cx="110" y="220" r="5" fill="#f5a623"/><text x="118" y="223" font-size="9" fill="#8892a4" font-family="monospace">підмізинний</text>
+  <circle cx="210" y="220" r="5" fill="#3ecf8e"/><text x="218" y="223" font-size="9" fill="#8892a4" font-family="monospace">середній</text>
+  <circle cx="290" y="220" r="5" fill="#4f8ef7"/><text x="298" y="223" font-size="9" fill="#8892a4" font-family="monospace">вказівний</text>
+  <circle cx="370" y="220" r="5" fill="#a78bfa"/><text x="378" y="223" font-size="9" fill="#8892a4" font-family="monospace">великий</text>
+</svg>
+</div>
+<div style="font-size:12px;color:var(--txt-2);line-height:1.8;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px">
+  <div>· Зап'ястя не лежать на столі під час набору</div>
+  <div>· Лікті під кутом ~90°, вільно вздовж тіла</div>
+  <div>· Пальці у вихідному положенні: <span style="color:var(--accent)">Ф І В А</span> і <span style="color:var(--accent)">П Р О Л</span></div>
+  <div>· Крапки на клавішах <span style="color:var(--accent)">А</span> та <span style="color:var(--accent)">О</span> — орієнтири без погляду</div>
+  <div>· Кожен палець відповідає за свій стовпець</div>
+  <div>· Погляд тільки на текст, не на клавіатуру</div>
+</div>
+  `);
     }
 
-    function CustomAlert() {
-        this.alert = function (message, title) {
-            document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody" style="line-height: 1.8em;"></div><div id="dialogboxfoot"></div></div></div>';
-
-            let dialogoverlay = document.getElementById('dialogoverlay');
-            let dialogbox = document.getElementById('dialogbox');
-
-            let winH = window.innerHeight;
-            dialogoverlay.style.height = winH + "px";
-
-            dialogbox.style.top = "100px";
-
-            dialogoverlay.style.display = "block";
-            dialogbox.style.display = "block";
-
-            document.getElementById('dialogboxhead').style.display = 'block';
-
-            if (typeof title === 'undefined') {
-                document.getElementById('dialogboxhead').style.display = 'none';
-            } else {
-                document.getElementById('dialogboxhead').innerHTML = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> ' + title;
-            }
-            document.getElementById('dialogboxbody').innerHTML = message;
-            document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-contained active" onclick="customAlert.ok()">OK</button>';
-        }
-
-        this.ok = function () {
-            document.getElementById('dialogbox').style.display = "none";
-            document.getElementById('dialogoverlay').style.display = "none";
-        }
+    function openAboutModal() {
+        openModal('Про Тиканку', `
+    Клавіатурний онлайн-тренажер для школярів.<br><br>
+    Щира подяка:<br>
+    · Pelle Lundgren (evilpaper) — за Keyboard Hero<br>
+    · Спільноті KDE — за уроки для Ktouch<br>
+    · Animista.net — за CSS-анімації<br>
+    · Спільноті «Шкільна інформатика від А до Я»<br><br>
+    Автор: Громко Г.Ю.
+  `);
     }
 
-    let customAlert = new CustomAlert();
+    /* ══════════════════════════════════════════════════════
+       INIT
+    ══════════════════════════════════════════════════════ */
+    buildKeyboard();
+    buildCharMap();        // init charToKeyId from FALLBACK_LAYOUT
+    startTask(0);
+    detectLayout();        // async: API → show typing area; fallback → start manual calib
 </script>
+</body>
 </html>
