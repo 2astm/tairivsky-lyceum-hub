@@ -18,7 +18,7 @@ const Contacts = () => {
           <div className="flex justify-between items-center mb-8">
             <SectionHeading
               title="Контакти"
-              description="Зв'яжіться з Таїровським ліцеєм"
+              description="Зв'яжіться з Таїрівським ліцеєм"
             />
 
             <a
@@ -101,7 +101,7 @@ const Contacts = () => {
                     className="w-full h-full border-0"
                     allowFullScreen
                     loading="lazy"
-                    title="Карта розташування Таїровського ліцею"
+                    title="Карта розташування Таїрівського ліцею"
                   ></iframe>
                 </div>
 

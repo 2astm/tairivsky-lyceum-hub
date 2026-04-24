@@ -7,7 +7,7 @@ const Structure = () => {
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
         <title>Структура управління | Таїрівський ліцей</title>
-        <meta name="description" content="Схема структури управління Таїровським ліцеєм" />
+        <meta name="description" content="Схема структури управління Таїрівським ліцеєм" />
       </Helmet>
       
       <Header />
@@ -50,9 +50,9 @@ const Structure = () => {
               </marker>
             </defs>
             
-            {/* ========== ROW 1: Таїровська селищна рада ========== */}
+            {/* ========== ROW 1: Таїрівська селищна рада ========== */}
             <rect x="450" y="20" width="200" height="40" rx="8" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2" />
-            <text x="550" y="45" textAnchor="middle" fontSize="12" fontWeight="600" fill="#1e40af">Таїровська селищна рада</text>
+            <text x="550" y="45" textAnchor="middle" fontSize="12" fontWeight="600" fill="#1e40af">Таїрівська селищна рада</text>
             
             {/* ========== ROW 2: Управління гуманітарної політики ========== */}
             <rect x="420" y="100" width="260" height="40" rx="8" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2" />
@@ -119,7 +119,7 @@ const Structure = () => {
             
             {/* ========== CONNECTIONS ========== */}
             
-            {/* 1. Таїровська селищна рада -> Управління гуманітарної політики */}
+            {/* 1. Таїрівська селищна рада -> Управління гуманітарної політики */}
             <line x1="550" y1="60" x2="550" y2="98" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowBlue)" />
             
             {/* 2. Управління гуманітарної політики -> Директор */}

@@ -25,7 +25,10 @@ const Hero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-4">
               Таїрівський ліцей
             </h1>
-            
+
+            <p className="text-xl text-gray-600 mb-8 max-w-lg mx-auto md:mx-0">
+              Таїрівської селищної ради Одеського району Одеської області
+            </p>
             <p className="text-xl text-gray-600 mb-8 max-w-lg mx-auto md:mx-0">
               Місце, де знання зустрічається з інноваціями, 
               а традиції - з майбутнім.

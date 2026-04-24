@@ -28,7 +28,7 @@ const Psychologist = () => {
           </Alert>
           
           <div className="prose prose-lg max-w-none mt-12">
-            <p className="lead">В Таїровському ліцеї працюють кваліфіковані психологи та соціальні педагоги, які надають допомогу учням, батькам та вчителям.</p>
+            <p className="lead">В Таїрівському ліцеї працюють кваліфіковані психологи та соціальні педагоги, які надають допомогу учням, батькам та вчителям.</p>
             
             <div className="grid md:grid-cols-2 gap-8 my-8">
               <Card className="p-6">

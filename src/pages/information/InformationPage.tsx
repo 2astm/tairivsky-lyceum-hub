@@ -34,7 +34,7 @@ const InformationPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             title="Інформація"
-            description="Корисна інформація для учнів та батьків Таїровського ліцею"
+            description="Корисна інформація для учнів та батьків Таїрівського ліцею"
           />
 
           <Alert className="my-6 border-amber-300 bg-amber-50">
