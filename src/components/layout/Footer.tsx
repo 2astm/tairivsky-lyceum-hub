@@ -13,7 +13,7 @@ const Footer = () => {
               <span className="bg-blue-500 text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm">
                 ТЛ
               </span>
-              <span>Таїровський ліцей</span>
+              <span>Таїрівський ліцей</span>
             </Link>
             <p className="text-gray-600 mb-6">
               Заклад освіти, який забезпечує якісну освіту та всебічний розвиток учнів.
@@ -124,7 +124,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-gray-200">
           <p className="text-gray-500 text-center text-sm">
-            © {new Date().getFullYear()} Таїровський ліцей. Усі права захищені.
+            © {new Date().getFullYear()} Таїрівський ліцей. Усі права захищені.
           </p>
         </div>
       </div>

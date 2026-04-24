@@ -33,7 +33,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
       <div className="inline-flex items-center mb-2">
         <div className="h-1 w-6 rounded bg-blue-500 mr-2" />
         <span className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-          Таїровський ліцей
+          Таїрівський ліцей
         </span>
       </div>
 

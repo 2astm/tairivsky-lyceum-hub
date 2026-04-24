@@ -12,7 +12,7 @@ const Preview = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4">
       <Card className="max-w-3xl w-full p-8 shadow-lg">
         <SectionHeading
-          title="Таїровський ліцей"
+          title="Таїрівський ліцей"
           description="Вибір версії сайту"
           align="center"
         />
@@ -59,7 +59,7 @@ const Preview = () => {
               Поточна офіційна версія
             </h3>
             <p className="text-gray-600 mb-4">
-              Це діюча версія сайту з актуальною інформацією про Таїровський ліцей, 
+              Це діюча версія сайту з актуальною інформацією про Таїрівський ліцей, 
               навчальний процес та новини.
             </p>
             <a href="https://sites.google.com/view/tairovskyi-zaklad/" target="_blank" rel="noopener noreferrer">
@@ -74,7 +74,7 @@ const Preview = () => {
         <div className="mt-6 flex justify-center">
           <div className="bg-blue-50 p-4 rounded-lg text-center w-full">
             <p className="text-blue-700 text-sm">
-              © 2025 Таїровський ліцей. Усі права захищені.
+              © 2025 Таїрівський ліцей. Усі права захищені.
             </p>
           </div>
         </div>

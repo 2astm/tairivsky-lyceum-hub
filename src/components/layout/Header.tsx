@@ -276,12 +276,12 @@ const Header = () => {
           <Link 
             to="/home" 
             className="flex items-center space-x-2 text-2xl font-semibold"
-            aria-label="Таїровський ліцей"
+            aria-label="Таїрівський ліцей"
           >
             <span className="bg-blue-500 text-white w-10 h-10 rounded-lg flex items-center justify-center">
               ТЛ
             </span>
-            <span>Таїровський ліцей</span>
+            <span>Таїрівський ліцей</span>
           </Link>
 
           <div ref={navRef} className="hidden md:flex items-center space-x-1">

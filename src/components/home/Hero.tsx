@@ -23,7 +23,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-4">
-              Таїровський ліцей
+              Таїрівський ліцей
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 max-w-lg mx-auto md:mx-0">
@@ -55,7 +55,7 @@ const Hero = () => {
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                 <img 
                   src="/lovable-uploads/fb6e1f18-6165-43c6-85bd-a633ac4c990a.png"
-                  alt="Таїровський ліцей - фото будівлі школи"
+                  alt="Таїрівський ліцей - фото будівлі школи"
                   className="object-cover w-full h-full"
                   onLoad={() => setIsImageLoaded(true)}
                 />

@@ -6,7 +6,7 @@ const Structure = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
-        <title>Структура управління | Таїровський ліцей</title>
+        <title>Структура управління | Таїрівський ліцей</title>
         <meta name="description" content="Схема структури управління Таїровським ліцеєм" />
       </Helmet>
       
