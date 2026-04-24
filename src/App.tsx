@@ -26,7 +26,7 @@ import StopViolence from "./pages/help-safety/StopViolence";
 import InternetSafety from "./pages/help-safety/InternetSafety";
 import Psychologist from "./pages/help-safety/Psychologist";
 import CareerGuidance from "./pages/career-guidance/CareerGuidance";
-import Tykanka from "./pages/Tykanka";
+import {Tykanka} from "@/components/tykanka/src/components/tykanka";
 
 const queryClient = new QueryClient();
 

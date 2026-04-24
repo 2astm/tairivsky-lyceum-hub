@@ -1,0 +1,277 @@
+/* ═══════════════════════════════════════════════════════
+   ТИКАНКА — Component styles
+   All classes prefixed with tyk- to avoid collisions.
+   CSS variables fall back gracefully if host app
+   doesn't define them.
+═══════════════════════════════════════════════════════ */
+
+.tyk-root {
+  --tyk-bg:        #0e0f11;
+  --tyk-surface:   #16181c;
+  --tyk-panel:     #1e2026;
+  --tyk-border:    #2a2d35;
+  --tyk-accent:    #4f8ef7;
+  --tyk-accent-lo: rgba(79,142,247,.15);
+  --tyk-ok:        #3ecf8e;
+  --tyk-ok-lo:     rgba(62,207,142,.15);
+  --tyk-err:       #f76f6f;
+  --tyk-err-lo:    rgba(247,111,111,.15);
+  --tyk-warn:      #f5a623;
+  --tyk-txt:       #e8eaf0;
+  --tyk-txt-2:     #8892a4;
+  --tyk-txt-3:     #50566a;
+  --tyk-mono:      'JetBrains Mono', monospace;
+  --tyk-display:   'Unbounded', sans-serif;
+  --tyk-radius:    10px;
+  --tyk-radius-lg: 16px;
+
+  font-family: var(--tyk-mono);
+  background: var(--tyk-bg);
+  color: var(--tyk-txt);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 4rem;
+  box-sizing: border-box;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.tyk-header {
+  width: 100%; max-width: 900px;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;
+}
+.tyk-logo {
+  font-family: var(--tyk-display);
+  font-size: 1.25rem; font-weight: 600;
+  letter-spacing: -0.03em; color: var(--tyk-txt);
+}
+.tyk-logo span { color: var(--tyk-accent); }
+
+.tyk-name-row {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.tyk-name-row label {
+  font-size: 11px; color: var(--tyk-txt-2);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.tyk-name-row input {
+  background: var(--tyk-panel);
+  border: 1px solid var(--tyk-border);
+  border-radius: var(--tyk-radius);
+  color: var(--tyk-txt); font-family: var(--tyk-mono);
+  font-size: 13px; padding: 6px 10px; width: 120px; outline: none;
+  transition: border-color .2s;
+}
+.tyk-name-row input:focus { border-color: var(--tyk-accent); }
+
+/* ── Nav ─────────────────────────────────────────────── */
+.tyk-nav {
+  width: 100%; max-width: 900px;
+  display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap;
+}
+.tyk-btn {
+  font-family: var(--tyk-mono); font-size: 12px;
+  padding: 7px 14px; border-radius: var(--tyk-radius);
+  border: 1px solid var(--tyk-border);
+  background: var(--tyk-panel); color: var(--tyk-txt-2);
+  cursor: pointer; transition: all .15s;
+}
+.tyk-btn:hover { border-color: var(--tyk-accent); color: var(--tyk-txt); }
+.tyk-btn-active {
+  background: var(--tyk-accent-lo);
+  border-color: var(--tyk-accent); color: var(--tyk-accent);
+}
+
+/* ── Typing area ────────────────────────────────────── */
+.tyk-typing-area { width: 100%; max-width: 900px; }
+
+.tyk-stats-bar {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 10px; margin-bottom: 1.5rem;
+}
+.tyk-stat-card {
+  background: var(--tyk-panel); border: 1px solid var(--tyk-border);
+  border-radius: var(--tyk-radius); padding: 12px 16px; text-align: center;
+}
+.tyk-stat-val { font-size: 22px; font-weight: 600; color: var(--tyk-txt); line-height: 1; }
+.tyk-stat-lbl {
+  font-size: 10px; color: var(--tyk-txt-3);
+  text-transform: uppercase; letter-spacing: .1em; margin-top: 5px;
+}
+
+.tyk-progress-track {
+  height: 3px; background: var(--tyk-border);
+  border-radius: 2px; margin-bottom: 1.25rem; overflow: hidden;
+}
+.tyk-progress-fill {
+  height: 100%; background: var(--tyk-accent);
+  border-radius: 2px; transition: width .2s;
+}
+
+.tyk-task-box {
+  background: var(--tyk-surface); border: 1px solid var(--tyk-border);
+  border-radius: var(--tyk-radius-lg); padding: 1.25rem 1.5rem;
+  font-size: 15px; letter-spacing: .06em; line-height: 2;
+  margin-bottom: 1.25rem; min-height: 80px;
+  display: flex; align-items: center; flex-wrap: wrap; word-break: break-all;
+}
+.tyk-char-done   { color: var(--tyk-ok); }
+.tyk-char-cursor { color: var(--tyk-txt); border-bottom: 2px solid var(--tyk-accent); animation: tyk-blink .8s step-end infinite; }
+.tyk-char-ahead  { color: var(--tyk-txt-3); }
+@keyframes tyk-blink { 50% { border-color: transparent; } }
+
+.tyk-status {
+  font-size: 13px; color: var(--tyk-warn);
+  text-align: center; min-height: 24px; margin-bottom: 1rem;
+}
+
+/* ── Pre-calib message ──────────────────────────────── */
+.tyk-pre-calib {
+  width: 100%; max-width: 900px;
+  background: var(--tyk-surface); border: 1px solid var(--tyk-border);
+  border-radius: var(--tyk-radius-lg); padding: 1.5rem;
+  margin-bottom: 1.25rem; text-align: center;
+}
+.tyk-pre-calib-title { font-size: 15px; font-weight: 500; color: var(--tyk-txt); margin-bottom: 8px; }
+.tyk-pre-calib-sub   { font-size: 13px; color: var(--tyk-txt-2); line-height: 1.7; }
+
+/* ── Calibration panel ──────────────────────────────── */
+.tyk-calib-panel {
+  width: 100%; max-width: 900px;
+  background: var(--tyk-surface); border: 1px solid var(--tyk-border);
+  border-radius: var(--tyk-radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px;
+}
+.tyk-calib-header {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 10px; gap: 12px; flex-wrap: wrap;
+}
+.tyk-calib-phase { font-size: 11px; color: var(--tyk-accent); text-transform: uppercase; letter-spacing: .1em; font-weight: 500; }
+.tyk-calib-progress-wrap { display: flex; align-items: center; gap: 10px; flex: 1; max-width: 280px; }
+.tyk-calib-track { flex: 1; height: 5px; background: var(--tyk-border); border-radius: 3px; overflow: hidden; }
+.tyk-calib-fill  { height: 100%; background: var(--tyk-ok); border-radius: 3px; transition: width .15s; }
+.tyk-calib-count { font-size: 11px; color: var(--tyk-txt-3); white-space: nowrap; }
+.tyk-calib-instr { font-size: 13px; color: var(--tyk-txt-2); line-height: 1.6; }
+.tyk-calib-instr b { color: var(--tyk-txt); }
+
+/* ── Keyboard ───────────────────────────────────────── */
+.tyk-keyboard {
+  width: 100%; max-width: 900px;
+  background: var(--tyk-surface); border: 1px solid var(--tyk-border);
+  border-radius: var(--tyk-radius-lg); padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 8px; user-select: none;
+}
+.tyk-kb-row { display: flex; gap: 6px; }
+
+.tyk-key {
+  background: var(--tyk-panel); border: 1px solid var(--tyk-border);
+  border-radius: 7px; color: var(--tyk-txt-2);
+  font-family: var(--tyk-mono); font-size: 12px;
+  height: 42px; min-width: 42px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 6px; flex: 1; cursor: default;
+  transition: background .1s, color .1s, border-color .1s, transform .05s;
+  position: relative; box-sizing: border-box;
+}
+
+/* Width variants */
+.tyk-wide-1 { flex: 1.5; }
+.tyk-wide-2 { flex: 2; }
+.tyk-wide-3 { flex: 3; }
+.tyk-wide-5 { flex: 5; }
+
+/* States */
+.tyk-key-selected { background: var(--tyk-accent-lo); border-color: var(--tyk-accent); color: var(--tyk-accent); font-weight: 600; }
+.tyk-key-hit-ok   { background: var(--tyk-ok-lo);     border-color: var(--tyk-ok);     color: var(--tyk-ok);     transform: scale(.93); }
+.tyk-key-hit-err  { background: var(--tyk-err-lo);    border-color: var(--tyk-err);    color: var(--tyk-err);    transform: scale(.93); }
+
+/* Finger bottom-border colors */
+.tyk-f-pinky  { border-bottom: 2px solid #f76f6f; }
+.tyk-f-ring   { border-bottom: 2px solid #f5a623; }
+.tyk-f-middle { border-bottom: 2px solid #3ecf8e; }
+.tyk-f-index  { border-bottom: 2px solid #4f8ef7; }
+.tyk-f-thumb  { border-bottom: 2px solid #a78bfa; }
+
+/* Home row bump dot */
+.tyk-home-key::after {
+  content: '';
+  position: absolute; bottom: 5px;
+  left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: currentColor; opacity: .5;
+}
+
+/* ── Finger legend ──────────────────────────────────── */
+.tyk-finger-legend {
+  width: 100%; max-width: 900px;
+  display: flex; gap: 16px; flex-wrap: wrap;
+  justify-content: center; margin-top: 10px;
+}
+.tyk-legend-item { font-size: 11px; color: var(--tyk-txt-2); display: flex; align-items: center; gap: 5px; }
+.tyk-legend-dot, .tyk-legend-home-dot { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.tyk-f-pinky-dot  { background: #f76f6f; }
+.tyk-f-ring-dot   { background: #f5a623; }
+.tyk-f-middle-dot { background: #3ecf8e; }
+.tyk-f-index-dot  { background: #4f8ef7; }
+.tyk-f-thumb-dot  { background: #a78bfa; }
+.tyk-legend-home-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--tyk-txt-2); opacity: .6; }
+
+/* ── Modal ──────────────────────────────────────────── */
+.tyk-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.65); z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+}
+.tyk-modal {
+  background: var(--tyk-surface); border: 1px solid var(--tyk-border);
+  border-radius: var(--tyk-radius-lg);
+  width: min(520px, 92vw); overflow: hidden;
+  animation: tyk-pop-in .2s ease;
+}
+@keyframes tyk-pop-in { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.tyk-modal-head {
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--tyk-border);
+  font-family: var(--tyk-display); font-size: 14px; font-weight: 600; color: var(--tyk-txt);
+}
+.tyk-modal-body { padding: 1.25rem; font-size: 13px; line-height: 1.9; color: var(--tyk-txt-2); }
+.tyk-modal-body p { margin: 0 0 2px; }
+.tyk-modal-foot {
+  padding: .75rem 1.25rem; border-top: 1px solid var(--tyk-border);
+  display: flex; justify-content: flex-end;
+}
+.tyk-btn-primary {
+  background: var(--tyk-accent); border: none; color: #fff;
+  font-family: var(--tyk-mono); font-size: 13px;
+  padding: 8px 20px; border-radius: var(--tyk-radius);
+  cursor: pointer; transition: opacity .15s;
+}
+.tyk-btn-primary:hover { opacity: .85; }
+
+.tyk-select {
+  width: 100%; background: var(--tyk-panel); border: 1px solid var(--tyk-border);
+  border-radius: var(--tyk-radius); color: var(--tyk-txt);
+  font-family: var(--tyk-mono); font-size: 13px; padding: 8px; outline: none;
+}
+
+/* ── Result grid ────────────────────────────────────── */
+.tyk-result-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-top: 8px; }
+.tyk-result-cell { background: var(--tyk-panel); border-radius: var(--tyk-radius); padding: 12px; text-align: center; }
+.tyk-result-big  { font-size: 26px; font-weight: 600; color: var(--tyk-txt); }
+.tyk-result-lbl  { font-size: 11px; color: var(--tyk-txt-3); text-transform: uppercase; letter-spacing: .08em; margin-top: 4px; }
+.tyk-grade-badge {
+  display: inline-block; padding: 6px 20px; border-radius: var(--tyk-radius);
+  font-family: var(--tyk-display); font-size: 15px; font-weight: 600;
+  background: var(--tyk-accent-lo); color: var(--tyk-accent); border: 1px solid var(--tyk-accent);
+}
+
+.tyk-modal-confirm-title { font-size: 14px; color: var(--tyk-txt); font-weight: 500; margin-bottom: 8px; }
+.tyk-modal-confirm-sub   { font-size: 13px; color: var(--tyk-txt-2); }
+
+/* ── Hands modal ────────────────────────────────────── */
+.tyk-hands-tips {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6px 16px; font-size: 12px; color: var(--tyk-txt-2); line-height: 1.8;
+}
+.tyk-hands-tips b { color: var(--tyk-txt); }

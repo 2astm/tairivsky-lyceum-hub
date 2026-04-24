@@ -5,7 +5,387 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Тиканка — клавіатурний тренажер</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Unbounded:wght@400;600&display=swap" rel="stylesheet">
-    <link href="./tykstyle.css" rel="stylesheet">
+    <style>
+        /* ── TOKENS ─────────────────────────────────────────── */
+        :root {
+            --bg:        #0e0f11;
+            --surface:   #16181c;
+            --panel:     #1e2026;
+            --border:    #2a2d35;
+            --accent:    #4f8ef7;
+            --accent-lo: rgba(79,142,247,.15);
+            --ok:        #3ecf8e;
+            --ok-lo:     rgba(62,207,142,.15);
+            --err:       #f76f6f;
+            --err-lo:    rgba(247,111,111,.15);
+            --warn:      #f5a623;
+            --txt:       #e8eaf0;
+            --txt-2:     #8892a4;
+            --txt-3:     #50566a;
+            --mono:      'JetBrains Mono', monospace;
+            --display:   'Unbounded', sans-serif;
+            --radius:    10px;
+            --radius-lg: 16px;
+        }
+
+        /* ── RESET ──────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--mono);
+            background: var(--bg);
+            color: var(--txt);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem 4rem;
+        }
+
+        /* ── HEADER ─────────────────────────────────────────── */
+        .app-header {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .app-logo {
+            font-family: var(--display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            color: var(--txt);
+        }
+        .app-logo span { color: var(--accent); }
+
+        .name-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .name-row label {
+            font-size: 11px;
+            color: var(--txt-2);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .name-row input {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--txt);
+            font-family: var(--mono);
+            font-size: 13px;
+            padding: 6px 10px;
+            width: 120px;
+            outline: none;
+            transition: border-color .2s;
+        }
+        .name-row input:focus { border-color: var(--accent); }
+
+        /* ── NAV BUTTONS ────────────────────────────────────── */
+        .nav-row {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            font-family: var(--mono);
+            font-size: 12px;
+            padding: 7px 14px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--txt-2);
+            cursor: pointer;
+            transition: all .15s;
+        }
+        .btn:hover { border-color: var(--accent); color: var(--txt); }
+        .btn.active { background: var(--accent-lo); border-color: var(--accent); color: var(--accent); }
+
+        /* ── STATS BAR ──────────────────────────────────────── */
+        .stats-bar {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            text-align: center;
+        }
+        .stat-card .val {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--txt);
+            line-height: 1;
+        }
+        .stat-card .lbl {
+            font-size: 10px;
+            color: var(--txt-3);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 5px;
+        }
+
+        /* ── PROGRESS BAR ───────────────────────────────────── */
+        .progress-track {
+            width: 100%;
+            max-width: 900px;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+            width: 0%;
+            transition: width .2s;
+        }
+
+        /* ── TASK DISPLAY ───────────────────────────────────── */
+        .task-box {
+            width: 100%;
+            max-width: 900px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.5rem;
+            font-size: 15px;
+            letter-spacing: 0.06em;
+            line-height: 2;
+            margin-bottom: 1.25rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            word-break: break-all;
+            gap: 0;
+        }
+        .task-box .done  { color: var(--ok); }
+        .task-box .error { color: var(--err); background: var(--err-lo); border-radius: 3px; }
+        .task-box .cursor {
+            color: var(--txt);
+            border-bottom: 2px solid var(--accent);
+            animation: blink .8s step-end infinite;
+        }
+        .task-box .ahead { color: var(--txt-3); }
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        /* ── STATUS MESSAGE ─────────────────────────────────── */
+        #status-msg {
+            width: 100%;
+            max-width: 900px;
+            min-height: 24px;
+            font-size: 13px;
+            color: var(--warn);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* ── KEYBOARD ───────────────────────────────────────── */
+        .keyboard {
+            width: 100%;
+            max-width: 900px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            user-select: none;
+        }
+        .kb-row {
+            display: flex;
+            gap: 6px;
+        }
+        .key {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            color: var(--txt-2);
+            font-family: var(--mono);
+            font-size: 12px;
+            height: 42px;
+            min-width: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6px;
+            flex: 1;
+            cursor: default;
+            transition: background .1s, color .1s, border-color .1s, transform .05s;
+            position: relative;
+        }
+        .key.wide-1  { flex: 1.5; }
+        .key.wide-2  { flex: 2; }
+        .key.wide-3  { flex: 3; }
+        .key.wide-5  { flex: 5; }
+
+        /* States */
+        .key.selected {
+            background: var(--accent-lo);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .key.hit-ok {
+            background: var(--ok-lo);
+            border-color: var(--ok);
+            color: var(--ok);
+            transform: scale(.93);
+        }
+        .key.hit-err {
+            background: var(--err-lo);
+            border-color: var(--err);
+            color: var(--err);
+            transform: scale(.93);
+        }
+
+        /* ── Finger zones ───────────────────────────────────── */
+        /* pinky=red  ring=amber  middle=teal  index=blue  thumb=purple */
+        .f-pinky  { border-bottom: 2px solid #f76f6f; }
+        .f-ring   { border-bottom: 2px solid #f5a623; }
+        .f-middle { border-bottom: 2px solid #3ecf8e; }
+        .f-index  { border-bottom: 2px solid #4f8ef7; }
+        .f-thumb  { border-bottom: 2px solid #a78bfa; }
+
+        /* Home-row bump dot */
+        .key.home-key::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: .5;
+        }
+
+        /* ── MODAL OVERLAY ──────────────────────────────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.65);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            width: min(480px, 92vw);
+            overflow: hidden;
+            animation: popIn .2s ease;
+        }
+        @keyframes popIn {
+            from { transform: scale(.92); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+        .modal-head {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--display);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--txt);
+        }
+        .modal-body {
+            padding: 1.25rem;
+            font-size: 13px;
+            line-height: 1.9;
+            color: var(--txt-2);
+        }
+        .modal-body select {
+            width: 100%;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--txt);
+            font-family: var(--mono);
+            font-size: 13px;
+            padding: 8px;
+            outline: none;
+        }
+        .modal-foot {
+            padding: .75rem 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 13px;
+            padding: 8px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: opacity .15s;
+        }
+        .btn-primary:hover { opacity: .85; }
+
+        /* ── RESULT GRID ────────────────────────────────────── */
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .result-cell {
+            background: var(--panel);
+            border-radius: var(--radius);
+            padding: 12px;
+            text-align: center;
+        }
+        .result-cell .big {
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--txt);
+        }
+        .result-cell .sm {
+            font-size: 11px;
+            color: var(--txt-3);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-top: 4px;
+        }
+        .grade-badge {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 6px 20px;
+            border-radius: var(--radius);
+            font-family: var(--display);
+            font-size: 15px;
+            font-weight: 600;
+            background: var(--accent-lo);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+    </style>
 </head>
 <body>
 
@@ -276,27 +656,65 @@
        2. Manual calibration fallback (Safari/Firefox/other)
     ══════════════════════════════════════════════════════ */
 
+    /* ══════════════════════════════════════════════════════
+       KEYBOARD LAYOUT DETECTION
+       1. KeyboardLayoutMap API (Chrome/Edge) —
+          повертає QWERTY-символ для кожного фізичного code.
+          Ми знаємо що code→qwerty, і що qwerty→ua (ЙЦУКЕН),
+          тож будуємо code→ua через цей подвійний маппінг.
+       2. Ручне калібрування — якщо API недоступний.
+    ══════════════════════════════════════════════════════ */
+
     const TYPEABLE_CODES = Object.keys(CODE_TO_ID).filter(c => c !== 'Space');
 
-    /* ── Step 1: try the API ──────────────────────────────── */
+    // QWERTY lowercase char → Ukrainian [lo, hi]
+    // Це дозволяє перевести результат API (завжди QWERTY) в українські символи
+    const QWERTY_TO_UA = {
+        "'":["'","ʼ"], '1':["1","!"],  '2':["2",'"'],  '3':["3","№"],
+        '4':["4",";"], '5':["5","%"],  '6':["6",":"],  '7':["7","?"],
+        '8':["8","*"], '9':["9","("],  '0':["0",")"],  '-':["-","_"],  '=':["=","+"],
+        'q':["й","Й"], 'w':["ц","Ц"], 'e':["у","У"], 'r':["к","К"],
+        't':["е","Е"], 'y':["н","Н"], 'u':["г","Г"], 'i':["ш","Ш"],
+        'o':["щ","Щ"], 'p':["з","З"], '[':["х","Х"], ']':["ї","Ї"], '\\':["ґ","Ґ"],
+        'a':["ф","Ф"], 's':["і","І"], 'd':["в","В"], 'f':["а","А"],
+        'g':["п","П"], 'h':["р","Р"], 'j':["о","О"], 'k':["л","Л"],
+        'l':["д","Д"], ';':["ж","Ж"], "'":[" ","є","Є"],  // quote key = є
+        'z':["я","Я"], 'x':["ч","Ч"], 'c':["с","С"], 'v':["м","М"],
+        'b':["и","И"], 'n':["т","Т"], 'm':["ь","Ь"],
+        ',':["б","Б"], '.':["ю","Ю"], '/':[".",","],
+    };
+    // Fix quote key entry (JS object literal issue above)
+    QWERTY_TO_UA["'"] = ["є","Є"];
+
     async function detectLayout() {
+        // ── Try KeyboardLayoutMap API ──────────────────────────
         if (navigator.keyboard?.getLayoutMap) {
             try {
                 const map      = await navigator.keyboard.getLayoutMap();
                 const detected = { ...FALLBACK_LAYOUT };
+
                 for (const code of TYPEABLE_CODES) {
-                    const lo = map.get(code);
-                    if (lo && lo !== 'Dead' && lo.length === 1) {
-                        detected[code] = [lo, lo.toUpperCase()];
+                    const qwerty = map.get(code); // e.g. KeyA → 'a', Semicolon → ';'
+                    if (!qwerty || qwerty === 'Dead' || qwerty.length !== 1) continue;
+
+                    const uaPair = QWERTY_TO_UA[qwerty.toLowerCase()];
+                    if (uaPair) {
+                        // Map this physical code to the Ukrainian pair
+                        detected[code] = uaPair;
+                    } else {
+                        // Non-standard key (e.g. AZERTY or Dvorak physical position) —
+                        // keep the raw qwerty char as fallback
+                        detected[code] = [qwerty, qwerty.toUpperCase()];
                     }
                 }
+
                 applyRuntimeLayout(detected, 'api');
                 return;
             } catch (err) {
                 console.warn('KeyboardLayoutMap API failed:', err);
             }
         }
-        // API unavailable — start manual calibration
+        // ── API unavailable → manual calibration ──────────────
         startManualCalib();
     }
 
@@ -305,13 +723,11 @@
         buildCharMap();
         applyLayout(false);
         if (source === 'api' || source === 'calib') {
-            // Show the typing area now that layout is known
             document.getElementById('typing-area').style.display = '';
             document.getElementById('pre-calib-msg').style.display = 'none';
         }
-        if (source === 'api') showStatus('Розкладку клавіатури визначено автоматично ✓', 3000);
-        if (source === 'calib') {
-            showStatus('Розкладку збережено ✓', 3000);
+        if (source === 'api') {
+            showStatus('Розкладку клавіатури визначено автоматично ✓', 3000);
             clearKeyHighlights();
             highlightNextKey();
         }
@@ -451,6 +867,9 @@
         document.querySelector('#modal .btn-primary').onclick = () => {
             closeModal();
             applyRuntimeLayout(merged, 'calib');
+            showStatus('Розкладку збережено ✓', 3000);
+            clearKeyHighlights();
+            highlightNextKey();
             document.querySelector('#modal .btn-primary').onclick = closeModal; // restore default
         };
     }
@@ -613,14 +1032,15 @@
     }
 
     function handleWrongChar(typed, expected) {
+        if (typed.toLowerCase() === expected.toLowerCase()) {
+            showStatus('Змініть регістр символів! (Перевірте CapsLock)');
+        } else if (isEng(typed) && isCyr(expected) || isCyr(typed) && isEng(expected)) {
+            showStatus('Змініть розкладку клавіатури! (мову)');
+            return;
+        }
+
         state.errors++;
         updateStats();
-
-        if (typed.toLowerCase() === expected.toLowerCase()) {
-            showStatus('Змініть регістр символів!');
-        } else if (isEng(typed) && isCyr(expected) || isCyr(typed) && isEng(expected)) {
-            showStatus('Змініть розкладку клавіатури!');
-        }
     }
 
     /* ══════════════════════════════════════════════════════
@@ -717,7 +1137,17 @@
     document.addEventListener('keydown', e => {
         const active = document.activeElement;
         if (active.id === 'inp-name' || active.id === 'inp-surname') return;
-        if (calib.active) { handleCalibKey(e); return; }
+
+        // During calibration: handle Shift display separately, then route to calib handler
+        if (calib.active) {
+            if (e.key === 'Shift') {
+                applyLayout(true);  // show shifted labels so user sees what they're typing
+                const shiftId = e.code === 'ShiftLeft' ? 'shiftleft' : 'shiftright';
+                document.getElementById(shiftId)?.classList.add('selected');
+            }
+            handleCalibKey(e);
+            return;
+        }
 
         if (e.key === 'Shift') {
             state.shiftOn = true;
@@ -728,6 +1158,10 @@
 
         if (e.key === 'CapsLock') {
             state.capsOn = !state.capsOn;
+            if (state.capsOn)
+                document.getElementById('capslock')?.classList.add('selected');
+            else
+                document.getElementById('capslock')?.classList.remove('selected');
             applyLayout(isUppercase());
         }
     });
@@ -735,7 +1169,16 @@
     document.addEventListener('keyup', e => {
         const active = document.activeElement;
         if (active.id === 'inp-name' || active.id === 'inp-surname') return;
-        if (calib.active) { e.preventDefault(); return; }  // block typing during calib
+
+        if (calib.active) {
+            e.preventDefault();
+            if (e.key === 'Shift') {
+                applyLayout(false);  // restore lowercase labels
+                document.querySelectorAll('#shiftleft, #shiftright')
+                    .forEach(el => el.classList.remove('selected'));
+            }
+            return;
+        }
         if (e.key === 'GroupNext') return;
 
         // Special / modifier keys — ignore for typing
