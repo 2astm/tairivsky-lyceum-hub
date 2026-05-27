@@ -19,7 +19,7 @@ export const legalSections = [
         documents: [
             {
                 label: 'Оголошення (PDF)',
-                url: "/files/ogoloshennya-pro-konkurs-na-zamishhennya-vakantnoyi-posadi-direktora.pdf",
+                url: "/files/documents/ogoloshennya-pro-konkurs-na-zamishhennya-vakantnoyi-posadi-direktora.pdf",
                 type: 'pdf'
             }
         ]
@@ -61,12 +61,12 @@ export const legalSections = [
         documents: [
             {
                 label: 'Стратегія розвитку (PDF)',
-                url: "/files/stratehiia-rozvytku-taiirovskoho-litseiu.pdf",
+                url: "/files/documents/stratehiia-rozvytku-taiirovskoho-litseiu.pdf",
                 type: 'pdf'
             },
             {
                 label: 'Затвердження стратегії (PDF)',
-                url: "/files/zatverdgennia-stratehiii-rozvytku-taiirovskoho-litseiu.pdf",
+                url: "/files/documents/zatverdgennia-stratehiii-rozvytku-taiirovskoho-litseiu.pdf",
                 type: 'pdf'
             }
         ]
@@ -80,7 +80,12 @@ export const legalSections = [
         documents: [
             {
                 label: 'Облік дітей (PDF)',
-                url: "/files/oblik-ditej.pdf",
+                url: "/files/documents/oblik-ditej.pdf",
+                type: 'pdf'
+            },
+            {
+                label: 'Територія обслуговування(рішення 1473) (PDF)',
+                url: "/files/documents/teretorija-obsluhovuvannia.pdf",
                 type: 'pdf'
             }
         ]
@@ -102,7 +107,7 @@ export const legalSections = [
         documents: [
             {
                 label: 'Прийом документів (PDF)',
-                url: "/files/prijom-documentiv-2026",
+                url: "/files/documents/prijom-documentiv-2026",
                 type: 'pdf'
             }
         ]
