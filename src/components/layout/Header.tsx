@@ -40,6 +40,7 @@ const navItems = [
     ]
   },
   { name: 'Профорієнтація', path: '/career-guidance' },
+  { name: 'Профільне навчання', path: '/profile-education' },
   { name: 'Розклад', path: '/schedule' },
   { name: 'Прозорість', path: '/legal-information' },
 ];
