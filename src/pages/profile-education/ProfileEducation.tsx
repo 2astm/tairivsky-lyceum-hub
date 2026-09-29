@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import SectionHeading from '@/components/ui/SectionHeading';
-import { GraduationCap, ClipboardList, ExternalLink } from 'lucide-react';
+ import { GraduationCap, ClipboardList, ExternalLink, FileText } from 'lucide-react';
 
 const ProfileEducation = () => {
     return (
@@ -61,6 +61,39 @@ const ProfileEducation = () => {
                                         </a>
                                     </Button>
                                 </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                    <FileText className="h-6 w-6" />
+                                    Комунікаційна стратегія
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <Button asChild variant="outline">
+                                    <a href="/files/documents/komunikatsijna-stratehia.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                        <FileText className="h-4 w-4" />
+                                        Переглянути документ (PDF)
+                                    </a>
+                                </Button>
+                            </CardContent>
+                        </Card>
+
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                    <FileText className="h-6 w-6" />
+                                    Річний комунікаційний план
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <Button asChild variant="outline">
+                                    <a href="/files/documents/richnij-komunikatsijnij-plan.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                        <FileText className="h-4 w-4" />
+                                        Переглянути документ (PDF)
+                                    </a>
+                                </Button>
                             </CardContent>
                         </Card>
                     </div>

@@ -99,6 +99,34 @@ export const legalSections = [
         documents: []
     },
     {
+        id: 'komunikatsijna-stratehia',
+        categories: ['administrative'],
+        title: 'Комунікаційна стратегія',
+        icon: FileText,
+        content: 'Комунікаційна стратегія Таїрівського ліцею.',
+        documents: [
+            {
+                label: 'Комунікаційна стратегія (PDF)',
+                url: '/files/documents/komunikatsijna-stratehia.pdf',
+                type: 'pdf'
+            }
+        ]
+    },
+    {
+        id: 'richnij-komunikatsijnij-plan',
+        categories: ['administrative'],
+        title: 'Річний комунікаційний план',
+        icon: FileText,
+        content: 'Річний комунікаційний план Таїрівського ліцею.',
+        documents: [
+            {
+                label: 'Річний комунікаційний план (PDF)',
+                url: '/files/documents/richnij-komunikatsijnij-plan.pdf',
+                type: 'pdf'
+            }
+        ]
+    },
+    {
         id: 'prijom-documentiv-2026',
         categories: ['admission'],
         title: 'Прийом документів для вступу у 1-ий клас, 2026 рік',
