@@ -127,6 +127,20 @@ export const legalSections = [
         ]
     },
     {
+        id: 'protocol-zasidannja-batkivskih-zboriv-9-klasiv',
+        categories: ['admission'],
+        title: 'Протокол засідання батьківських зборів 9 класів',
+        icon: FileText,
+        content: 'Протокол засідання батьківських зборів учнів 9 класів Таїрівського ліцею щодо профільного навчання.',
+        documents: [
+            {
+                label: 'Протокол (PDF)',
+                url: '/files/documents/protocol-zasidannja-batkivskih-zboriv-9-klasiv.pdf',
+                type: 'pdf'
+            }
+        ]
+    },
+    {
         id: 'prijom-documentiv-2026',
         categories: ['admission'],
         title: 'Прийом документів для вступу у 1-ий клас, 2026 рік',
