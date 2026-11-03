@@ -1,8 +1,7 @@
 import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import {Alert, AlertTitle, AlertDescription} from '@/components/ui/alert';
-import {AlertTriangle, FileText, GraduationCap} from 'lucide-react';
+import {FileText, GraduationCap} from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import SectionHeading from '@/components/ui/SectionHeading';

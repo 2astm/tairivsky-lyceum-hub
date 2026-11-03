@@ -319,7 +319,92 @@ const ProfileEducation = () => {
                                             Пройти опитування
                                         </a>
                                     </Button>
+                                    <Button asChild size="lg" variant="outline">
+                                        <a
+                                            href="/files/documents/analitychna-dovidka-opituvannya-9-klasiv-tairivskyi-litsei-10-klas-2026.pdf"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2"
+                                        >
+                                            <FileText className="h-5 w-5" />
+                                            Результати анкетування (PDF)
+                                        </a>
+                                    </Button>
                                 </div>
+
+                                <Accordion type="single" collapsible>
+                                    <AccordionItem value="survey-results" className="border-t">
+                                        <AccordionTrigger className="hover:bg-gray-50 px-2 rounded-md py-3 text-blue-700 font-semibold">
+                                            Результати опитування 2026
+                                        </AccordionTrigger>
+                                        <AccordionContent className="px-2 pb-2 space-y-4">
+                                            <p className="text-xs text-gray-500">№769 від 03.11.2026 р. Директор: Надія Гончаренко</p>
+
+                                            <div className="grid grid-cols-3 gap-3 text-center">
+                                                <div className="bg-blue-50 rounded-lg p-3">
+                                                    <p className="text-2xl font-bold text-blue-700">104</p>
+                                                    <p className="text-xs text-gray-600 mt-1">учнів 9–х класів</p>
+                                                </div>
+                                                <div className="bg-green-50 rounded-lg p-3">
+                                                    <p className="text-2xl font-bold text-green-700">42</p>
+                                                    <p className="text-xs text-gray-600 mt-1">продовжують у 10 класі</p>
+                                                </div>
+                                                <div className="bg-purple-50 rounded-lg p-3">
+                                                    <p className="text-2xl font-bold text-purple-700">3</p>
+                                                    <p className="text-xs text-gray-600 mt-1">кластери / профілі</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-3">
+                                                <div className="rounded-lg border p-3 bg-blue-50 border-blue-100">
+                                                    <p className="text-sm font-semibold text-blue-800 mb-2">STEM-кластер</p>
+                                                    <div className="space-y-2">
+                                                        {[
+                                                            { name: 'Інформаційно-технологічний', count: 8 },
+                                                            { name: 'Біотехнологічний', count: 8 },
+                                                        ].map(({ name, count }) => (
+                                                            <div key={name}>
+                                                                <div className="flex justify-between text-xs text-gray-700 mb-1">
+                                                                    <span>{name}</span>
+                                                                    <span className="font-semibold">{count} учн.</span>
+                                                                </div>
+                                                                <div className="h-2 bg-white rounded-full overflow-hidden">
+                                                                    <div className="h-full bg-blue-400 rounded-full" style={{ width: `${Math.round(count / 42 * 100)}%` }} />
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                <div className="rounded-lg border p-3 bg-yellow-50 border-yellow-100">
+                                                    <p className="text-sm font-semibold text-yellow-800 mb-2">Мовно-літературний кластер</p>
+                                                    <div>
+                                                        <div className="flex justify-between text-xs text-gray-700 mb-1">
+                                                            <span>Іноземна філологія</span>
+                                                            <span className="font-semibold">12 учн.</span>
+                                                        </div>
+                                                        <div className="h-2 bg-white rounded-full overflow-hidden">
+                                                            <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${Math.round(12 / 42 * 100)}%` }} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="rounded-lg border p-3 bg-green-50 border-green-100">
+                                                    <p className="text-sm font-semibold text-green-800 mb-2">Соціально-гуманітарний кластер</p>
+                                                    <div>
+                                                        <div className="flex justify-between text-xs text-gray-700 mb-1">
+                                                            <span>Економіко-правовий</span>
+                                                            <span className="font-semibold">14 учн.</span>
+                                                        </div>
+                                                        <div className="h-2 bg-white rounded-full overflow-hidden">
+                                                            <div className="h-full bg-green-400 rounded-full" style={{ width: `${Math.round(14 / 42 * 100)}%` }} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                </Accordion>
                             </CardContent>
                         </Card>
                         <Card>
