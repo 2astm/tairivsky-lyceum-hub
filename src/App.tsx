@@ -20,11 +20,8 @@ import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
 import Schedule from "./pages/Schedule";
 import HelpAndSafety from "./pages/HelpAndSafety";
-import PsychologicalService from "./pages/help-safety/PsychologicalService";
 import StopBullying from "./pages/help-safety/StopBullying";
-import StopViolence from "./pages/help-safety/StopViolence";
 import InternetSafety from "./pages/help-safety/InternetSafety";
-import Psychologist from "./pages/help-safety/Psychologist";
 import CareerGuidance from "./pages/career-guidance/CareerGuidance";
 import ProfileEducation from "./pages/profile-education/ProfileEducation";
 import {Tykanka} from "@/components/tykanka/src/components/tykanka";
@@ -46,11 +43,8 @@ const App = () => (
           <Route path="/news" element={<News/>} />
           <Route path="/distance-learning" element={<DistanceLearning/>} />
           <Route path="/help-and-safety" element={<HelpAndSafety />} />
-          <Route path="/help-and-safety/psychological-service" element={<PsychologicalService />} />
           <Route path="/help-and-safety/stop-bullying" element={<StopBullying />} />
-          <Route path="/help-and-safety/stop-violence" element={<StopViolence />} />
           <Route path="/help-and-safety/internet-safety" element={<InternetSafety />} />
-          <Route path="/help-and-safety/psychologist" element={<Psychologist />} />
           <Route path="/institution/administration" element={<Administration />} />
           <Route path="/institution/faculty" element={<Faculty />} />
           <Route path="/institution/faculty/:departmentId" element={<FacultyDepartment />} />

@@ -5,7 +5,8 @@ export const categories = [
     // {id: 'general', name: 'Загальна інформація'},
     // {id: 'education', name: 'Освітній процес'},
     {id: 'admission', name: 'Вступ'},
-    {id: 'administrative', name: 'Адміністративні питання'}
+    {id: 'administrative', name: 'Адміністративні питання'},
+    {id: 'safety', name: 'Безпека'}
 ];
 
 // Legal information sections based on Ukrainian law
@@ -32,8 +33,13 @@ export const legalSections = [
         content: "Статут Таїрівського ліцею Таїрівської селищної ради Одеського району Одеської області",
         documents: [
             {
-                label: 'Статут (PDF)',
+                label: 'Статут ліцею, 2023 (PDF)',
                 url: "/files/documents/statut-litceju-2023.pdf",
+                type: 'pdf'
+            },
+            {
+                label: 'Рішення про внесення змін до статуту, 2026 (PDF)',
+                url: "/files/documents/rishennya-pro-vnesennya-zmin-do-yedryuo-ta-statut-litseyu2026.pdf",
                 type: 'pdf'
             }
         ]
@@ -136,6 +142,34 @@ export const legalSections = [
             {
                 label: 'Протокол (PDF)',
                 url: '/files/documents/protocol-zasidannja-batkivskih-zboriv-9-klasiv.pdf',
+                type: 'pdf'
+            }
+        ]
+    },
+    {
+        id: 'vypyska-z-yedryuo',
+        categories: ['administrative'],
+        title: 'Виписка з ЄДРЮО (зміна юридичної адреси)',
+        icon: FileText,
+        content: 'Виписка з Єдиного державного реєстру юридичних осіб, фізичних осіб-підприємців та громадських формувань щодо зміни юридичної адреси Таїрівського ліцею.',
+        documents: [
+            {
+                label: 'Виписка з ЄДРЮО (PDF)',
+                url: '/files/documents/vypyska-z-yedryuo2026.pdf',
+                type: 'pdf'
+            }
+        ]
+    },
+    {
+        id: 'pravyla-bezpechnoho-korystuvannya-merezhei-internet',
+        categories: ['safety'],
+        title: 'Правила безпечного користування мережею Інтернет',
+        icon: FileText,
+        content: 'Правила безпечного користування мережею Інтернет для здобувачів освіти Таїрівського ліцею.',
+        documents: [
+            {
+                label: 'Правила безпечного користування мережею Інтернет (PDF)',
+                url: '/files/documents/pravyla-bezpechnoho-korystuvannya-merezhei-internet.pdf',
                 type: 'pdf'
             }
         ]

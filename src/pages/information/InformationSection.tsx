@@ -138,7 +138,8 @@ const InformationSection = () => {
                   <a
                     key={index}
                     href={document.url}
-                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-between p-3 bg-white rounded-md border border-blue-200 hover:bg-blue-50 transition-colors group"
                   >
                     <div className="flex items-center">

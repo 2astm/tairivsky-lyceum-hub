@@ -73,6 +73,8 @@ const LegalInformation = () => {
                                                             <a
                                                                 key={docIndex}
                                                                 href={document.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
                                                                 className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors group"
                                                             >
                                                                 <div className="flex items-center">
