@@ -121,6 +121,20 @@ const HelpAndSafety = () => {
               </div>
               <Download className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors shrink-0" />
             </a>
+            <a
+              href="/files/documents/pravyla-bezpechnoho-korystuvannya-merezhei-internet.pdf"
+              download
+              className="flex items-center gap-4 p-5 border border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-colors group"
+            >
+              <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-green-100 group-hover:bg-green-200 transition-colors shrink-0">
+                <FileText className="h-6 w-6 text-green-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-gray-900 text-sm">Правила безпечного користування мережею Інтернет</p>
+                <p className="text-gray-500 text-xs mt-0.5">Для здобувачів освіти Таїрівського ліцею · PDF</p>
+              </div>
+              <Download className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors shrink-0" />
+            </a>
           </div>
 
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Корисні посилання</h2>
